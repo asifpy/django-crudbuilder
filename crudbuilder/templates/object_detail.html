@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load tags %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="/{{object|get_model_for_instance|lower|make_plural}}">{{object|get_model_for_instance|make_plural|undertospaced}}</a> <span class="divider">/</span></li>
+    <li class="active">{{object}}</li>
+</ul>
+{% endblock %}
+
+{% block main_content %}
+	{% block actions %}
+		<a class="btn" href="/{{object|get_model_for_instance|lower|make_plural}}/{{object.id}}/update"><i class="icon-edit"></i>Update</a>
+		<a class="btn" href="/{{object|get_model_for_instance|lower|make_plural}}/{{object.id}}/delete/"><i class="icon-remove-sign"></i>Delete</a>
+	{% endblock %}
+<hr/>
+<div class="container">
+	<h3>{{object}}</h3>
+	<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for field in object|get_model_fields %}
+        		<tr>
+        			<td>{{field.name|undertospaced}}</td>
+        			<td>{{object|get_value:field.name}}</td>
+        		</tr>
+        	{% endfor %}
+        </tbody>
+     </table>
+</div>
+{% endblock %}

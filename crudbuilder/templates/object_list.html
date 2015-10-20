@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/DT_bootstrap.css">
+{% endblock %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">{{object_list|get_model_for_queryset|make_plural|undertospaced}}</li>
+</ul>
+{% endblock %}
+
+{% block main_content %}
+{% block actions %}
+    <a class="btn" href="/{{object_list|get_model_for_queryset|lower|make_plural}}/create/"><i class="icon-plus-sign"></i> Add {{object_list|get_model_for_queryset|undertospaced}}</a>
+{% endblock %}
+<hr/>
+<div class="container">
+	<h3>{{object_list|get_model_for_queryset|make_plural|undertospaced}}</h3>
+
+    {{object_list}}
+
+</div>
+{% endblock %}

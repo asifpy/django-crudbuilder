@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load tags %}
+
+{% load crispy_forms_tags %}
+
+{% block main_content %}
+<div id="title">
+	<h3>Delete {{object|get_model_for_instance}}</h3>
+</div>
+
+<h4>Are you sure?</h4>
+Are you sure you want to delete the selected {{object|get_model_for_instance|undertospaced}}?
+{{ object}}
+
+<form action="." method="post">{% csrf_token %}
+    <input type="submit" value="Delete" class="btn" />
+</form>
+
+{% endblock %}
