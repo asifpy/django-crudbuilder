@@ -3,12 +3,6 @@ import os
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.contenttypes.models import ContentType
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-
-from crudbuilder.text import model_class_form, plural
-
-
 from django.views.generic import(
     DetailView,
     ListView,
@@ -17,6 +11,11 @@ from django.views.generic import(
     DeleteView
 )
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
+from crudbuilder.mixins import CrudBuilderMixin
+from crudbuilder.text import model_class_form, plural
 
 class ViewBuilder(object):
 
@@ -64,7 +63,7 @@ class ViewBuilder(object):
     def generate_list_view(self):
         name = model_class_form(self.model + 'ListView')
 
-        list_class = type(name, (ListView,), {
+        list_class = type(name, (CrudBuilderMixin, ListView), {
             'model': self.get_model_class(),
             'context_object_name': plural(self.model),
             'template_name': 'object_list.html',
