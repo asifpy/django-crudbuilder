@@ -24,5 +24,6 @@ PLURIZED MODEL : {{pluralized_model_name}}
 
 <div class="container">
 	<h3>{{object_list|get_model_for_queryset|make_plural|undertospaced}}</h3>
+	{{object_list}}
 </div>
 {% endblock %}

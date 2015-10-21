@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 {% load tags %}
 
-{% load crispy_forms_tags %}
-
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="/static/css/datepicker.css">
-{% endblock %}
 
 {% block js %}
 	<script src="/static/js/bootstrap/bootstrap-datepicker.js"></script>
@@ -38,6 +33,15 @@ PLURIZED MODEL : {{pluralized_model_name}}
 <div id="title">
 	<h3>Update {{form|get_model_for_form|undertospaced}}</h3>
 </div>
-	{% crispy form %}
 
+<form action="." method="post">
+	{% csrf_token %}
+	{% for field in form %}
+		<div class="fieldWrapper">
+        	{{ field.errors }}
+        	{{ field.label_tag }} {{ field }}
+    	</div>
+	{% endfor %}
+	<input type="submit" value="Submit" />
+</form>
 {% endblock %}

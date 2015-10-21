@@ -11,20 +11,16 @@ from django.views.generic import(
     DeleteView
 )
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-
 from crudbuilder.mixins import CrudBuilderMixin
 from crudbuilder.text import model_class_form, plural
 
 class ViewBuilder(object):
 
-    def __init__(self, app, model, excludes=None, custom_form=None, autocomplete_fields=None):
+    def __init__(self, app, model, excludes=None, custom_form=None):
         self.model = model
         self.app = app
         self.excludes = excludes
         self.custom_form = custom_form
-        self.autocomplete_fields = autocomplete_fields
         self.classes = {}
 
     def get_model_class(self):
@@ -42,22 +38,8 @@ class ViewBuilder(object):
         class _ObjectForm(forms.ModelForm):
             class Meta:
                 model = model_class
-                exclude = []
-                autocomplete_fields = self.autocomplete_fields
+                exclude = self.excludes if self.excludes else []
 
-            def __init__(self, *args, **kwargs):
-                self.helper = FormHelper()
-                self.helper.form_method = 'post'
-                self.helper.form_tag = True
-                self.helper.form_class = 'form-horizontal'
-                self.helper.label_class = 'col-sm-2 control-label'
-                self.helper.field_class = 'col-sm-3'
-                self.helper.add_input(
-                    Submit('submit', 'Submit',
-                        css_class="col-sm-offset-2 btn-primary"
-                        )
-                    )
-                super(_ObjectForm, self).__init__(*args, **kwargs)
         return _ObjectForm
 
     def generate_list_view(self):
