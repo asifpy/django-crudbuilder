@@ -11,5 +11,5 @@ urlpatterns = [
 ]
 
 
-builder = UrlBuilder('person')
+builder = UrlBuilder('example', 'person')
 urlpatterns += builder.urls

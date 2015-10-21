@@ -20,15 +20,16 @@ from django.views.generic import(
 
 class ViewBuilder(object):
 
-    def __init__(self, model, excludes=None, custom_form=None, autocomplete_fields=None):
+    def __init__(self, app, model, excludes=None, custom_form=None, autocomplete_fields=None):
         self.model = model
+        self.app = app
         self.excludes = excludes
         self.custom_form = custom_form
         self.autocomplete_fields = autocomplete_fields
         self.classes = {}
 
     def get_model_class(self):
-        c = ContentType.objects.get(model=self.model)
+        c = ContentType.objects.get(app_label=self.app, model=self.model)
         return c.model_class()
 
     def get_actual_form(self):
@@ -79,7 +80,7 @@ class ViewBuilder(object):
         create_class = type(name, (CreateView,), {
             'form_class': self.get_actual_form(),
             'template_name': 'object_create.html',
-            'success_url': reverse_lazy('{}-list'.format(self.model))
+            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
         })
         self.classes[name] = create_class
         return create_class
@@ -101,7 +102,7 @@ class ViewBuilder(object):
             'form_class': self.get_actual_form(),
             'model': self.get_model_class(),
             'template_name': 'object_update.html',
-            'success_url': reverse_lazy('{}-list'.format(self.model))
+            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
         })
         self.classes[name] = update_class
         return update_class
@@ -112,7 +113,7 @@ class ViewBuilder(object):
         delete_class = type(name, (DeleteView,), {
             'model': self.get_model_class(),
             'template_name':  'object_delete.html',
-            'success_url': reverse_lazy('{}-list'.format(self.model))
+            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
             })
 
         self.classes[name] = delete_class

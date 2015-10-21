@@ -35,6 +35,9 @@ def get_model_for_queryset(queryset):
     model_name = queryset.model.__name__
     return mixedToUnder(model_name)
 
+@register.filter
+def get_app_label_for_queryset(quesryset):
+    return queryset.model.app_label
 
 @register.filter
 def get_model_for_instance(instance):
