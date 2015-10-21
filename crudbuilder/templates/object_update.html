@@ -31,6 +31,10 @@
 {% endblock %}
 
 {% block main_content %}
+APP : {{app_label}}
+MODEL : {{actual_model_name}}
+PLURIZED MODEL : {{pluralized_model_name}}
+
 <div id="title">
 	<h3>Update {{form|get_model_for_form|undertospaced}}</h3>
 </div>

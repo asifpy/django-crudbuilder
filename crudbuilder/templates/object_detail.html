@@ -10,12 +10,20 @@
 </ul>
 {% endblock %}
 
+
+
 {% block main_content %}
 	{% block actions %}
 		<a class="btn" href="/{{object|get_model_for_instance|lower|make_plural}}/{{object.id}}/update"><i class="icon-edit"></i>Update</a>
 		<a class="btn" href="/{{object|get_model_for_instance|lower|make_plural}}/{{object.id}}/delete/"><i class="icon-remove-sign"></i>Delete</a>
 	{% endblock %}
 <hr/>
+
+APP : {{app_label}}
+MODEL : {{actual_model_name}}
+PLURIZED MODEL : {{pluralized_model_name}}
+
+
 <div class="container">
 	<h3>{{object}}</h3>
 	<table class="table table-bordered">

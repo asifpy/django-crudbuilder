@@ -17,6 +17,11 @@
     <a class="btn" href="/{{object_list|get_model_for_queryset|lower|make_plural}}/create/"><i class="icon-plus-sign"></i> Add {{object_list|get_model_for_queryset|undertospaced}}</a>
 {% endblock %}
 <hr/>
+
+APP : {{app_label}}
+MODEL : {{actual_model_name}}
+PLURIZED MODEL : {{pluralized_model_name}}
+
 <div class="container">
 	<h3>{{object_list|get_model_for_queryset|make_plural|undertospaced}}</h3>
 </div>

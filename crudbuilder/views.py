@@ -75,9 +75,9 @@ class ViewBuilder(object):
     def generate_create_view(self):
         name = model_class_form(self.model + 'CreateView')
 
-        
-        create_class = type(name, (CreateView,), {
+        create_class = type(name, (CrudBuilderMixin, CreateView), {
             'form_class': self.get_actual_form(),
+            'model': self.get_model_class(),
             'template_name': 'object_create.html',
             'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
         })
@@ -87,7 +87,7 @@ class ViewBuilder(object):
     def generate_detail_view(self):
         name = model_class_form(self.model + 'DetailView')
 
-        detail_class = type(name, (DetailView,), {
+        detail_class = type(name, (CrudBuilderMixin, DetailView), {
             'model': self.get_model_class(),
             'template_name': 'object_detail.html',
         })
@@ -97,7 +97,7 @@ class ViewBuilder(object):
     def generate_update_view(self):
         name = model_class_form(self.model + 'UpdateView')
 
-        update_class= type(name, (UpdateView,), {
+        update_class= type(name, (CrudBuilderMixin, UpdateView), {
             'form_class': self.get_actual_form(),
             'model': self.get_model_class(),
             'template_name': 'object_update.html',
@@ -109,7 +109,7 @@ class ViewBuilder(object):
     def generate_delete_view(self):
         name = model_class_form(self.model + 'DeleteView')
 
-        delete_class = type(name, (DeleteView,), {
+        delete_class = type(name, (CrudBuilderMixin, DeleteView), {
             'model': self.get_model_class(),
             'template_name':  'object_delete.html',
             'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))

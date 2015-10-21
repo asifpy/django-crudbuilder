@@ -4,6 +4,12 @@
 {% load crispy_forms_tags %}
 
 {% block main_content %}
+
+APP : {{app_label}}
+MODEL : {{actual_model_name}}
+PLURIZED MODEL : {{pluralized_model_name}}
+
+
 <div id="title">
 	<h3>Delete {{object|get_model_for_instance}}</h3>
 </div>
