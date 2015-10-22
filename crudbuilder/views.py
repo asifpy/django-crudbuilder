@@ -3,6 +3,7 @@ import os
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.contenttypes.models import ContentType
+from django.forms.models import modelform_factory
 from django.views.generic import(
     DetailView,
     ListView,
@@ -10,17 +11,16 @@ from django.views.generic import(
     UpdateView,
     DeleteView
 )
+from django_tables2 import SingleTableView
 
 from crudbuilder.mixins import CrudBuilderMixin
+from crudbuilder.abstract import BaseBuilder
+from crudbuilder.tables import TableBuilder
 from crudbuilder.text import model_class_form, plural
 
-class ViewBuilder(object):
-
-    def __init__(self, app, model, excludes=None, custom_form=None):
-        self.model = model
-        self.app = app
-        self.excludes = excludes
-        self.custom_form = custom_form
+class ViewBuilder(BaseBuilder):
+    def __init__(self, *args, **kwargs):
+        super(ViewBuilder, self).__init__(*args, **kwargs)
         self.classes = {}
 
     def get_model_class(self):
@@ -33,24 +33,38 @@ class ViewBuilder(object):
         else:
             return self.generate_modelform()
 
+    def get_actual_table(self):
+        if self.custom_table:
+            return self.custom_table
+        else:
+            table_builder = TableBuilder(
+                self.app,
+                self.model,
+                self.table_fields,
+                self.css_table_class
+                )
+
+            return table_builder.generate_table()
+
     def generate_modelform(self):
         model_class = self.get_model_class()
-        class _ObjectForm(forms.ModelForm):
-            class Meta:
-                model = model_class
-                exclude = self.excludes if self.excludes else []
-
+        excludes = self.form_excludes if self.form_excludes else []
+        _ObjectForm = modelform_factory(model_class, exclude=excludes)
         return _ObjectForm
 
     def generate_list_view(self):
         name = model_class_form(self.model + 'ListView')
 
-        list_class = type(name, (CrudBuilderMixin, ListView), {
-            'model': self.get_model_class(),
-            'context_object_name': plural(self.model),
-            'template_name': 'object_list.html',
-        })
+        list_args = dict(
+            model=self.get_model_class(),
+            context_object_name=plural(self.model),
+            template_name='object_list.html',
+            table_class=self.get_actual_table(),
+            context_table_name='table_objects',
+            table_pagination=self.table_pagination
+            )
 
+        list_class = type(name, (CrudBuilderMixin, SingleTableView), list_args)
         self.classes[name] = list_class
         return list_class
 

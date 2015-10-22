@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load tags %}
+{% load render_table from django_tables2 %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="/static/css/DT_bootstrap.css">
@@ -25,5 +26,8 @@ PLURIZED MODEL : {{pluralized_model_name}}
 <div class="container">
 	<h3>{{object_list|get_model_for_queryset|make_plural|undertospaced}}</h3>
 	{{object_list}}
+
+	{% render_table table_objects %}
+
 </div>
 {% endblock %}

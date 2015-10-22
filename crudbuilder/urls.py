@@ -1,14 +1,14 @@
 
 from django.conf.urls import patterns, url
+
+from crudbuilder.abstract import BaseBuilder
 from crudbuilder.views import ViewBuilder
 from crudbuilder import text
 
-class UrlBuilder(object):
-
-    def __init__(self, app, model):
-        self.model = model
-        self.app = app
-        self.viewbuilder = ViewBuilder(self.app, self.model)
+class UrlBuilder(BaseBuilder):
+    def __init__(self, *args, **kwargs):
+        result = super(UrlBuilder, self).__init__(*args, **kwargs)
+        self.viewbuilder = ViewBuilder(*args, **kwargs)
         self.urls = self.generate_urls()
 
     def generate_urls(self):
