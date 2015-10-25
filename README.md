@@ -52,7 +52,7 @@ PLURIZED MODEL : {{pluralized_model_name}}
 
 HELPERS
 -------
-You can customize all the generated views/tables/forms/urls.
+All the generated views/tables/forms/url are extendable.
 [Visit CRUD BUILDER helpers!](https://github.com/asifpy/django-crudbuilder/blob/master/example/example/usage.py)
 
 
