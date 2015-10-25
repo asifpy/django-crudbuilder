@@ -39,3 +39,10 @@ urlpatterns += builder.urls
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/update/
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
 ```
+
+HELPERS
+-------
+You can customize all the generated views/tables/forms/urls.
+[Visit CRUD BUILDER helpers!](https://github.com/asifpy/django-crudbuilder/blob/master/example/example/usage.py)
+
+
