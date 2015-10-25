@@ -23,6 +23,7 @@ class ViewBuilder(BaseBuilder):
         super(ViewBuilder, self).__init__(*args, **kwargs)
         self.classes = {}
 
+    @property
     def get_model_class(self):
         c = ContentType.objects.get(app_label=self.app, model=self.model)
         return c.model_class()
@@ -47,7 +48,7 @@ class ViewBuilder(BaseBuilder):
             return table_builder.generate_table()
 
     def generate_modelform(self):
-        model_class = self.get_model_class()
+        model_class = self.get_model_class
         excludes = self.form_excludes if self.form_excludes else []
         _ObjectForm = modelform_factory(model_class, exclude=excludes)
         return _ObjectForm
@@ -56,7 +57,7 @@ class ViewBuilder(BaseBuilder):
         name = model_class_form(self.model + 'ListView')
 
         list_args = dict(
-            model=self.get_model_class(),
+            model=self.get_model_class,
             context_object_name=plural(self.model),
             template_name='object_list.html',
             table_class=self.get_actual_table(),
@@ -70,51 +71,50 @@ class ViewBuilder(BaseBuilder):
 
     def generate_create_view(self):
         name = model_class_form(self.model + 'CreateView')
+        create_args = dict(
+            form_class=self.get_actual_form(),
+            model=self.get_model_class,
+            template_name='object_create.html',
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
+            )
 
-        create_class = type(name, (CrudBuilderMixin, CreateView), {
-            'form_class': self.get_actual_form(),
-            'model': self.get_model_class(),
-            'template_name': 'object_create.html',
-            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
-        })
+        create_class = type(name, (CrudBuilderMixin, CreateView), create_args)
         self.classes[name] = create_class
         return create_class
 
     def generate_detail_view(self):
         name = model_class_form(self.model + 'DetailView')
+        detail_args = dict(
+            model=self.get_model_class,
+            template_name='object_detail.html'
+            )
 
-        detail_class = type(name, (CrudBuilderMixin, DetailView), {
-            'model': self.get_model_class(),
-            'template_name': 'object_detail.html',
-        })
+        detail_class = type(name, (CrudBuilderMixin, DetailView), detail_args)
         self.classes[name] = detail_class
         return detail_class
 
     def generate_update_view(self):
         name = model_class_form(self.model + 'UpdateView')
+        update_args = dict(
+            form_class=self.get_actual_form(),
+            model=self.get_model_class,
+            template_name='object_update.html',
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
+            )
 
-        update_class= type(name, (CrudBuilderMixin, UpdateView), {
-            'form_class': self.get_actual_form(),
-            'model': self.get_model_class(),
-            'template_name': 'object_update.html',
-            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
-        })
+        update_class= type(name, (CrudBuilderMixin, UpdateView), update_args)
         self.classes[name] = update_class
         return update_class
 
     def generate_delete_view(self):
         name = model_class_form(self.model + 'DeleteView')
+        delete_args = dict(
+            model=self.get_model_class,
+            template_name='object_delete.html',
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
+            )
 
-        delete_class = type(name, (CrudBuilderMixin, DeleteView), {
-            'model': self.get_model_class(),
-            'template_name':  'object_delete.html',
-            'success_url': reverse_lazy('{}-{}-list'.format(self.app, self.model))
-            })
-
+        delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
         self.classes[name] = delete_class
         return delete_class
 
-# if __name__ == '__main__':
-#     builder = ViewBuilder('pipe')
-#     builder.generate_list_view()
-#     print builder.classes
