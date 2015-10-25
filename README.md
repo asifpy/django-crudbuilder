@@ -40,6 +40,16 @@ urlpatterns += builder.urls
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
 ```
 
+EXTRA TEMPLATE VARIABLES
+------------------------
+Added mixin which allows access to additional template variables like app lable and model name in every template.
+
+```
+APP : {{app_label}}
+MODEL : {{actual_model_name}}
+PLURIZED MODEL : {{pluralized_model_name}}
+```
+
 HELPERS
 -------
 You can customize all the generated views/tables/forms/urls.
