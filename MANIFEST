@@ -1,5 +1,0 @@
-include LICENSE
-include README.rst
-recursive-include crudbuilder/static *
-recursive-include crudbuilder/templates *
-recursive-include docs *
