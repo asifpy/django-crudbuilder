@@ -23,6 +23,13 @@ class ViewBuilder(BaseBuilder):
         super(ViewBuilder, self).__init__(*args, **kwargs)
         self.classes = {}
 
+    def generate_crud(self):
+        self.generate_list_view()
+        self.generate_create_view()
+        self.generate_detail_view()
+        self.generate_update_view()
+        self.generate_delete_view()
+
     @property
     def get_model_class(self):
         c = ContentType.objects.get(app_label=self.app, model=self.model)
