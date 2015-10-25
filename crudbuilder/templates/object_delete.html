@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 {% load tags %}
 
-{% load crispy_forms_tags %}
-
 {% block main_content %}
 
-APP : {{app_label}}
-MODEL : {{actual_model_name}}
-PLURIZED MODEL : {{pluralized_model_name}}
+<b>APP :</b> {{app_label}}<br/>
+<b>MODEL : </b>{{actual_model_name}}<br/>
+<b>PLURIZED MODEL :</b> {{pluralized_model_name}}<br/>
 
 
 <div id="title">

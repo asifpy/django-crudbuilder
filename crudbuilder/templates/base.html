@@ -5,122 +5,29 @@
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
     {% block jquery %}
-		<script src="/static/js/jquery.min.js"></script>
     {% endblock %}
+
     {% block js %}{% endblock %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 100px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    
     
     {% block css %}{% endblock %}
-    
-    <!--link href="/static/css/common.css" rel="stylesheet"-->
-    <!--link rel="stylesheet" href="/static/css/master.css" type="text/css" /-->
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <!--link rel="shortcut icon" href="/static/ico/favicon.ico"-->
   </head>
 
   <body {% block body_tag %} {% endblock %}>
     {% block js_body_first %}{% endblock %}
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Example Project</a>
-        </div>
-		
-		{% if user.is_authenticated %}
-          <p class="navbar-text pull-right">Logged in as <a href="/auth/logout/?next=/auth/login/">{{ user.username }}</a></p>
-		{% else %}		
-	        <div class="navbar-collapse collapse">
-	          <form class="navbar-form navbar-right" role="form" action="/" method="post">
-	            {% csrf_token %}
-	            <div class="form-group">
-	              <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-	            </div>
-	            <div class="form-group">
-	              <input type="password" name="password" class="form-control" placeholder="Password" required>
-	            </div>
-	            <button type="submit" class="btn btn-success">Sign in</button>
-	          </form>
-	        </div><!--/.navbar-collapse -->
-		{% endif %}
-      </div>
-    </div>
 
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                {% block breadcrumb %}
-                {% endblock %}
-                <div id="alert"></div>            
-            </div>
-        </div>
-        {% if messages %}
-        {% for msg in messages %}
-        <div class="alert alert-{{msg.tags}}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{msg}}
-        </div>
-        {% endfor %}
-        {% endif %}
+    {% block main_content %}
+    {% endblock %}
 
-    </div>
+  <footer>
+    {% block footer %}
+        <p>&copy; Example  {% now "Y" %}</p>
+    {% endblock %}
+  </footer>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span12">
-            {% block sidebar %}
-            {% endblock %}
-            {% block hero %}
-            {% endblock %}
-            {% block sections %}
-            {% endblock %}
-            {% block main_content %}
-            {% endblock %}
-        </div>
-      </div><!--/row-->
-
-    {% block body %}{% endblock %}
-    {% block script %}{% endblock %}
-
-    <hr>
-
-    <footer>
-        {% block footer %}
-            <p>&copy; Example  now "Y" %}</p>
-        {% endblock %}    
-    </footer>
-
-    </div><!--/.fluid-container-->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    {% block js_before_last %}{% endblock %}
-    <script src="/static/js/jquery.dataTables.min.js"></script>
-    <script src="/static/js/DT_bootstrap.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    {% block js_last %}{% endblock %}
+  {% block js_before_last %}{% endblock %}
+  {% block js_last %}{% endblock %}
   </body>
 </html>
