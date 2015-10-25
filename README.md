@@ -1,5 +1,6 @@
 # django-crudbuilder
-Generic CRUD implementation in Django
+
+Generic CRUD implementation in Django which uses django tables2 to list objects
 
 Installation
 ------------
