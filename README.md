@@ -10,15 +10,37 @@ Installation
 Usage
 -----
 
-```
 1. Add "crudbuilder" to INSTALLED_APPS:
+ ``` 
   INSTALLED_APPS = {
     ...
     'crudbuilder'
   }
+  ```
 
-2. Open urls.py and add the following
+2. Create models
+``` 
+class Person(models.Model):
+    """ an actual singular human being """
+    
+    # for crudbuilder
+    search_feilds = ['name']
+    tables2_fields = ('name', 'email')
+    tables2_css_class = "table table-bordered table-condensed"
+    tables2_pagination = 20 # default is 10
+    #modelform_excludes = ['name']
 
+    # model fields
+    name = models.CharField(blank=True, max_length=100)
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.name
+``` 
+
+3. Open urls.py and add the following
+``` 
 from crudbuilder.urls import UrlBuilder
 
 urlpatterns = [
@@ -29,10 +51,13 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 ]
 
-builder = UrlBuilder('yourappname', 'yourmodelname', table_fields=('name', 'email'))
+builder = UrlBuilder('yourappname', 'yourmodelname')
 urlpatterns += builder.urls
+``` 
 
-3. Now you can access the below CRUD URLS:
+
+4. Now you can access the below CRUD URLS:
+``` 
 - http://127.0.0.1:8000/yourappname/yourmodelname
 - http://127.0.0.1:8000/yourappname/yourmodelname/create/
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/detail/
