@@ -13,12 +13,14 @@ from django.views.generic import(
 )
 from django_tables2 import SingleTableView
 
-from crudbuilder.mixins import CrudBuilderMixin
+from crudbuilder.mixins import CrudBuilderMixin, BaseListViewMixin
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
 from crudbuilder.text import model_class_form, plural
 
 class ViewBuilder(BaseBuilder):
+    """View builder which returns all the CRUD class based views"""
+
     def __init__(self, *args, **kwargs):
         super(ViewBuilder, self).__init__(*args, **kwargs)
         self.classes = {}
@@ -30,49 +32,38 @@ class ViewBuilder(BaseBuilder):
         self.generate_update_view()
         self.generate_delete_view()
 
-    @property
-    def get_model_class(self):
-        c = ContentType.objects.get(app_label=self.app, model=self.model)
-        return c.model_class()
-
     def get_actual_form(self):
-        if self.custom_form:
-            return self.custom_form
+        if self.custom_modelform:
+            return self.custom_modelform
         else:
             return self.generate_modelform()
 
     def get_actual_table(self):
-        if self.custom_table:
-            return self.custom_table
+        if self.custom_table2:
+            return self.custom_table2
         else:
-            table_builder = TableBuilder(
-                self.app,
-                self.model,
-                self.table_fields,
-                self.css_table_class
-                )
+            table_builder = TableBuilder(self.app, self.model)
 
             return table_builder.generate_table()
 
     def generate_modelform(self):
         model_class = self.get_model_class
-        excludes = self.form_excludes if self.form_excludes else []
+        excludes = self.modelform_excludes if self.modelform_excludes else []
         _ObjectForm = modelform_factory(model_class, exclude=excludes)
         return _ObjectForm
 
     def generate_list_view(self):
         name = model_class_form(self.model + 'ListView')
-
         list_args = dict(
             model=self.get_model_class,
             context_object_name=plural(self.model),
             template_name='object_list.html',
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
-            table_pagination=self.table_pagination
+            table_pagination=self.tables2_pagination or 10
             )
 
-        list_class = type(name, (CrudBuilderMixin, SingleTableView), list_args)
+        list_class = type(name, (BaseListViewMixin, SingleTableView), list_args)
         self.classes[name] = list_class
         return list_class
 

@@ -1,21 +1,26 @@
+from django.contrib.contenttypes.models import ContentType
 
 class BaseBuilder(object):
-	def __init__(self,
-		app,
-		model,
-		form_excludes=None,
-		custom_form=None,
-		table_fields=None,
-		css_table_class=None,
-		custom_table=None,
-		table_pagination=10):
-
+	def __init__(self, app, model, custom_modelform=None, custom_table2=None):
 		self.model = model
 		self.app = app
-		self.form_excludes = form_excludes
-		self.custom_form = custom_form
-		self.table_fields = table_fields
-		self.css_table_class = css_table_class
-		self.custom_table = custom_table
-		self.table_pagination = table_pagination
+
+		self.custom_modelform = custom_modelform
+		self.modelform_excludes = self._has_model_attr('modelform_excludes')
+		#django tables2
+		self.custom_table2 = custom_table2
+		self.tables2_fields = self._has_model_attr('tables2_fields')
+		self.tables2_css_class = self._has_model_attr('tables2_css_class')
+		self.tables2_pagination = self._has_model_attr('table2_pagination')
+
+	@property
+	def get_model_class(self):
+		c = ContentType.objects.get(app_label=self.app, model=self.model)
+		return c.model_class()
+
+	def _has_model_attr(self, attr):
+		if hasattr(self.get_model_class, attr):
+			return getattr(self.get_model_class, attr)
+		else:
+			return None
 

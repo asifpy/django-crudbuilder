@@ -15,6 +15,12 @@
 <h3>{{pluralized_model_name|title}}<h3>
 
 <h4>Using Django Tables2</h4>
+
+<form saction="." method="GET">
+	<input type="text" name='search'>
+	<button type="submit" >Search</button>
+</form>
+
 {% render_table table_objects %}
 
 <hr/>
