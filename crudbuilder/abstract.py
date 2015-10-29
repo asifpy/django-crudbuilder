@@ -16,7 +16,7 @@ class BaseBuilder(object):
 		self.custom_table2 = custom_table2
 		self.tables2_fields = self._has_model_attr('tables2_fields')
 		self.tables2_css_class = self._has_model_attr('tables2_css_class')
-		self.tables2_pagination = self._has_model_attr('table2_pagination')
+		self.tables2_pagination = self._has_model_attr('tables2_pagination')
 
 	@property
 	def get_model_class(self):

@@ -43,7 +43,6 @@ class ViewBuilder(BaseBuilder):
             return self.custom_table2
         else:
             table_builder = TableBuilder(self.app, self.model)
-
             return table_builder.generate_table()
 
     def generate_modelform(self):
