@@ -1,2 +1,6 @@
 *.pyc
+build
+dist
+*.egg-info
+crudbuilder/db.sqlite3
 .DS_Store
