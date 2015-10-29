@@ -1,5 +1,7 @@
 from django.db import models
+from crudbuilder.decorators import DecorateCrudBuilder
 
+builder = DecorateCrudBuilder()
 
 class Person(models.Model):
 
@@ -16,6 +18,13 @@ class Person(models.Model):
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now=True)
+    created_by = models.Foreign
 
     def __unicode__(self):
         return self.name
+
+    # @builder.register('post_create')
+    # def update_user_obj(self):
+    # 	print "hello"
+
+

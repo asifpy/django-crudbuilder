@@ -1,7 +1,12 @@
 from django.contrib.contenttypes.models import ContentType
 
 class BaseBuilder(object):
-	def __init__(self, app, model, custom_modelform=None, custom_table2=None):
+	def __init__(self,
+		app,
+		model,
+		custom_modelform=None,
+		custom_table2=None):
+		
 		self.model = model
 		self.app = app
 
@@ -15,6 +20,8 @@ class BaseBuilder(object):
 
 	@property
 	def get_model_class(self):
+		"""Returns model class"""
+
 		c = ContentType.objects.get(app_label=self.app, model=self.model)
 		return c.model_class()
 
@@ -23,4 +30,5 @@ class BaseBuilder(object):
 			return getattr(self.get_model_class, attr)
 		else:
 			return None
+
 
