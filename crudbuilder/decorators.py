@@ -16,4 +16,4 @@ class DecorateCrudBuilder():
             raise Exception("No function registered against - " + str(name))
         return func()
 
-app = MyApp()
+app = DecorateCrudBuilder()
