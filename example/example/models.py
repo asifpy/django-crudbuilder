@@ -1,10 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from crudbuilder.decorators import DecorateCrudBuilder
-
-builder = DecorateCrudBuilder()
-
 class Person(models.Model):
 
     """ an actual singular human being """
@@ -24,9 +20,4 @@ class Person(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    # @builder.register('post_create')
-    # def update_user_obj(self):
-    # 	print "hello"
-
 
