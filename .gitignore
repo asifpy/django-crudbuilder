@@ -2,5 +2,5 @@
 build
 dist
 *.egg-info
-crudbuilder/db.sqlite3
+example/db.sqlite3
 .DS_Store

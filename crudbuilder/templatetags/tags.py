@@ -2,10 +2,12 @@ from django import template
 from django.contrib import admin
 from django.template.defaultfilters import stringfilter
 from itertools import cycle, chain
+from collections import namedtuple
 
 from crudbuilder.text import mixedToUnder, plural
 
 register = template.Library()
+Field = namedtuple('Field', 'name verbose_name')
 
 @register.filter
 def get_model_fields(obj):
