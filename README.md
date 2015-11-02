@@ -1,5 +1,8 @@
 # django-crudbuilder
 
+[![Code Health](https://landscape.io/github/asifpy/django-crudbuilder/master/landscape.svg?style=flat)](https://landscape.io/github/asifpy/django-crudbuilder/master) [![PyPI Version](https://img.shields.io/pypi/v/django-crudbuilder.svg)](https://pypi.python.org/pypi/django-crudbuilder)
+
+
 Generic CRUD implementation in Django which uses django tables2 to list objects
 
 Installation
