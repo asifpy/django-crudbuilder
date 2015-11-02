@@ -1,5 +1,5 @@
 
-class DecorateCrudBuilder():
+class DecorateCrudBuilder(object):
     def __init__(self):
         self.func_map = {}
 
