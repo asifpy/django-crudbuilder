@@ -1,13 +1,14 @@
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.views import ViewBuilder
 from crudbuilder import text
 
+
 class UrlBuilder(BaseBuilder):
     def __init__(self, *args, **kwargs):
-        result = super(UrlBuilder, self).__init__(*args, **kwargs)
+        super(UrlBuilder, self).__init__(*args, **kwargs)
         self.viewbuilder = ViewBuilder(*args, **kwargs)
         self.urls = self.generate_urls()
 
@@ -15,7 +16,7 @@ class UrlBuilder(BaseBuilder):
         urls = []
 
         pluralized = text.plural(self.model)
-        
+
         list_view = self.viewbuilder.generate_list_view()
         update_view = self.viewbuilder.generate_update_view()
         detail_view = self.viewbuilder.generate_detail_view()
@@ -26,8 +27,12 @@ class UrlBuilder(BaseBuilder):
             (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
             (r'^{}/{}/(?P<pk>\d+)/$', detail_view.as_view(), '{}-{}-detail'),
             (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<pk>\d+)/update/$', update_view.as_view(), '{}-{}-update'),
-            (r'^{}/{}/(?P<pk>\d+)/delete/$', delete_view.as_view(), '{}-{}-delete'),
+            (r'^{}/{}/(?P<pk>\d+)/update/$',
+                update_view.as_view(),
+                '{}-{}-update'),
+            (r'^{}/{}/(?P<pk>\d+)/delete/$',
+                delete_view.as_view(),
+                '{}-{}-delete'),
         ]
 
         for entry in entries:

@@ -1,12 +1,7 @@
-import os
-
-from django import forms
 from django.core.urlresolvers import reverse_lazy
-from django.contrib.contenttypes.models import ContentType
 from django.forms.models import modelform_factory
 from django.views.generic import(
     DetailView,
-    ListView,
     CreateView,
     UpdateView,
     DeleteView
@@ -17,6 +12,7 @@ from crudbuilder.mixins import CrudBuilderMixin, BaseListViewMixin
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
 from crudbuilder.text import model_class_form, plural
+
 
 class ViewBuilder(BaseBuilder):
     """View builder which returns all the CRUD class based views"""
@@ -62,7 +58,11 @@ class ViewBuilder(BaseBuilder):
             table_pagination=self.tables2_pagination or 10
             )
 
-        list_class = type(name, (BaseListViewMixin, SingleTableView), list_args)
+        list_class = type(
+            name,
+            (BaseListViewMixin, SingleTableView),
+            list_args
+            )
         self.classes[name] = list_class
         return list_class
 
@@ -99,7 +99,11 @@ class ViewBuilder(BaseBuilder):
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        update_class= type(name, (CrudBuilderMixin, UpdateView), update_args)
+        update_class = type(
+            name,
+            (CrudBuilderMixin, UpdateView),
+            update_args
+            )
         self.classes[name] = update_class
         return update_class
 

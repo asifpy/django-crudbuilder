@@ -1,13 +1,15 @@
 from django import template
 from django.contrib import admin
 from django.template.defaultfilters import stringfilter
-from itertools import cycle, chain
+from django.db.models.fields import FieldDoesNotExist
+from itertools import chain
 from collections import namedtuple
 
 from crudbuilder.text import mixedToUnder, plural
 
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
+
 
 @register.filter
 def get_model_fields(obj):
@@ -21,6 +23,7 @@ def get_model_fields(obj):
 
     return chain(obj._meta.fields, property_fields)
 
+
 @register.filter
 def get_verbose_name(obj, field_name):
     try:
@@ -28,18 +31,22 @@ def get_verbose_name(obj, field_name):
     except FieldDoesNotExist:
         return ''
 
+
 @register.filter
 def get_value(obj, field):
     return getattr(obj, field)
+
 
 @register.filter
 def get_model_for_queryset(queryset):
     model_name = queryset.model.__name__
     return mixedToUnder(model_name)
 
+
 @register.filter
-def get_app_label_for_queryset(quesryset):
+def get_app_label_for_queryset(queryset):
     return queryset.model.app_label
+
 
 @register.filter
 def get_model_for_instance(instance):
@@ -88,8 +95,8 @@ def get_field(obj, field, default=''):
     except AttributeError:
         return default
 
+
 @register.filter
 @stringfilter
 def undertospaced(value):
     return value.replace("_", " ").title()
-
