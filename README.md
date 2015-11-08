@@ -3,7 +3,16 @@
 [![Code Health](https://landscape.io/github/asifpy/django-crudbuilder/master/landscape.svg?style=flat)](https://landscape.io/github/asifpy/django-crudbuilder/master) [![PyPI Version](https://img.shields.io/pypi/v/django-crudbuilder.svg)](https://pypi.python.org/pypi/django-crudbuilder)
 
 
-Generic CRUD implementation in Django which uses django tables2 to list objects
+Generic CRUD implementation in Django which uses django tables2 to list objects.
+
+Features:
+---------
+- Generates class based views for CRUD
+- Uses django-tables2 to display objects in ListView
+- Allows custom forms/tables as additional arguments
+- Context provides additional template variables APP_LABEL and MODEL for all CRUD templates
+- Enable/disable login required option for CRUD views
+- All the generated views/tables/forms/url are extendable.
 
 Installation
 ------------
