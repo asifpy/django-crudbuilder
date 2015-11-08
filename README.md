@@ -20,6 +20,8 @@ Usage
     'django_tables2',
     'crudbuilder'
   }
+  
+  LOGIN_REQUIRED_FOR_CRUD = True/False
   ```
 
 2. Create models
