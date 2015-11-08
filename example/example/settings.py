@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REQUIRED_FOR_CRUD = True
+LOGIN_URL = '/auth/login/'
 
 # Application definition
 

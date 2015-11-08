@@ -1,10 +1,35 @@
 import operator
 from django.db.models import Q
+from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.conf import settings
 
 from crudbuilder.text import mixedToUnder, plural
 
 
-class CrudBuilderMixin(object):
+class LoginRequiredMixin(object):
+    """
+    View mixin which verifies that login required for the crud builder
+    """
+    login_url = settings.LOGIN_URL
+    redirect_field_name = REDIRECT_FIELD_NAME  # Set by django.contrib.auth
+
+    def handle_login_required(self, request):
+        return redirect_to_login(
+            request.get_full_path(),
+            self.login_url,
+            self.redirect_field_name)
+
+    def dispatch(self, request, *args, **kwargs):
+        if settings.LOGIN_REQUIRED_FOR_CRUD:
+            if not request.user.is_authenticated():
+                return self.handle_login_required(request)
+
+        return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
+
+
+class CrudBuilderMixin(LoginRequiredMixin):
     """
     - Mixin to provide additional context data for the templates
     - app_label : return app_label for CRUD model
