@@ -20,6 +20,7 @@ class BaseBuilder(object):
         self.tables2_fields = self._has_model_attr('tables2_fields')
         self.tables2_css_class = self._has_model_attr('tables2_css_class')
         self.tables2_pagination = self._has_model_attr('tables2_pagination')
+        self.permission_required = self._has_model_attr('permission_required')
 
     @property
     def get_model_class(self):
@@ -33,3 +34,9 @@ class BaseBuilder(object):
             return getattr(self.get_model_class, attr)
         else:
             return None
+
+    def view_permission(self, view_type):
+        if self.permission_required:
+            return self.permission_required.get(view_type, None)
+        else:
+            return '{}.{}_{}'.format(self.app, self.model, view_type)

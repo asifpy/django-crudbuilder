@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block main_content %}
+
+{{ form.non_field_errors }}
+
+<div class="login_forms">
+    <form method="post" action=".">
+        {% csrf_token %} 
+        <div id="form_non_errors"></div>
+        <div id="fieldWrapper">
+            <div id="form_errors">{{ form.username.errors }}</div>
+            <div id="label"><label for="id_username">Username:</label></div>
+            <div id="input">{{ form.username }}</div>
+        </div>
+        <br/>
+        <div id="fieldWrapper">
+            <div id="form_errors">{{ form.password.errors }}</div>
+            <div id="label"><label for="id_email">Password:</label></div>
+            <div id="input">{{ form.password }}</div>
+        </div>
+        <div id="submit_form"><input class="btn" type="submit" value="{% trans 'Log in' %}" /></div> 
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <div id="reset"><a href="/auth/password_reset/">{% trans "Lost Password" %}</a></div>
+</div>
+
+{% endblock %}

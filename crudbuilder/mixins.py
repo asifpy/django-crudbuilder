@@ -29,7 +29,30 @@ class LoginRequiredMixin(object):
             request, *args, **kwargs)
 
 
-class CrudBuilderMixin(LoginRequiredMixin):
+class PermissionRequiredMixin(object):
+    """
+    View mixin which verifies that the logged in user has the specified
+    permission.
+    """
+    def check_permissions(self, request):
+        perms = self.permission_required
+        result = request.user.has_perm(perms) if perms else True
+        return result
+
+    def dispatch(self, request, *args, **kwargs):
+        has_permission = self.check_permissions(request)
+
+        if settings.PERMISSION_REQUIRED_FOR_CRUD and not has_permission:
+            return redirect_to_login(
+                request.get_full_path(),
+                settings.LOGIN_URL,
+                REDIRECT_FIELD_NAME)
+
+        return super(PermissionRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
+
+
+class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
     """
     - Mixin to provide additional context data for the templates
     - app_label : return app_label for CRUD model

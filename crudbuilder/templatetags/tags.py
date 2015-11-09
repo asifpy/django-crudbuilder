@@ -1,9 +1,21 @@
 from django import template
 from itertools import chain
+from django.template.defaultfilters import stringfilter
 from collections import namedtuple
 
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
+
+
+@register.filter
+@stringfilter
+def undertospaced(value):
+    return value.replace("_", " ").title()
+
+
+@register.filter
+def get_value(obj, field):
+    return getattr(obj, field)
 
 
 @register.filter

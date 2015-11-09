@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block main_content %}
+
+<div class="reg_forms">
+
+	<form action="." method="post">
+
+    	{{ form.non_field_errors }}
+    	
+    	
+    	<div id="fieldWrapper">
+
+				<div id="form_errors">
+		
+		        	 {{ form.first_name.errors }}
+        
+       			</div>
+        
+		        <div id="label">
+
+        			<label for="id_username">First Name:</label>
+
+    			</div>
+       
+				<div id="input">
+     				{{ form.first_name }}
+				</div>
+
+    </div>
+    
+    <br/>
+    
+    <div id="fieldWrapper">
+
+				<div id="form_errors">
+		
+		        	 {{ form.last_name.errors }}
+        
+       			</div>
+        
+		        <div id="label">
+
+        			<label for="id_username">Last Name:</label>
+
+    			</div>
+       
+				<div id="input">
+     				{{ form.last_name }}
+				</div>
+
+    </div>
+    
+    	
+    	<br/>
+    	
+    	
+
+   			<div id="fieldWrapper">
+
+				<div id="form_errors">
+		
+		        	 {{ form.username.errors }}
+        
+       			</div>
+        
+		        <div id="label">
+
+        			<label for="id_username">Username:</label>
+
+    			</div>
+       
+				<div id="input">
+     				{{ form.username }}
+				</div>
+
+    		</div>
+  
+<br/>
+
+	
+    
+    
+
+    		<div id="fieldWrapper">
+    
+   			 	<div id="form_errors">
+
+       				 {{ form.email.errors }}
+       				 
+				</div>
+
+				<div id="label">
+				
+       				 <label for="id_email">Email:</label>
+ 
+ 				</div>
+ 
+ 				<div id="input">
+ 
+ 				     {{ form.email }}
+ 				     
+				</div>
+
+
+</div>
+    
+    
+<br/>
+
+    <div id="fieldWrapper">
+    
+   		 <div id="form_errors">
+
+        {{ form.password1.errors }}
+        
+        </div>
+        
+        <div id="label">
+
+        <label for="id_password1"> Password:</label>
+
+ 		</div>
+ 		
+ 		 <div id="input">
+        {{ form.password1 }}
+</div>
+
+    </div>
+<br/>
+
+    <div id="fieldWrapper">
+    
+		<div id="form_errors">
+		
+        {{ form.password2.errors }}
+        
+        </div>
+
+<div id="pswd_again">
+
+        <label for="pasword2"><p>Password: (again)</p></label>
+</div>
+
+<div id="input">
+        {{ form.password2 }}
+</div>
+    </div>
+
+<br/>
+<div id="submit_form">
+
+    <p><input type="submit" value="submit" /></p>
+    
+</div>     
+</form>
+
+</div>
+{% endblock %}

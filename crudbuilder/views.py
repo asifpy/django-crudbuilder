@@ -55,6 +55,7 @@ class ViewBuilder(BaseBuilder):
             template_name='object_list.html',
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
+            permission_required=self.view_permission('list'),
             table_pagination=self.tables2_pagination or 10
             )
 
@@ -72,6 +73,7 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form(),
             model=self.get_model_class,
             template_name='object_create.html',
+            permission_required=self.view_permission('create'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
@@ -83,7 +85,8 @@ class ViewBuilder(BaseBuilder):
         name = model_class_form(self.model + 'DetailView')
         detail_args = dict(
             model=self.get_model_class,
-            template_name='object_detail.html'
+            template_name='object_detail.html',
+            permission_required=self.view_permission('detail')
             )
 
         detail_class = type(name, (CrudBuilderMixin, DetailView), detail_args)
@@ -96,6 +99,7 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form(),
             model=self.get_model_class,
             template_name='object_update.html',
+            permission_required=self.view_permission('update'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
@@ -112,10 +116,10 @@ class ViewBuilder(BaseBuilder):
         delete_args = dict(
             model=self.get_model_class,
             template_name='object_delete.html',
+            permission_required=self.view_permission('delete'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
         delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
         self.classes[name] = delete_class
         return delete_class
-
