@@ -12,6 +12,7 @@ Features:
 - Allows custom forms/tables as additional arguments
 - Context provides additional template variables APP_LABEL and MODEL for all CRUD templates
 - Enable/disable login required option for CRUD views
+- Enable/disable permission required option for CRUD views
 - All the generated views/tables/forms/url are extendable.
 
 Installation
@@ -31,6 +32,7 @@ Usage
   }
   
   LOGIN_REQUIRED_FOR_CRUD = True/False
+  PERMISSION_REQUIRED_FOR_CRUD = True/False
   ```
 
 2. Create models
@@ -43,12 +45,17 @@ class Person(models.Model):
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 20 # default is 10
-    #modelform_excludes = ['name']
+    modelform_excludes = ['created_by']
+    # permission_required = {
+    #     'list': 'example.permission1',
+    #     'create': 'example.permission2'
+    # }
 
     # model fields
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -70,7 +77,6 @@ builder = UrlBuilder('yourappname', 'yourmodelname')
 urlpatterns += builder.urls
 ``` 
 
-
 4. Now you can access the below CRUD URLS:
 ``` 
 - http://127.0.0.1:8000/yourappname/yourmodelname
@@ -79,6 +85,40 @@ urlpatterns += builder.urls
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/update/
 - http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
 ```
+
+LOGIN REQUIRED
+--------------
+To enable login required for all CRUD views, add the following to settings file
+
+``` LOGIN_REQUIRED_FOR_CRUD = True```
+
+
+PERMISSION REQUIRED
+-------------------
+To enable permission required for all CRUD views, add the following to settings file
+
+``` PERMISSION_REQUIRED_FOR_CRUD = True```
+
+By enabling the above flag, crudbuilder by default checks for following permissions:
+
+``` 
+- For ListView   : <your app_name>.<your model>_list
+- For CreateView : <your app_name>.<your model>_create
+- For DetailView : <your app_name>.<your model>_detail
+- For UpdateView : <your app_name>.<your model>_update
+- For DeleteView : <your app_name>.<your model>_delete
+``` 
+
+If you want to add your own permissions, then define your own permission required dictionary exlicitly on the model.
+``` 
+permission_required = {
+    'list'  : 'example.permission1',
+    'create': 'example.permission2'
+    'detail': 'example.permission3',
+    'update': 'example.permission4',
+    'delete': 'example.permission5',
+    }
+``` 
 
 EXTRA TEMPLATE VARIABLES
 ------------------------
