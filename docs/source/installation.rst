@@ -68,8 +68,4 @@ The above will generate following URL's::
     http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
 
 
-.. _jQuery plugin: https://github.com/thornomad/django-hitcount/blob/master/hitcount/static/hitcount/jquery.postcsrf.js
-
 .. _example project: https://github.com/asifpy/django-crudbuilder/tree/master/example
-
-.. _views: https://github.com/thornomad/django-hitcount/blob/master/hitcount/views.py

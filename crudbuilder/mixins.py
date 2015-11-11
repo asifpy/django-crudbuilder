@@ -21,7 +21,9 @@ class LoginRequiredMixin(object):
             self.redirect_field_name)
 
     def dispatch(self, request, *args, **kwargs):
-        if settings.LOGIN_REQUIRED_FOR_CRUD:
+        login_required = getattr(settings, 'LOGIN_REQUIRED_FOR_CRUD', False)
+
+        if login_required:
             if not request.user.is_authenticated():
                 return self.handle_login_required(request)
 
@@ -41,8 +43,10 @@ class PermissionRequiredMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         has_permission = self.check_permissions(request)
+        permission_required = getattr(
+            settings, 'PERMISSION_REQUIRED_FOR_CRUD', False)
 
-        if settings.PERMISSION_REQUIRED_FOR_CRUD and not has_permission:
+        if permission_required and not has_permission:
             return redirect_to_login(
                 request.get_full_path(),
                 settings.LOGIN_URL,
