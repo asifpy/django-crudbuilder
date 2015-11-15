@@ -68,4 +68,18 @@ The above will generate following URL's::
     http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
 
 
+CRUD Model Attributes
+---------------------
+
+- **search_fields** -- Search fields for list view
+- **tables2_fields** -- Fields which will be used in django-tables2 fields attribute (in list view)
+- **tables2_css_class** -- CSS class for list view table (for django-tables2)
+- **tables2_pagination** -- By default crudbuilder will set pagination to 10, you can oveeride this value by setting this attribute
+- **modelform_excludes** -- Exclude fields for model form
+- **permission_required** -- By default crudbuilder will generate crud permissions, if you want to define your own permissions then add permission_required dictionary on the model. For more details on permission, you can check :doc:`custom permission </settings>`
+
+Usage of all these attributes you can view in `models of example project`_ on Github.
+
 .. _example project: https://github.com/asifpy/django-crudbuilder/tree/master/example
+.. _models of example project: https://github.com/asifpy/django-crudbuilder/blob/master/example/example/models.py
+

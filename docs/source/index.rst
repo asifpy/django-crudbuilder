@@ -17,10 +17,8 @@ Contents:
 
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+Issues
+
+Use the GitHub issue tracker for django-crudbuilder to submit bugs, issues, and feature requests.
 
