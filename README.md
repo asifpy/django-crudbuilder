@@ -5,6 +5,11 @@
 
 Generic CRUD implementation in Django which uses django tables2 to list objects.
 
+Documentation
+-------------
+
+https://django-crudbuilder.readthedocs.org/en/latest/index.html
+
 Features:
 ---------
 - Generates class based views for CRUD
