@@ -12,6 +12,7 @@ Features
 - Enable/disable login required option for CRUD views
 - Enable/disable permission required option for CRUD views
 - All the generated views/tables/forms/url are extendable.
+- post_create and post_update signals to handle specific actions in Create and Update views
 
 
 Requirements and Compatibility

@@ -79,7 +79,6 @@ class CreateUpdateViewMixin(CrudBuilderMixin):
 
     @property
     def get_actual_signal(self):
-        print self.object
         if self.object:
             return post_update_signal
         else:
