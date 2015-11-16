@@ -8,7 +8,11 @@ from django.views.generic import(
 )
 from django_tables2 import SingleTableView
 
-from crudbuilder.mixins import CrudBuilderMixin, BaseListViewMixin
+from crudbuilder.mixins import(
+    CrudBuilderMixin,
+    BaseListViewMixin,
+    CreateUpdateViewMixin
+)
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
 from crudbuilder.text import model_class_form, plural
@@ -77,7 +81,7 @@ class ViewBuilder(BaseBuilder):
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        create_class = type(name, (CrudBuilderMixin, CreateView), create_args)
+        create_class = type(name, (CreateUpdateViewMixin, CreateView), create_args)
         self.classes[name] = create_class
         return create_class
 
@@ -105,7 +109,7 @@ class ViewBuilder(BaseBuilder):
 
         update_class = type(
             name,
-            (CrudBuilderMixin, UpdateView),
+            (CreateUpdateViewMixin, UpdateView),
             update_args
             )
         self.classes[name] = update_class

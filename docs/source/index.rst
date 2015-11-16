@@ -7,6 +7,7 @@ Welcome to django-crudbuilder's documentation!
 ==============================================
 
 Contents:
+---------
 
 .. toctree::
    :maxdepth: 2
@@ -14,11 +15,14 @@ Contents:
    overview
    installation
    settings
+   templates
+   signals
 
 
 
 
 Issues
+------
 
 Use the GitHub issue tracker for django-crudbuilder to submit bugs, issues, and feature requests.
 

@@ -5,6 +5,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.conf import settings
 
 from crudbuilder.text import mixedToUnder, plural
+from crudbuilder.signals import post_update_signal, post_create_signal
 
 
 class LoginRequiredMixin(object):
@@ -71,6 +72,25 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['actual_model_name'] = mixedToUnder(model.__name__)
         context['pluralized_model_name'] = plural(model.__name__.lower())
         return context
+
+
+class CreateUpdateViewMixin(CrudBuilderMixin):
+    """Common form_valid() method for both Create and Update views"""
+
+    @property
+    def get_actual_signal(self):
+        print self.object
+        if self.object:
+            return post_update_signal
+        else:
+            return post_create_signal
+
+    def form_valid(self, form):
+        signal = self.get_actual_signal
+        instance = form.save(commit=False)
+        signal.send(sender=self.model, request=self.request, instance=instance)
+        instance.save()
+        return super(CreateUpdateViewMixin, self).form_valid(form)
 
 
 class BaseListViewMixin(CrudBuilderMixin):

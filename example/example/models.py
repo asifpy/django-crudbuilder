@@ -11,7 +11,7 @@ class Person(models.Model):
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 20  # default is 10
-    modelform_excludes = ['created_by']
+    modelform_excludes = ['created_by', 'updated_by']
     # permission_required = {
     #     'list': 'example.person_list',
     #     'create': 'example.person_create'
@@ -21,7 +21,16 @@ class Person(models.Model):
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, blank=True, null=True)
+    created_by = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        related_name='creators')
+    updated_by = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        related_name='updators')
 
     def __unicode__(self):
         return self.name

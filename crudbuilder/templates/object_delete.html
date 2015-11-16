@@ -9,11 +9,11 @@
 
 
 <div id="title">
-	<h3>Delete {{object|get_model_for_instance}}</h3>
+	<h3>Delete {{actual_model_name}}</h3>
 </div>
 
 <h4>Are you sure?</h4>
-Are you sure you want to delete the selected {{object|get_model_for_instance|undertospaced}}?
+Are you sure you want to delete the selected {{actual_model_name}}?
 {{ object}}
 
 <form action="." method="post">{% csrf_token %}
