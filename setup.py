@@ -1,12 +1,13 @@
 import os
 from setuptools import setup
+import crudbuilder
 
 # Allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-crudbuilder',
-    version='0.0.9',
+    version=crudbuilder.VERSION,
     packages=['crudbuilder'],
     include_package_data=True,
     license='BSD License',
