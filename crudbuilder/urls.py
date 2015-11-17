@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.views import ViewBuilder
-from crudbuilder import text
+from crudbuilder import helpers
 
 
 class UrlBuilder(BaseBuilder):
@@ -15,7 +15,7 @@ class UrlBuilder(BaseBuilder):
     def generate_urls(self):
         urls = []
 
-        pluralized = text.plural(self.model)
+        pluralized = helpers.plural(self.model)
 
         list_view = self.viewbuilder.generate_list_view()
         update_view = self.viewbuilder.generate_update_view()

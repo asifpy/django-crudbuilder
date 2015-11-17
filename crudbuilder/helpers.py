@@ -3,6 +3,8 @@ import string
 
 __all__ = ['plural', 'mixedToUnder', 'capword', 'lowerword', 'underToMixed']
 
+# http://code.activestate.com/recipes/82102-smart-pluralisation-english/
+
 
 def plural(text):
     """
@@ -68,6 +70,7 @@ def plural(text):
     return result
 
 
+# http://www.sqlobject.org/sqlobject/styles.py.html
 class Style(object):
 
     """

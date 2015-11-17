@@ -2,7 +2,7 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 from crudbuilder.abstract import BaseBuilder
-from crudbuilder.text import model_class_form, plural
+from crudbuilder.helpers import model_class_form, plural
 
 
 class TableBuilder(BaseBuilder):
