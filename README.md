@@ -45,6 +45,7 @@ Usage
   ``` 
   class Person(models.Model):
       """ an actual singular human being """
+      
       name = models.CharField(blank=True, max_length=100)
       email = models.EmailField()
       created_at = models.DateTimeField(auto_now=True)
@@ -75,10 +76,6 @@ Usage
 4. Open yourapp/urls.py and add the following
   ```
   urlpatterns = [
-    # Examples:
-    # url(r'^$', 'example.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^crud/',  include('crudbuilder.urls')),
     ]
