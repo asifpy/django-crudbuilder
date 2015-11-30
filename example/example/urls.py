@@ -1,6 +1,5 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-#from crudbuilder.urls import UrlBuilder
 
 urlpatterns = [
     # Examples:
@@ -11,9 +10,3 @@ urlpatterns = [
     url(r'^auth/',  include('django.contrib.auth.urls')),
     url(r'^crud/',  include('crudbuilder.urls')),
     ]
-
-
-# builder = UrlBuilder('example', 'person')
-
-# print builder.urls
-# urlpatterns += builder.urls

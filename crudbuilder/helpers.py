@@ -278,7 +278,7 @@ def underToAllCaps(value):
     return ' '.join(map(lambda x: x.title(), value.split('_')))
 
 
-def import_moderator(app):
+def import_crud(app):
     '''
     Import moderator module and register all models it contains with moderation
     '''
@@ -307,7 +307,7 @@ def auto_discover():
     from django.conf import settings
 
     for app in settings.INSTALLED_APPS:
-        import_moderator(app)
+        import_crud(app)
 
 
 if __name__ == '__main__':
