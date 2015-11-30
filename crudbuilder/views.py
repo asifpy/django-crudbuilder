@@ -42,7 +42,7 @@ class ViewBuilder(BaseBuilder):
         if self.custom_table2:
             return self.custom_table2
         else:
-            table_builder = TableBuilder(self.app, self.model)
+            table_builder = TableBuilder(self.app, self.model, self.crud)
             return table_builder.generate_table()
 
     def generate_modelform(self):
@@ -59,6 +59,7 @@ class ViewBuilder(BaseBuilder):
             template_name='object_list.html',
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
+            crud=self.crud,
             permission_required=self.view_permission('list'),
             table_pagination=self.tables2_pagination or 10
             )

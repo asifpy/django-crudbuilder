@@ -4,7 +4,7 @@
 
 {% block main_content %}
 {% block actions %}
-    <a class="btn" href="/{{app_label}}/{{pluralized_model_name}}/create/"><i class="icon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+	<a class="btn" href="{% url app_label|add:'-'|add:actual_model_name|add:'-create' %}"><i class="icon-plus-sign"></i> Add {{actual_model_name|title}}</a>
 {% endblock %}
 <hr/>
 

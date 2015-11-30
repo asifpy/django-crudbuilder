@@ -1,45 +1,43 @@
 
 from django.conf.urls import url
 
-from crudbuilder.abstract import BaseBuilder
+import crudbuilder
 from crudbuilder.views import ViewBuilder
 from crudbuilder import helpers
+helpers.auto_discover()
 
+urlpatterns = []
 
-class UrlBuilder(BaseBuilder):
-    def __init__(self, *args, **kwargs):
-        super(UrlBuilder, self).__init__(*args, **kwargs)
-        self.viewbuilder = ViewBuilder(*args, **kwargs)
-        self.urls = self.generate_urls()
+for app_model, base_crud in crudbuilder.registry.iteritems():
+    app, model = app_model.split('-')
+    viewbuilder = ViewBuilder(app, model, base_crud)
 
-    def generate_urls(self):
-        urls = []
+    urls = []
+    pluralized = helpers.plural(model)
 
-        pluralized = helpers.plural(self.model)
+    list_view = viewbuilder.generate_list_view()
+    update_view = viewbuilder.generate_update_view()
+    detail_view = viewbuilder.generate_detail_view()
+    create_view = viewbuilder.generate_create_view()
+    delete_view = viewbuilder.generate_delete_view()
 
-        list_view = self.viewbuilder.generate_list_view()
-        update_view = self.viewbuilder.generate_update_view()
-        detail_view = self.viewbuilder.generate_detail_view()
-        create_view = self.viewbuilder.generate_create_view()
-        delete_view = self.viewbuilder.generate_delete_view()
-
-        entries = [
-            (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
-            (r'^{}/{}/(?P<pk>\d+)/$', detail_view.as_view(), '{}-{}-detail'),
-            (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<pk>\d+)/update/$',
-                update_view.as_view(),
-                '{}-{}-update'),
-            (r'^{}/{}/(?P<pk>\d+)/delete/$',
-                delete_view.as_view(),
-                '{}-{}-delete'),
+    entries = [
+        (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
+        (r'^{}/{}/(?P<pk>\d+)/$', detail_view.as_view(), '{}-{}-detail'),
+        (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
+        (r'^{}/{}/(?P<pk>\d+)/update/$',
+            update_view.as_view(),
+            '{}-{}-update'),
+        (r'^{}/{}/(?P<pk>\d+)/delete/$',
+            delete_view.as_view(),
+            '{}-{}-delete'),
         ]
 
-        for entry in entries:
-            address = entry[0].format(self.app, pluralized)
-            url_name = entry[2].format(self.app, self.model)
+    for entry in entries:
+        address = entry[0].format(app, pluralized)
+        url_name = entry[2].format(app, model)
 
-            urls.append(
-                url(address, entry[1], name=url_name),
-            )
-        return urls
+        urls.append(
+            url(address, entry[1], name=url_name),
+        )
+    urlpatterns += urls

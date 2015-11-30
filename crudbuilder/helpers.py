@@ -1,6 +1,8 @@
 import re
 import string
 
+from crudbuilder.exceptions import CrudModuleNotExit
+
 __all__ = ['plural', 'mixedToUnder', 'capword', 'lowerword', 'underToMixed']
 
 # http://code.activestate.com/recipes/82102-smart-pluralisation-english/
@@ -274,6 +276,38 @@ def underToAllCaps(value):
     'Foo Bar Baz'
     """
     return ' '.join(map(lambda x: x.title(), value.split('_')))
+
+
+def import_moderator(app):
+    '''
+    Import moderator module and register all models it contains with moderation
+    '''
+    from django.utils.importlib import import_module
+    import imp
+
+    try:
+        app_path = import_module(app).__path__
+    except AttributeError:
+        return None
+
+    try:
+        imp.find_module('crud', app_path)
+    except ImportError:
+        return None
+
+    module = import_module("%s.crud" % app)
+
+    return module
+
+
+def auto_discover():
+    '''
+    Auto register all apps that have module moderator with moderation
+    '''
+    from django.conf import settings
+
+    for app in settings.INSTALLED_APPS:
+        import_moderator(app)
 
 
 if __name__ == '__main__':

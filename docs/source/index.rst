@@ -21,8 +21,8 @@ Contents:
 
 
 
-Issues
-------
+Issues:
+-------
 
 Use the GitHub issue tracker for django-crudbuilder to submit bugs, issues, and feature requests.
 

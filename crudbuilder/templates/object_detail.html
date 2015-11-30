@@ -4,8 +4,8 @@
 
 {% block main_content %}
 	{% block actions %}
-		<a class="btn" href="/{{app_label}}/{{pluralized_model_name}}/{{object.id}}/update"><i class="icon-edit"></i>Update</a>
-		<a class="btn" href="/{{app_label}}/{{pluralized_model_name}}/{{object.id}}/delete/"><i class="icon-remove-sign"></i>Delete</a>
+		<a class="btn" href="{% url app_label|add:'-'|add:actual_model_name|add:'-update' object.id %}"><i class="icon-edit"></i>Update</a>
+		<a class="btn" href="{% url app_label|add:'-'|add:actual_model_name|add:'-delete' object.id %}"><i class="icon-remove-sign"></i>Delete</a>
 	{% endblock %}
 <hr/>
 

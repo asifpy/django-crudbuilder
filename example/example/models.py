@@ -5,18 +5,6 @@ from django.contrib.auth.models import User
 class Person(models.Model):
 
     """ an actual singular human being """
-
-    # for crudbuilder
-    search_feilds = ['name']
-    tables2_fields = ('name', 'email')
-    tables2_css_class = "table table-bordered table-condensed"
-    tables2_pagination = 20  # default is 10
-    modelform_excludes = ['created_by', 'updated_by']
-    # permission_required = {
-    #     'list': 'example.person_list',
-    #     'create': 'example.person_create'
-    # }
-
     # model fields
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
@@ -35,6 +23,13 @@ class Person(models.Model):
     def __unicode__(self):
         return self.name
 
-    @property
-    def p_name(self):
-        return self.name
+
+class PersonEmployment(models.Model):
+    year = models.IntegerField()
+    salary = models.FloatField()
+    person = models.ForeignKey(
+        Person,
+        blank=True,
+        null=True,
+        related_name='employments')
+    medical_allowance = models.BooleanField(default=False)

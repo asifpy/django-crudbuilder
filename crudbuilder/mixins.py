@@ -69,7 +69,7 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context = super(CrudBuilderMixin, self).get_context_data(**kwargs)
         model = context['view'].model
         context['app_label'] = model._meta.app_label
-        context['actual_model_name'] = mixedToUnder(model.__name__)
+        context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
         return context
 
@@ -105,7 +105,7 @@ class BaseListViewMixin(CrudBuilderMixin):
             q_list = [
                 Q(
                     ('{}__icontains'.format(field), search)
-                    ) for field in self.model.search_feilds
+                    ) for field in self.crud.search_feilds
                 ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
