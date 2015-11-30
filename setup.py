@@ -17,6 +17,7 @@ setup(
     author_email='saluasif@gmail.com',
     install_requires=[
         'django_tables2>=1.0.4',
+        'six>=1.10.0'
     ],
     classifiers=[
         'Environment :: Web Environment',
