@@ -30,7 +30,7 @@ Usage
 -----
 
 1. Add "crudbuilder" to INSTALLED_APPS:
- ``` 
+  ``` 
   INSTALLED_APPS = {
     ...
     'django_tables2',
@@ -41,56 +41,57 @@ Usage
   PERMISSION_REQUIRED_FOR_CRUD = True/False
   ```
 
-2. Create models
-``` 
-class Person(models.Model):
-    """ an actual singular human being """
-    
-    # for crudbuilder
-    search_feilds = ['name']
-    tables2_fields = ('name', 'email')
-    tables2_css_class = "table table-bordered table-condensed"
-    tables2_pagination = 20 # default is 10
-    modelform_excludes = ['created_by']
-    # permission_required = {
-    #     'list': 'example.permission1',
-    #     'create': 'example.permission2'
-    # }
+2. Create models in yourapp/models.py
+  ``` 
+  class Person(models.Model):
+      """ an actual singular human being """
+      name = models.CharField(blank=True, max_length=100)
+      email = models.EmailField()
+      created_at = models.DateTimeField(auto_now=True)
+      created_by = models.ForeignKey(User, blank=True, null=True)
+      
+      def __unicode__(self):
+          return self.name
+  ``` 
 
-    # model fields
-    name = models.CharField(blank=True, max_length=100)
-    email = models.EmailField()
-    created_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, blank=True, null=True)
+3. Create CRUD for Person model in yourapp/crud.py
+  ```
+  from crudbuilder.abstract import BaseCrudBuilder
+  from yourapp.models import Person
 
-    def __unicode__(self):
-        return self.name
-``` 
+  class PersonCrud(BaseCrudBuilder):
+      model = Person
+      search_feilds = ['name']
+      tables2_fields = ('name', 'email')
+      tables2_css_class = "table table-bordered table-condensed"
+      tables2_pagination = 20  # default is 10
+      modelform_excludes = ['created_by', 'updated_by']
+      # permission_required = {
+      #     'list': 'example.person_list',
+      #     'create': 'example.person_create'
+      # }
+  ```
 
-3. Open urls.py and add the following
-``` 
-from crudbuilder.urls import UrlBuilder
-
-urlpatterns = [
+4. Open yourapp/urls.py and add the following
+  ```
+  urlpatterns = [
     # Examples:
     # url(r'^$', 'example.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-]
+    url(r'^crud/',  include('crudbuilder.urls')),
+    ]
+  ``` 
 
-builder = UrlBuilder('yourappname', 'yourmodelname')
-urlpatterns += builder.urls
-``` 
-
-4. Now you can access the below CRUD URLS:
-``` 
-- http://127.0.0.1:8000/yourappname/yourmodelname
-- http://127.0.0.1:8000/yourappname/yourmodelname/create/
-- http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/detail/
-- http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/update/
-- http://127.0.0.1:8000/yourappname/yourmodelname/<pk>/delete/
-```
+5. Now you can access the below CRUD URLS:
+  ``` 
+  - http://127.0.0.1:8000/crud/yourappname/yourmodelname
+  - http://127.0.0.1:8000/crud/yourappname/yourmodelname/create/
+  - http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/detail/
+  - http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/update/
+  - http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/delete/
+  ```
 
 LOGIN REQUIRED
 --------------
@@ -115,7 +116,7 @@ By enabling the above flag, crudbuilder by default checks for following permissi
 - For DeleteView : <your app_name>.<your model>_delete
 ``` 
 
-If you want to add your own permissions, then define your own permission required dictionary exlicitly on the model.
+If you want to add your own permissions, then define your own permission required dictionary exlicitly in CRUD class.
 ``` 
 permission_required = {
     'list'  : 'example.permission1',
@@ -144,7 +145,7 @@ All the generated views/tables/forms/url are extendable.
 # GENERATE CRUD CLASSES
 ------------------------
 from crudbuilder.views import ViewBuilder
-builder = ViewBuilder('example', 'person')
+builder = ViewBuilder('example', 'person', crudclass)
 builder.generate_crud()
 builder.classes
 
@@ -162,17 +163,10 @@ builder = ViewBuilder('example', 'person')
 builder.generate_crud()
 PersonListView = builder.classes['PersonListView']
 class CustomPersonListView(PersonListView):
-		def get_context_data(self, **kwargs):
-			context = super(CustomPersonListView, self).get_context_data(**kwargs)
-			context['your_template_variable'] = 'Your new template variable'
-			return context
-
-PersonCreateView = builder.classes['PersonCreateView']
-class CustomPersonCreateView(PersonCreateView):
-		def form_valid(self, form):
-			object = form.save(commit=False)
-			object.user = self.request.user
-			return HttpResponseRedirect(reverse('url-name'))
+    def get_context_data(self, **kwargs):
+        context = super(CustomPersonListView, self).get_context_data(**kwargs)
+        context['your_template_variable'] = 'Your new template variable'
+        return context
 
 # OVERRIDE AUTO GENERATED TABLE (from django_tables2)
 -----------------------------------------------------
@@ -180,6 +174,6 @@ from crudbuilder.tables import TableBuilder
 builder = TableBuilder('example', 'person')
 PersonTable = builder.generate_table()
 class CustomPersonTable(PersonTable):
-		# add your custom implementation here
+    # add your custom implementation here
 ```
 
