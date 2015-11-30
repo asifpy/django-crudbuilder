@@ -24,7 +24,7 @@ By enabling the above flag, by default crudbuilder checks for following permissi
 - For UpdateView : <your app_name>.<your model>_update
 - For DeleteView : <your app_name>.<your model>_delete
 
-If you want to add your own permissions, then define your own permission required dictionary exlicitly on the model.::
+If you want to add your own permissions, then define your own permission required dictionary exlicitly in CRUD class.::
 
 	permission_required = {
     	'list'  : 'example.permission1',
