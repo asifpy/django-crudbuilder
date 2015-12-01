@@ -24,6 +24,7 @@ class BaseBuilder(object):
         self.tables2_css_class = self._has_crud_attr('tables2_css_class')
         self.tables2_pagination = self._has_crud_attr('tables2_pagination')
         self.permission_required = self._has_crud_attr('permission_required')
+        self.custom_templates = self._has_crud_attr('custom_templates')
 
     @property
     def get_model_class(self):

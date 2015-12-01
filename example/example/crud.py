@@ -10,6 +10,11 @@ class PersonCrud(BaseCrudBuilder):
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 20  # default is 10
     modelform_excludes = ['created_by', 'updated_by']
+
+    # custom_templates = {
+    #     'list': 'yourtemplates/template.html'
+    # }
+
     # permission_required = {
     #     'list': 'example.person_list',
     #     'create': 'example.person_create'

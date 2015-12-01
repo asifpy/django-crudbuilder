@@ -46,17 +46,31 @@ class ViewBuilder(BaseBuilder):
             return table_builder.generate_table()
 
     def generate_modelform(self):
+        """Generate modelform from Django modelform_factory"""
+
         model_class = self.get_model_class
         excludes = self.modelform_excludes if self.modelform_excludes else []
         _ObjectForm = modelform_factory(model_class, exclude=excludes)
         return _ObjectForm
 
+    def get_template(self, tname):
+        """
+        - Get custom template from CRUD class, if it is defined in it
+        - No custom template in CRUD class, then use the default template
+        """
+        if self.custom_templates and self.custom_templates.get(tname, None):
+            return self.custom_templates.get(tname)
+        else:
+            return 'object_{}.html'.format(tname)
+
     def generate_list_view(self):
+        """Generate class based view for ListView"""
+
         name = model_class_form(self.model + 'ListView')
         list_args = dict(
             model=self.get_model_class,
             context_object_name=plural(self.model),
-            template_name='object_list.html',
+            template_name=self.get_template('list'),
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
             crud=self.crud,
@@ -73,11 +87,13 @@ class ViewBuilder(BaseBuilder):
         return list_class
 
     def generate_create_view(self):
+        """Generate class based view for CreateView"""
+
         name = model_class_form(self.model + 'CreateView')
         create_args = dict(
             form_class=self.get_actual_form(),
             model=self.get_model_class,
-            template_name='object_create.html',
+            template_name=self.get_template('create'),
             permission_required=self.view_permission('create'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
@@ -87,10 +103,12 @@ class ViewBuilder(BaseBuilder):
         return create_class
 
     def generate_detail_view(self):
+        """Generate class based view for DetailView"""
+
         name = model_class_form(self.model + 'DetailView')
         detail_args = dict(
             model=self.get_model_class,
-            template_name='object_detail.html',
+            template_name=self.get_template('detail'),
             permission_required=self.view_permission('detail')
             )
 
@@ -99,11 +117,13 @@ class ViewBuilder(BaseBuilder):
         return detail_class
 
     def generate_update_view(self):
+        """Generate class based view for UpdateView"""
+
         name = model_class_form(self.model + 'UpdateView')
         update_args = dict(
             form_class=self.get_actual_form(),
             model=self.get_model_class,
-            template_name='object_update.html',
+            template_name=self.get_template('update'),
             permission_required=self.view_permission('update'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
@@ -117,10 +137,12 @@ class ViewBuilder(BaseBuilder):
         return update_class
 
     def generate_delete_view(self):
+        """Generate class based view for DeleteView"""
+
         name = model_class_form(self.model + 'DeleteView')
         delete_args = dict(
             model=self.get_model_class,
-            template_name='object_delete.html',
+            template_name=self.get_template('delete'),
             permission_required=self.view_permission('delete'),
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )

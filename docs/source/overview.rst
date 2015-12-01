@@ -13,6 +13,7 @@ Features
 - Enable/disable permission required option for CRUD views
 - All the generated views/tables/forms/url are extendable.
 - post_create and post_update signals to handle specific actions in Create and Update views
+- Add your own templates for List/Create/Detail/Update/Delete views
 
 
 Requirements and Compatibility

@@ -68,9 +68,10 @@ The above will generate following URL's::
     http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/delete/
 
 
-CRUD Model Attributes
+CRUD class Attributes
 ---------------------
 
+- **model** -- Actual model name
 - **search_fields** -- Search fields for list view
 - **tables2_fields** -- Fields which will be used in django-tables2 fields attribute (in list view)
 - **tables2_css_class** -- CSS class for list view table (for django-tables2)
@@ -78,6 +79,7 @@ CRUD Model Attributes
 - **modelform_excludes** -- Exclude fields for model form
 - **custom_modelform** -- Your custom model form
 - **custom_table2** -- Your custom Tables2 class
+- **custom_templates** -- Your own custom templates. For more details on custom templates, you can check check :doc:`custom templates </templates>`
 - **permission_required** -- By default crudbuilder will generate crud permissions, if you want to define your own permissions then add permission_required dictionary on the model. For more details on permission, you can check :doc:`custom permission </settings>`
 
 Usage of all these attributes you can view in `CRUD class of example project`_ on Github.
