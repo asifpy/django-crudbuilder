@@ -3,4 +3,5 @@ build
 dist
 *.egg-info
 example/db.sqlite3
+example/example/migrations*
 .DS_Store
