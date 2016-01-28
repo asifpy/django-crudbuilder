@@ -1,7 +1,16 @@
 import re
 import string
+import imp
 
 from crudbuilder.exceptions import CrudModuleNotExit
+
+try:
+    # Django versions >= 1.9
+    from django.utils.module_loading import import_module
+except ImportError:
+    # Django versions < 1.9
+    from django.utils.importlib import import_module
+
 
 __all__ = ['plural', 'mixedToUnder', 'capword', 'lowerword', 'underToMixed']
 
@@ -282,8 +291,6 @@ def import_crud(app):
     '''
     Import moderator module and register all models it contains with moderation
     '''
-    from django.utils.importlib import import_module
-    import imp
 
     try:
         app_path = import_module(app).__path__
