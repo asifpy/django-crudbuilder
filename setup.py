@@ -5,6 +5,10 @@ import crudbuilder
 # Allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 setup(
     name='django-crudbuilder',
     version=crudbuilder.VERSION,
@@ -15,6 +19,7 @@ setup(
     url='https://github.com/asifpy/django-crudbuilder/archive/master.tar.gz',
     author='Asif Jamadar',
     author_email='saluasif@gmail.com',
+    long_description=read('README.rst'),
     install_requires=[
         'django_tables2>=1.0.4',
         'six>=1.10.0'
