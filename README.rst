@@ -192,7 +192,7 @@ All the generated views/tables/forms/url are extendable.
 	builder.generate_crud()
 	PersonListView = builder.classes['PersonListView']
 	class CustomPersonListView(PersonListView):
-    	def get_context_data(self, **kwargs):
+    	    def get_context_data(self, **kwargs):
         	context = super(CustomPersonListView, self).get_context_data(**kwargs)
         	context['your_template_variable'] = 'Your new template variable'
         	return context
@@ -202,6 +202,6 @@ All the generated views/tables/forms/url are extendable.
 	builder = TableBuilder('example', 'person')
 	PersonTable = builder.generate_table()
 	class CustomPersonTable(PersonTable):
-    	# add your custom implementation here
+    	    # add your custom implementation here
 
 
