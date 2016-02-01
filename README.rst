@@ -174,7 +174,6 @@ All the generated views/tables/forms/url are extendable.
 .. code-block:: python
 	
 	# GENERATE CRUD CLASSES
-	------------------------
 	from crudbuilder.views import ViewBuilder
 	builder = ViewBuilder('example', 'person', crudclass)
 	builder.generate_crud()
@@ -188,7 +187,6 @@ All the generated views/tables/forms/url are extendable.
 	}
 
 	# OVERRIDE AUTO GENERATED VIEWS
-	------------------------------
 	from crudbuilder.views import ViewBuilder
 	builder = ViewBuilder('example', 'person')
 	builder.generate_crud()
@@ -200,7 +198,6 @@ All the generated views/tables/forms/url are extendable.
         	return context
 
 	# OVERRIDE AUTO GENERATED TABLE (from django_tables2)
-	-----------------------------------------------------
 	from crudbuilder.tables import TableBuilder
 	builder = TableBuilder('example', 'person')
 	PersonTable = builder.generate_table()
