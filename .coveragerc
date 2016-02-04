@@ -1,0 +1,12 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+
+source =
+    crudbuilder
+
+
+[report]
+
+[html]
+directory = htmlcov

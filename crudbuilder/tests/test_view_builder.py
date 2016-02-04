@@ -42,6 +42,24 @@ class ViewBuilderTestCase(TestCase):
         tables2_feilds = self.builder.tables2_fields
         self.assertEqual(tables2_feilds,  ('name', 'email'))
 
+    def test_custom_list_view_permission(self):
+        # test custom permission
+        self.builder.permission_required = dict(list='mycustom_list_perm')
+        self.assertEqual(
+            self.builder.view_permission('list'),
+            'mycustom_list_perm')
+
+    def test_default_list_view_permission(self):
+        # test auto generated (default) permission
+        self.assertEqual(
+            self.builder.view_permission('list'),
+            'tests.testmodel_list')
+
+
+
+
+
+
 
 
 
