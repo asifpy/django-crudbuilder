@@ -8,4 +8,4 @@ env:
   - DJANGO_VERSION=1.9.1
 install:
   - pip install -q Django==$DJANGO_VERSION
-  - python setup.py -q instal
+  - python setup.py -q install
