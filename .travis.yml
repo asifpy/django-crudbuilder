@@ -1,7 +1,9 @@
 language: python
 python:
   - "2.7"
-script: python run_tests.py
+script:
+  - python run_tests.py
+  - pylint crudbuilder
 env:
   - DJANGO_VERSION=1.7.8
   - DJANGO_VERSION=1.8.2
