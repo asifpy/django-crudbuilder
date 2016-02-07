@@ -12,7 +12,7 @@ urlpatterns = []
 tables = connection.introspection.table_names()
 
 if tables:
-    for app_model, base_crud in crudbuilder.registry.iteritems():
+    for app_model, base_crud in crudbuilder.registry.items():
         app, model = app_model.split('-')
         viewbuilder = ViewBuilder(app, model, base_crud)
 

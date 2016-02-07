@@ -2,8 +2,6 @@ import re
 import string
 import imp
 
-from crudbuilder.exceptions import CrudModuleNotExit
-
 try:
     # Django versions >= 1.9
     from django.utils.module_loading import import_module
@@ -191,4 +189,4 @@ def auto_discover():
 
 
 if __name__ == '__main__':
-    print plural('activity')
+    print (plural('activity'))
