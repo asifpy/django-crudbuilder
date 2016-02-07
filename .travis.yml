@@ -1,8 +1,11 @@
 language: python
 python:
   - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
 script:
-  - coverage run --source=crudbuilder run_tests.py
+  - coverage run --source=crudbuilder runtests.py
 env:
   - DJANGO_VERSION=1.7.8
   - DJANGO_VERSION=1.8.2
