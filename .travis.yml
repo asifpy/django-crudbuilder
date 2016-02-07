@@ -2,8 +2,7 @@ language: python
 python:
   - "2.7"
 script:
-  - python run_tests.py
-  - pylint crudbuilder
+  - coverage run --source=crudbuilder run_tests.py
 env:
   - DJANGO_VERSION=1.7.8
   - DJANGO_VERSION=1.8.2
@@ -11,3 +10,4 @@ env:
 install:
   - pip install -q Django==$DJANGO_VERSION
   - python setup.py -q install
+  - pip install coveralls
