@@ -1,7 +1,7 @@
 |Build|_ |CodeHealth|_ |pypi|_ |CodeQuality|_
 
-.. |Build| image:: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/badges/build.png?b=master
-.. _Build: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/build-status/master
+.. |Build| image:: https://travis-ci.org/asifpy/django-crudbuilder.svg?branch=master
+.. _Build: https://travis-ci.org/asifpy/django-crudbuilder
 
 .. |CodeHealth| image:: https://landscape.io/github/asifpy/django-crudbuilder/master/landscape.svg?style=flat
 .. _CodeHealth: https://landscape.io/github/asifpy/django-crudbuilder/master
