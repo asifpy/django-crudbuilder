@@ -2,6 +2,7 @@ import os
 import sys
 import django
 from django.conf import settings
+from django.test.utils import get_runner
 
 DJANGO_VERSION = float('.'.join([str(i) for i in django.VERSION[0:2]]))
 DIR_NAME = os.path.dirname(__file__)
@@ -45,7 +46,7 @@ settings.configure(
     TEMPLATES=[
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
+            # 'DIRS': [],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -62,12 +63,10 @@ settings.configure(
 
 django.setup()
 
-failures = None
-if DJANGO_VERSION >= 1.8:
-    from django.test.utils import get_runner
-    TestRunner = get_runner(settings)
-    test_runner = TestRunner()
-    failures = test_runner.run_tests(['crudbuilder', ])
+
+TestRunner = get_runner(settings)
+test_runner = TestRunner()
+failures = test_runner.run_tests(['crudbuilder', ])
 
 if failures:
     sys.exit(bool(failures))
