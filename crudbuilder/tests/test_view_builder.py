@@ -1,7 +1,11 @@
-from django.test import TestCase
-from crudbuilder.tests.crud import TestModelCrud
+from django.test import TestCase, Client
+from django.contrib.auth.models import User
+from django.conf import settings
 
 from crudbuilder.views import ViewBuilder
+from crudbuilder.tests.crud import TestModelCrud
+from crudbuilder.tests.forms import TestModelForm
+from crudbuilder.tests.tables import TestModelTable
 
 
 class ViewBuilderTestCase(TestCase):
@@ -54,6 +58,62 @@ class ViewBuilderTestCase(TestCase):
         self.assertEqual(
             self.builder.view_permission('list'),
             'tests.testmodel_list')
+
+    def test_check_crud_views(self):
+        self.builder.generate_crud()
+        generated_views = [
+            view_type for view_type in self.builder.classes.keys()]
+        expected_views = [
+            'TestmodelCreateView',
+            'TestmodelListView',
+            'TestmodelDetailView',
+            'TestmodelUpdateView',
+            'TestmodelDeleteView'
+        ]
+        self.assertEqual(sorted(generated_views), sorted(expected_views))
+
+
+class ActualViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='asdf',
+            password='asdf3452',
+            email='sa@me.org')
+
+    def client_login(self):
+        self.client.login(
+            username=self.user.username,
+            password='asdf3452'
+        )
+
+    def get_list_view(self):
+        self.client_login()
+        response = self.client.get('/crud/tests/testmodels/')
+        self.assertEqual(200, response.status_code)
+
+    def test_user_not_logged_in(self):
+        response = self.client.get('/crud/tests/testmodels/')
+        self.assertEqual(302, response.status_code)
+
+    def test_user_logged_in(self):
+        self.get_list_view()
+
+    def test_view_with_custom_form(self):
+        TestModelCrud.custom_modelform = TestModelForm
+        self.get_list_view()
+
+    def test_view_with_custom_tables2(self):
+        TestModelCrud.custom_table2 = TestModelTable
+        self.get_list_view()
+
+    def test_view_with_custom_template(self):
+        template = 'custom.html'
+        TestModelCrud.custom_templates = dict(list=template)
+        self.get_list_view()
+
+
+
 
 
 

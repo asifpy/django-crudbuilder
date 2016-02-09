@@ -51,12 +51,12 @@ class MetaCrudRegister(type):
             MetaCrudRegister, cls
             ).__new__(cls, clsname, bases, attrs)
 
-        if hasattr(newclass, 'model'):
+        if bases:
             if newclass.model:
                 crudbuilder.register(newclass.model, newclass)
-        else:
-            msg = "No model defined in {} class".format(newclass)
-            raise NotModelException(msg)
+            else:
+                msg = "No model defined in {} class".format(newclass)
+                raise NotModelException(msg)
         return newclass
 
 

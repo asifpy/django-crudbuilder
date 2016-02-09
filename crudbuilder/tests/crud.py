@@ -1,7 +1,10 @@
 from crudbuilder.abstract import BaseCrudBuilder
 
+from crudbuilder.tests.models import TestModel
+
 
 class TestModelCrud(BaseCrudBuilder):
+    model = TestModel
     search_feilds = ['name']
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
