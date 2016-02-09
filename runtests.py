@@ -36,6 +36,12 @@ settings.configure(
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django.middleware.security.SecurityMiddleware'),
 
+    TEMPLATE_LOADERS=(
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+        'django.template.loaders.eggs.Loader'
+    ),
+
     TEMPLATES=[
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
