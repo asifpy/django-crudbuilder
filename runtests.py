@@ -7,6 +7,10 @@ from django.test.utils import get_runner
 DJANGO_VERSION = float('.'.join([str(i) for i in django.VERSION[0:2]]))
 DIR_NAME = os.path.dirname(__file__)
 
+# path = lambda *ps: os.path.join(os.path.dirname(__file__), *ps)
+# datapath = lambda p: join(dirname(__file__), 'data', p)
+localpath = lambda p: os.path.join(os.path.dirname(__file__), p)
+
 settings.configure(
     DEBUG=True,
     DATABASES={
@@ -34,8 +38,7 @@ settings.configure(
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'django.middleware.security.SecurityMiddleware'),
+        'django.middleware.clickjacking.XFrameOptionsMiddleware'),
 
     TEMPLATE_LOADERS=(
         'django.template.loaders.filesystem.Loader',
@@ -46,7 +49,10 @@ settings.configure(
     TEMPLATES=[
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            # 'DIRS': [],
+            'DIRS': [
+                localpath('templates'),
+                os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\', '/')
+                ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
