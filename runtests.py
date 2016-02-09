@@ -6,9 +6,6 @@ from django.test.utils import get_runner
 
 DJANGO_VERSION = float('.'.join([str(i) for i in django.VERSION[0:2]]))
 DIR_NAME = os.path.dirname(__file__)
-
-# path = lambda *ps: os.path.join(os.path.dirname(__file__), *ps)
-# datapath = lambda p: join(dirname(__file__), 'data', p)
 localpath = lambda p: os.path.join(os.path.dirname(__file__), p)
 
 settings.configure(
@@ -51,7 +48,6 @@ settings.configure(
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
             'DIRS': [
                 localpath('templates'),
-                os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\', '/')
                 ],
             'APP_DIRS': True,
             'OPTIONS': {
@@ -69,6 +65,19 @@ settings.configure(
 
 django.setup()
 
+if DJANGO_VERSION == 1.7:
+    settings.TEMPLATE_CONTEXT_PROCESSORS = (
+        "django.contrib.auth.context_processors.auth",
+        "django.core.context_processors.debug",
+        "django.core.context_processors.i18n",
+        "django.core.context_processors.media",
+        "django.core.context_processors.static",
+        "django.core.context_processors.request",
+        "django.contrib.messages.context_processors.messages")
+
+    settings.TEMPLATE_DIRS = (
+        localpath('templates')
+    )
 
 TestRunner = get_runner(settings)
 test_runner = TestRunner()
