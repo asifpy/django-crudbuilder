@@ -20,7 +20,9 @@ matrix:
       env: DJANGO="Django1.9.2"
 
 install:
-  - pip install "$DJANGO" "coverage==3.7.1" coveralls "mock>=1.0.1"
+  - pip install -q Django==$DJANGO
+  - python setup.py -q install
   - pip install django_tables2
+  - pip install coveralls
 after_success:
   coveralls
