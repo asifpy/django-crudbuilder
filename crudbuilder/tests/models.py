@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 class TestModel(models.Model):
 
-    name = models.CharField(blank=True, max_length=100)
-    email = models.EmailField()
+    name = models.CharField(blank=True, null=True, max_length=100)
+    email = models.EmailField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, blank=True, null=True)

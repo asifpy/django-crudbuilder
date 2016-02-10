@@ -84,7 +84,7 @@ def plural(text):
 _mixedToUnderRE = re.compile(r'[A-Z]+')
 
 
-def mixedToUnder(s):
+def mixedToUnder(s):  # pragma: no cover
     """
     Sample:
         >>> mixedToUnder("FooBarBaz")
@@ -118,7 +118,7 @@ def capword(s):
     return s[0].upper() + s[1:]
 
 
-def lowerword(s):
+def lowerword(s):  # pragma: no cover
     """
     >>> lowerword('Hello')
     'hello'
@@ -150,7 +150,7 @@ def model_class_form(name):
     return capword(underToMixed(name))
 
 
-def underToAllCaps(value):
+def underToAllCaps(value):  # pragma: no cover
     """
     >>> underToAllCaps('foo_bar_baz')
     'Foo Bar Baz'

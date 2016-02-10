@@ -1,4 +1,5 @@
 import operator
+import six
 from django.db.models import Q
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -6,6 +7,9 @@ from django.conf import settings
 
 from crudbuilder.helpers import plural
 from crudbuilder.signals import post_update_signal, post_create_signal
+
+if six.PY3:
+    from functools import reduce
 
 
 class LoginRequiredMixin(object):
