@@ -39,6 +39,11 @@ Features:
 - post_create and post_update signals to handle specific actions in Create and Update views
 - Add your own custom templates for List/Create/Detail/Update/Delete views
 
+Prerequisites
+-------------
+- Django 1.7+
+- Python 2.7+, 3.2+
+- Django Tables2
 
 Installation
 ------------
