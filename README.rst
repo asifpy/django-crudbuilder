@@ -1,4 +1,4 @@
-|Build|_ |CodeHealth|_ |pypi|_ |CodeQuality|_
+|Build|_ |CodeHealth|_ |coverage|_ |pypi|_ |CodeQuality|_
 
 .. |Build| image:: https://travis-ci.org/asifpy/django-crudbuilder.svg?branch=master
 .. _Build: https://travis-ci.org/asifpy/django-crudbuilder
@@ -11,6 +11,9 @@
 
 .. |CodeQuality| image:: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/badges/quality-score.png?b=master
 .. _CodeQuality: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/?branch=master
+
+.. |coverage| image:: https://coveralls.io/repos/github/asifpy/django-crudbuilder/badge.svg?branch=master
+.. _coverage: https://coveralls.io/github/asifpy/django-crudbuilder?branch=master 
 
 ==================
 django-crudbuilder
