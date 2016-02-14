@@ -1,6 +1,10 @@
 from crudbuilder.abstract import BaseCrudBuilder
 from example.models import Person, PersonEmployment
-from example.forms import PersonEmploymentForm
+from example.forms import(
+    PersonEmploymentForm,
+    PersonEmployementCreateForm,
+    PersonEmployementUpdateForm
+)
 
 
 class PersonCrud(BaseCrudBuilder):
@@ -26,5 +30,9 @@ class PersonEmploymentCrud(BaseCrudBuilder):
     tables2_fields = ('year', 'salary', 'medical_allowance')
     search_feilds = ['year', 'person__name']
     tables2_css_class = "table table-bordered table-condensed"
-    custom_modelform = PersonEmploymentForm
+    # custom_modelform = PersonEmploymentForm
     # modelform_excludes = ['person']
+    createupdate_forms = {
+        'create': PersonEmployementCreateForm,
+        'update': PersonEmployementUpdateForm
+    }

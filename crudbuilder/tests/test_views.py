@@ -38,6 +38,7 @@ class ViewTestCase(TestCase):
     def tearDown(self):
         TestModelCrud.custom_table2 = None
         TestModelCrud.custom_modelform = None
+        TestModelCrud.createupdate_forms = None
 
     def test_user_logged_in(self):
         self.get_list_view()
@@ -67,7 +68,6 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(TestModel.objects.count(), 1)
 
-        TestModelCrud.custom_modelform = TestModelForm
         response = self.client.post('/crud/tests/testmodels/1/update/', data)
         self.assertEqual(response.status_code, 302)
 
@@ -87,4 +87,19 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('tests-testmodel-list'))
         self.assertEqual(200, response.status_code)
 
+    def test_separate_createupdateform(self):
+        TestModelCrud.custom_modelform = None
+        TestModelCrud.createupdate_forms = dict(
+            create=TestModelForm,
+            update=TestModelForm)
 
+        self.client_login()
+        data = {'name': 'Test text', 'email': 'sa@me.org'}
+        self.assertEqual(TestModel.objects.count(), 0)
+
+        response = self.client.post('/crud/tests/testmodels/create/', data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(TestModel.objects.count(), 1)
+
+        response = self.client.post('/crud/tests/testmodels/1/update/', data)
+        self.assertEqual(response.status_code, 302)

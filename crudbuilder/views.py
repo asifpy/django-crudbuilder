@@ -32,8 +32,10 @@ class ViewBuilder(BaseBuilder):
         self.generate_update_view()
         self.generate_delete_view()
 
-    def get_actual_form(self):
-        if self.custom_modelform:
+    def get_actual_form(self, view):
+        if self.createupdate_forms and self.createupdate_forms.get(view, None):
+            return self.createupdate_forms.get(view)
+        elif self.custom_modelform:
             return self.custom_modelform
         else:
             return self.generate_modelform()
@@ -91,7 +93,7 @@ class ViewBuilder(BaseBuilder):
 
         name = model_class_form(self.model + 'CreateView')
         create_args = dict(
-            form_class=self.get_actual_form(),
+            form_class=self.get_actual_form('create'),
             model=self.get_model_class,
             template_name=self.get_template('create'),
             permission_required=self.view_permission('create'),
@@ -121,7 +123,7 @@ class ViewBuilder(BaseBuilder):
 
         name = model_class_form(self.model + 'UpdateView')
         update_args = dict(
-            form_class=self.get_actual_form(),
+            form_class=self.get_actual_form('update'),
             model=self.get_model_class,
             template_name=self.get_template('update'),
             permission_required=self.view_permission('update'),

@@ -38,6 +38,7 @@ Features:
 - All the generated views/tables/forms/url are extendable.
 - post_create and post_update signals to handle specific actions in Create and Update views
 - Add your own custom templates for List/Create/Detail/Update/Delete views
+- Separate CREATE and UPDATE forms
 
 Prerequisites
 -------------

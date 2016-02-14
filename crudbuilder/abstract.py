@@ -10,7 +10,7 @@ class BaseBuilder(object):
         app,
         model,
         crud
-        ):
+    ):
 
         self.model = model
         self.app = app
@@ -18,11 +18,14 @@ class BaseBuilder(object):
 
         self.custom_modelform = self._has_crud_attr('custom_modelform')
         self.modelform_excludes = self._has_crud_attr('modelform_excludes')
+        self.createupdate_forms = self._has_crud_attr('createupdate_forms')
+
         # django tables2
         self.custom_table2 = self._has_crud_attr('custom_table2')
         self.tables2_fields = self._has_crud_attr('tables2_fields')
         self.tables2_css_class = self._has_crud_attr('tables2_css_class')
         self.tables2_pagination = self._has_crud_attr('tables2_pagination')
+
         self.permission_required = self._has_crud_attr('permission_required')
         self.custom_templates = self._has_crud_attr('custom_templates')
 
