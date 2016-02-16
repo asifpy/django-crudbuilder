@@ -77,6 +77,7 @@ class ViewBuilder(BaseBuilder):
             context_table_name='table_objects',
             crud=self.crud,
             permission_required=self.view_permission('list'),
+            login_required=self.check_login_required,
             table_pagination=self.tables2_pagination or 10
             )
 
@@ -97,6 +98,7 @@ class ViewBuilder(BaseBuilder):
             model=self.get_model_class,
             template_name=self.get_template('create'),
             permission_required=self.view_permission('create'),
+            login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
@@ -111,6 +113,7 @@ class ViewBuilder(BaseBuilder):
         detail_args = dict(
             model=self.get_model_class,
             template_name=self.get_template('detail'),
+            login_required=self.check_login_required,
             permission_required=self.view_permission('detail')
             )
 
@@ -127,6 +130,7 @@ class ViewBuilder(BaseBuilder):
             model=self.get_model_class,
             template_name=self.get_template('update'),
             permission_required=self.view_permission('update'),
+            login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
@@ -146,6 +150,7 @@ class ViewBuilder(BaseBuilder):
             model=self.get_model_class,
             template_name=self.get_template('delete'),
             permission_required=self.view_permission('delete'),
+            login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 

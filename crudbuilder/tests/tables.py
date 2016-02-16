@@ -6,5 +6,4 @@ class TestModelTable(tables.Table):
 
     class Meta:
         model = TestModel
-        fields = '__all__'
         attrs = {"class": "table table-bordered table-condensed"}

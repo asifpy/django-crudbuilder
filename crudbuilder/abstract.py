@@ -27,6 +27,8 @@ class BaseBuilder(object):
         self.tables2_pagination = self._has_crud_attr('tables2_pagination')
 
         self.permission_required = self._has_crud_attr('permission_required')
+        self.login_required = self._has_crud_attr('login_required')
+
         self.custom_templates = self._has_crud_attr('custom_templates')
 
     @property
@@ -36,16 +38,17 @@ class BaseBuilder(object):
         return c.model_class()
 
     def _has_crud_attr(self, attr):
-        if hasattr(self.crud, attr):
-            return getattr(self.crud, attr)
-        else:
-            return None
+        return getattr(self.crud, attr, None)
 
     def view_permission(self, view_type):
         if self.permission_required:
             return self.permission_required.get(view_type, None)
         else:
             return '{}.{}_{}'.format(self.app, self.model, view_type)
+
+    @property
+    def check_login_required(self):
+        return True if self.login_required else False
 
 
 class MetaCrudRegister(type):

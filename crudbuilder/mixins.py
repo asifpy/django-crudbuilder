@@ -28,7 +28,7 @@ class LoginRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
         login_required = getattr(settings, 'LOGIN_REQUIRED_FOR_CRUD', False)
 
-        if login_required:
+        if login_required or self.login_required:
             if not request.user.is_authenticated():
                 return self.handle_login_required(request)
 
