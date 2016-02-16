@@ -15,6 +15,7 @@ Contents:
    overview
    installation
    settings
+   forms
    templates
    signals
 
