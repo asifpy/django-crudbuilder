@@ -44,7 +44,7 @@ class ViewBuilderTestCase(TestCase):
 
     def test_custom_list_view_permission(self):
         # test custom permission
-        self.builder.permission_required = dict(list='mycustom_list_perm')
+        self.builder.permissions = dict(list='mycustom_list_perm')
         self.assertEqual(
             self.builder.view_permission('list'),
             'mycustom_list_perm')

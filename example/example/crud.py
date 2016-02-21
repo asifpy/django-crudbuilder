@@ -15,12 +15,13 @@ class PersonCrud(BaseCrudBuilder):
     tables2_pagination = 20  # default is 10
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
+    permission_required = True
 
     # custom_templates = {
     #     'list': 'yourtemplates/template.html'
     # }
 
-    # permission_required = {
+    # permissions = {
     #     'list': 'example.person_list',
     #     'create': 'example.person_create'
     # }

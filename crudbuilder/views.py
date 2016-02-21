@@ -76,7 +76,8 @@ class ViewBuilder(BaseBuilder):
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
             crud=self.crud,
-            permission_required=self.view_permission('list'),
+            permissions=self.view_permission('list'),
+            permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             table_pagination=self.tables2_pagination or 10
             )
@@ -97,7 +98,8 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form('create'),
             model=self.get_model_class,
             template_name=self.get_template('create'),
-            permission_required=self.view_permission('create'),
+            permissions=self.view_permission('create'),
+            permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
@@ -114,7 +116,8 @@ class ViewBuilder(BaseBuilder):
             model=self.get_model_class,
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
-            permission_required=self.view_permission('detail')
+            permissions=self.view_permission('detail'),
+            permission_required=self.check_permission_required,
             )
 
         detail_class = type(name, (CrudBuilderMixin, DetailView), detail_args)
@@ -129,7 +132,8 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form('update'),
             model=self.get_model_class,
             template_name=self.get_template('update'),
-            permission_required=self.view_permission('update'),
+            permissions=self.view_permission('update'),
+            permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
@@ -149,7 +153,8 @@ class ViewBuilder(BaseBuilder):
         delete_args = dict(
             model=self.get_model_class,
             template_name=self.get_template('delete'),
-            permission_required=self.view_permission('delete'),
+            permissions=self.view_permission('delete'),
+            permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
