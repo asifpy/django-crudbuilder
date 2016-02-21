@@ -126,23 +126,37 @@ Usage
 LOGIN REQUIRED
 --------------
 
-To enable login required for all CRUD views, add the following to settings file
+To enable global login required for all CRUD views, add the following to settings file
 
 .. code-block:: python
 
 	LOGIN_REQUIRED_FOR_CRUD = True
 
+If you want to enable login required only for specific model crud, then you need to add following to crud class
+
+.. code-block:: python
+	
+	# myapp/crud.py
+	login_required = True
+
 
 PERMISSION REQUIRED
 -------------------
 
-To enable permission required for all CRUD views, add the following to settings file
+To enable global permission required for all CRUD views, add the following to settings file
 
 .. code-block:: python
 
 	PERMISSION_REQUIRED_FOR_CRUD = True
 
-By enabling the above flag, crudbuilder by default checks for following permissions:
+If you want to enable permission required only for specific model crud, then you need to add following to crud class
+
+.. code-block:: python
+	
+	# myapp/crud.py
+	permission_required = True
+
+By enabling either of above flag, crudbuilder by default checks for following permissions:
 
 .. code-block:: python
 	
