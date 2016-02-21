@@ -97,7 +97,9 @@ Usage
   		tables2_css_class = "table table-bordered table-condensed"
   		tables2_pagination = 20  # default is 10
   		modelform_excludes = ['created_by', 'updated_by']
-  		# permission_required = {
+  		login_required=True
+  		permission_required=True
+  		# permissions = {
   		#   'list': 'example.person_list',
   		#	'create': 'example.person_create'
   		# }
@@ -126,7 +128,7 @@ Usage
 LOGIN REQUIRED
 --------------
 
-To enable global login required for all CRUD views, add the following to settings file
+To enable global login required for all the models CRUD views, add the following to settings file
 
 .. code-block:: python
 
@@ -134,16 +136,16 @@ To enable global login required for all CRUD views, add the following to setting
 
 If you want to enable login required only for specific model crud, then you need to add following to crud class
 
-.. code-block:: python
-	
-	# myapp/crud.py
-	login_required = True
+	.. code-block:: python
+		
+		# myapp/crud.py
+		login_required = True
 
 
 PERMISSION REQUIRED
 -------------------
 
-To enable global permission required for all CRUD views, add the following to settings file
+To enable global permission required for all the models CRUD views, add the following to settings file
 
 .. code-block:: python
 
@@ -151,10 +153,10 @@ To enable global permission required for all CRUD views, add the following to se
 
 If you want to enable permission required only for specific model crud, then you need to add following to crud class
 
-.. code-block:: python
-	
-	# myapp/crud.py
-	permission_required = True
+	.. code-block:: python
+		
+		# myapp/crud.py
+		permission_required = True
 
 By enabling either of above flag, crudbuilder by default checks for following permissions:
 
@@ -167,11 +169,11 @@ By enabling either of above flag, crudbuilder by default checks for following pe
 	- For DeleteView : <your app_name>.<your model>_delete
 
 
-If you want to add your own permissions, then define your own permission required dictionary exlicitly in CRUD class.
+If you want to add your own permissions, then define your own permission required dictionary explicitly in CRUD class.
 
 .. code-block:: python
 	
-	permission_required = {
+	permissions = {
 		'list'  : 'example.permission1',
 		'create': 'example.permission2'
 		'detail': 'example.permission3',

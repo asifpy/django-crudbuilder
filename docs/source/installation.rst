@@ -46,7 +46,10 @@ Then create the CRUD class for ``Person`` model::
         tables2_css_class = "table table-bordered table-condensed"
         tables2_pagination = 20  # default is 10
         modelform_excludes = ['created_by', 'updated_by']
-        # permission_required = {
+        login_required=True
+        permission_required=True
+
+        # permissions = {
         #     'list': 'example.person_list',
         #     'create': 'example.person_create'
         # }
@@ -85,7 +88,9 @@ CRUD class Attributes
 - **custom_modelform** -- Your custom model form
 - **custom_table2** -- Your custom Tables2 class
 - **custom_templates** -- Your own custom templates. For more details on custom templates, you can check check :doc:`custom templates </templates>`
-- **permission_required** -- By default crudbuilder will generate crud permissions, if you want to define your own permissions then add permission_required dictionary on the model. For more details on permission, you can check :doc:`custom permission </settings>`
+- **login_required** -- Enable login required for specific model CRUD (by default False)
+- **permission_required** -- Enable permission required for specific model CRUD (by default False)
+- **permissions** -- By default crudbuilder will generate crud permissions, if you want to define your own permissions then add permissions dictionary on the CRUD class. For more details on permission, you can check :doc:`custom permission </settings>`
 - **createupdate_forms** -- Define separate CREATE and UPDATE forms
 
 Usage of all these attributes you can view in `CRUD class of example project`_ on Github.
