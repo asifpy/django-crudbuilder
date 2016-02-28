@@ -39,6 +39,7 @@ Features:
 - post_create and post_update signals to handle specific actions in Create and Update views
 - Add your own custom templates for List/Create/Detail/Update/Delete views
 - Separate CREATE and UPDATE forms
+- Define your own custom queryset for list view
 
 Prerequisites
 -------------

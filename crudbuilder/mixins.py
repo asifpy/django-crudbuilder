@@ -105,7 +105,10 @@ class BaseListViewMixin(CrudBuilderMixin):
     - Override get_queryset method of ListView
     """
     def get_queryset(self):
-        objects = self.model.objects.all()
+        if self.custom_queryset:
+            objects = self.custom_queryset(self.request, **self.kwargs)
+        else:
+            objects = self.model.objects.all()
         search = self.request.GET.get('search')
         if search:
             q_list = [

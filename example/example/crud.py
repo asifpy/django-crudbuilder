@@ -1,7 +1,6 @@
 from crudbuilder.abstract import BaseCrudBuilder
 from example.models import Person, PersonEmployment
 from example.forms import(
-    PersonEmploymentForm,
     PersonEmployementCreateForm,
     PersonEmployementUpdateForm
 )
@@ -26,6 +25,9 @@ class PersonCrud(BaseCrudBuilder):
     #     'create': 'example.person_create'
     # }
 
+    def custom_queryset(self, request, **kwargs):
+        return self.model.objects.all()
+
 
 class PersonEmploymentCrud(BaseCrudBuilder):
     model = PersonEmployment
@@ -38,3 +40,6 @@ class PersonEmploymentCrud(BaseCrudBuilder):
         'create': PersonEmployementCreateForm,
         'update': PersonEmployementUpdateForm
     }
+
+    def custom_queryset(self, request, **kwargs):
+        return self.model.objects.filter(medical_allowance=False)

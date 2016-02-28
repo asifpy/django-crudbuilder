@@ -103,3 +103,9 @@ class ViewTestCase(TestCase):
 
         response = self.client.post('/crud/tests/testmodels/1/update/', data)
         self.assertEqual(response.status_code, 302)
+
+    def test_custom_queryset(self):
+        def custom_queryset(self, request, **kwargs):
+            return self.model.objects.all()
+        setattr(TestModelCrud, 'custom_queryset', custom_queryset)
+        self.get_list_view()

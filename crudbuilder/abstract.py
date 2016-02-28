@@ -31,6 +31,7 @@ class BaseBuilder(object):
         self.login_required = self._has_crud_attr('login_required')
 
         self.custom_templates = self._has_crud_attr('custom_templates')
+        self.custom_queryset = self._has_crud_attr('custom_queryset')
 
     @property
     def get_model_class(self):
