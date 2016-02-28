@@ -49,9 +49,10 @@ Then create the CRUD class for ``Person`` model::
         login_required=True
         permission_required=True
 
-        def custom_queryset(self, request, **kwargs):
+        @classmethod
+        def custom_queryset(cls, request, **kwargs):
             """Define your own custom queryset for list view"""
-            qset = self.model.objects.filter(created_by=request.user)
+            qset = cls.model.objects.filter(created_by=request.user)
             return qset
 
         # permissions = {

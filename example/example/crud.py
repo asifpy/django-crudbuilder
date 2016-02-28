@@ -25,8 +25,9 @@ class PersonCrud(BaseCrudBuilder):
     #     'create': 'example.person_create'
     # }
 
-    def custom_queryset(self, request, **kwargs):
-        return self.model.objects.all()
+    @classmethod
+    def custom_queryset(cls, request, **kwargs):
+        return cls.model.objects.filter(created_by=request.user)
 
 
 class PersonEmploymentCrud(BaseCrudBuilder):
@@ -41,5 +42,6 @@ class PersonEmploymentCrud(BaseCrudBuilder):
         'update': PersonEmployementUpdateForm
     }
 
-    def custom_queryset(self, request, **kwargs):
-        return self.model.objects.filter(medical_allowance=False)
+    @classmethod
+    def custom_queryset(cls, request, **kwargs):
+        return cls.model.objects.filter(medical_allowance=False)

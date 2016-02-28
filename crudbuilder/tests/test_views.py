@@ -107,5 +107,5 @@ class ViewTestCase(TestCase):
     def test_custom_queryset(self):
         def custom_queryset(self, request, **kwargs):
             return self.model.objects.all()
-        setattr(TestModelCrud, 'custom_queryset', custom_queryset)
+        setattr(TestModelCrud, 'custom_queryset', classmethod(custom_queryset))
         self.get_list_view()
