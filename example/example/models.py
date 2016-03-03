@@ -19,6 +19,9 @@ class Person(models.Model):
         blank=True,
         null=True,
         related_name='updators')
+    img = models.ImageField(
+        upload_to='uploads',
+        blank=True)
 
     def __unicode__(self):
         return self.name

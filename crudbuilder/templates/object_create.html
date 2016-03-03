@@ -11,7 +11,7 @@
 	<h3>Create {{actual_model_name|title}}</h3>
 </div>
 
-<form action="." method="post">
+<form action="." method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{% for field in form %}
 		<div class="fieldWrapper">

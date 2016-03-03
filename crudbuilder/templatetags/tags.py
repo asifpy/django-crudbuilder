@@ -25,7 +25,9 @@ def get_model_fields(obj):
 
     property_fields = []
     for name in dir(model):
-        if name not in excludes and isinstance(getattr(model, name), property):
+        if name not in excludes and isinstance(
+            getattr(model, name, None), property
+        ):
             property_fields.append(Field(name=name, verbose_name=name))
 
     return chain(obj._meta.fields, property_fields)
