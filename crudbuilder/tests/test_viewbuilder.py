@@ -15,7 +15,7 @@ class ViewBuilderTestCase(TestCase):
     def test_list_view(self):
         list_view = self.builder.generate_list_view()
         self.assertEqual(list_view.__name__, "TestmodelListView")
-        self.assertEqual(list_view.table_pagination, self.builder.tables2_pagination)
+        self.assertEqual(list_view.table_pagination, {'per_page': self.builder.tables2_pagination})
 
     def test_create_view(self):
         create_view = self.builder.generate_create_view()
@@ -36,7 +36,7 @@ class ViewBuilderTestCase(TestCase):
         # test the default pagination
         self.builder.tables2_pagination = None
         list_view = self.builder.generate_list_view()
-        self.assertEqual(list_view.table_pagination, 10)
+        self.assertEqual(list_view.table_pagination, {'per_page': 10})
 
     def test_tables2_feilds(self):
         tables2_feilds = self.builder.tables2_fields
