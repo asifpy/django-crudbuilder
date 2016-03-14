@@ -64,7 +64,7 @@ def plural(text):
             if text[-2:] in ('ch', 'sh'):
                 postfix = 'es'
             elif text[-1:] == 'y':
-                if (text[-2:-1] in vowels) or (text[0] in string.uppercase):
+                if (text[-2:-1] in vowels) or (text[0] in string.ascii_uppercase):
                     postfix = 's'
                 else:
                     postfix = 'ies'
