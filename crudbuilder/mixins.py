@@ -1,9 +1,11 @@
 import operator
 import six
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.conf import settings
+from django.contrib import messages
 
 from crudbuilder.helpers import plural
 from crudbuilder.signals import post_update_signal, post_create_signal
@@ -118,3 +120,33 @@ class BaseListViewMixin(CrudBuilderMixin):
                 ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
+
+
+class InlineFormsetView(CrudBuilderMixin):
+    def get_context_data(self, **kwargs):
+        context = super(InlineFormsetView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['inlineformset'] = self.inlineformset(
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context['inlineformset'] = self.inlineformset(
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        inlineformset = context['inlineformset']
+        if inlineformset.is_valid():
+            self.object = form.save()
+            inlineformset.instance = self.object
+            inlineformset.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            messages.error(
+                self.request, inlineformset.non_form_errors())
+            return self.render_to_response(
+                self.get_context_data(form=form, inlineformset=inlineformset)
+            )

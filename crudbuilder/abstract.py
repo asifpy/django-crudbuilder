@@ -1,7 +1,8 @@
 import crudbuilder
 from six import with_metaclass
-from crudbuilder.exceptions import NotModelException
 from django.contrib.contenttypes.models import ContentType
+
+from crudbuilder.exceptions import NotModelException
 
 
 class BaseBuilder(object):
@@ -32,6 +33,7 @@ class BaseBuilder(object):
 
         self.custom_templates = self._has_crud_attr('custom_templates')
         self.custom_queryset = self._has_crud_attr('custom_queryset')
+        self.inlineformset = self.get_inlineformset
 
     @property
     def get_model_class(self):
@@ -56,6 +58,13 @@ class BaseBuilder(object):
     def check_permission_required(self):
         return True if self.permission_required else False
 
+    @property
+    def get_inlineformset(self):
+        if self.crud.inlineformset:
+            return self.crud.inlineformset().construct_formset()
+        else:
+            return None
+
 
 class MetaCrudRegister(type):
     def __new__(cls, clsname, bases, attrs):
@@ -74,3 +83,4 @@ class MetaCrudRegister(type):
 
 class BaseCrudBuilder(with_metaclass(MetaCrudRegister)):
     model = None
+    inlineformset = None

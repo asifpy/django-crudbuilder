@@ -11,7 +11,8 @@ from django_tables2 import SingleTableView
 from crudbuilder.mixins import(
     CrudBuilderMixin,
     BaseListViewMixin,
-    CreateUpdateViewMixin
+    CreateUpdateViewMixin,
+    InlineFormsetView
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
@@ -105,7 +106,22 @@ class ViewBuilder(BaseBuilder):
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        create_class = type(name, (CreateUpdateViewMixin, CreateView), create_args)
+        if self.inlineformset:
+            create_args.update({'inlineformset': self.inlineformset})
+            create_args.update(
+                {'template_name': self.get_template('inline_create')})
+
+            create_class = type(
+                name,
+                (InlineFormsetView, CreateView),
+                create_args
+                )
+        else:
+            create_class = type(
+                name,
+                (CreateUpdateViewMixin, CreateView),
+                create_args
+            )
         self.classes[name] = create_class
         return create_class
 
@@ -139,11 +155,22 @@ class ViewBuilder(BaseBuilder):
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        update_class = type(
-            name,
-            (CreateUpdateViewMixin, UpdateView),
-            update_args
-            )
+        if self.inlineformset:
+            update_args.update({'inlineformset': self.inlineformset})
+            update_args.update(
+                {'template_name': self.get_template('inline_create')})
+
+            update_class = type(
+                name,
+                (InlineFormsetView, UpdateView),
+                update_args
+                )
+        else:
+            update_class = type(
+                name,
+                (CreateUpdateViewMixin, UpdateView),
+                update_args
+                )
         self.classes[name] = update_class
         return update_class
 

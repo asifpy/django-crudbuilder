@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load tags %}
+
+{% block main_content %}
+
+<b>APP :</b> {{app_label}}<br/>
+<b>MODEL : </b>{{actual_model_name}}<br/>
+<b>PLURIZED MODEL :</b> {{pluralized_model_name}}<br/>
+
+<div id="title">
+	<h3>Create {{actual_model_name|title}}</h3>
+</div>
+
+<form action="." method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% for field in form %}
+		<div class="fieldWrapper">
+        	{{ field.errors }}
+        	{{ field.label_tag }} {{ field }}
+    	</div>
+	{% endfor %}
+
+	<h4>Formset</h4>
+
+	<table>
+	{% for form in inlineformset.forms %}
+		{{ form.id }}
+		<tr>
+		{% for field in form.visible_fields %}
+			<div class="fieldWrapper">
+        		{{ field.errors }}
+        		<td>{{ field.label_tag }}</td> <td>{{ field }}</td>
+    		</div>
+		{% endfor %}
+		</tr>
+	{% endfor %}
+	</table>
+	{{ inlineformset.management_form }}
+
+	<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
