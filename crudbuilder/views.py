@@ -12,7 +12,7 @@ from crudbuilder.mixins import(
     CrudBuilderMixin,
     BaseListViewMixin,
     CreateUpdateViewMixin,
-    InlineFormsetView
+    InlineFormsetViewMixin
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
@@ -61,10 +61,19 @@ class ViewBuilder(BaseBuilder):
         - Get custom template from CRUD class, if it is defined in it
         - No custom template in CRUD class, then use the default template
         """
+        if self.inlineformset:
+            tname = 'inline_{}'.format(tname)
+
         if self.custom_templates and self.custom_templates.get(tname, None):
             return self.custom_templates.get(tname)
         else:
             return 'object_{}.html'.format(tname)
+
+    def get_createupdate_mixin(self):
+        if self.inlineformset:
+            return InlineFormsetViewMixin
+        else:
+            return CreateUpdateViewMixin
 
     def generate_list_view(self):
         """Generate class based view for ListView"""
@@ -103,25 +112,16 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('create'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
+            inlineformset=self.inlineformset,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        if self.inlineformset:
-            create_args.update({'inlineformset': self.inlineformset})
-            create_args.update(
-                {'template_name': self.get_template('inline_create')})
-
-            create_class = type(
-                name,
-                (InlineFormsetView, CreateView),
-                create_args
-                )
-        else:
-            create_class = type(
-                name,
-                (CreateUpdateViewMixin, CreateView),
-                create_args
+        create_class = type(
+            name,
+            (self.get_createupdate_mixin(), CreateView),
+            create_args
             )
+
         self.classes[name] = create_class
         return create_class
 
@@ -152,23 +152,13 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('update'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
+            inlineformset=self.inlineformset,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        if self.inlineformset:
-            update_args.update({'inlineformset': self.inlineformset})
-            update_args.update(
-                {'template_name': self.get_template('inline_create')})
-
-            update_class = type(
+        update_class = type(
                 name,
-                (InlineFormsetView, UpdateView),
-                update_args
-                )
-        else:
-            update_class = type(
-                name,
-                (CreateUpdateViewMixin, UpdateView),
+                (self.get_createupdate_mixin(), UpdateView),
                 update_args
                 )
         self.classes[name] = update_class

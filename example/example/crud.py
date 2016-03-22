@@ -11,6 +11,7 @@ from example.forms import(
 class PersonEmploymentInlineFormset(BaseInlineFormset):
     inline_model = PersonEmployment
     parent_model = Person
+    exclude = ['created_by', 'updated_by']
 
 
 class PersonCrud(BaseCrudBuilder):

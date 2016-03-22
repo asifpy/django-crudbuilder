@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from crudbuilder.helpers import plural
-from crudbuilder.signals import post_update_signal, post_create_signal
+from crudbuilder.signals import signals
 
 if six.PY3:
     from functools import reduce
@@ -81,16 +81,18 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['pluralized_model_name'] = plural(model.__name__.lower())
         return context
 
+    @property
+    def get_actual_signal(self):
+        view = 'update' if self.object else 'create'
+
+        if self.inlineformset:
+            return signals['inlineformset'][view]
+        else:
+            return signals['instance'][view]
+
 
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
-
-    @property
-    def get_actual_signal(self):
-        if self.object:
-            return post_update_signal
-        else:
-            return post_create_signal
 
     def form_valid(self, form):
         signal = self.get_actual_signal
@@ -122,9 +124,10 @@ class BaseListViewMixin(CrudBuilderMixin):
         return objects.order_by('-id')
 
 
-class InlineFormsetView(CrudBuilderMixin):
+class InlineFormsetViewMixin(CrudBuilderMixin):
     def get_context_data(self, **kwargs):
-        context = super(InlineFormsetView, self).get_context_data(**kwargs)
+        context = super(
+            InlineFormsetViewMixin, self).get_context_data(**kwargs)
         if self.request.POST:
             context['inlineformset'] = self.inlineformset(
                 self.request.POST,
@@ -139,10 +142,21 @@ class InlineFormsetView(CrudBuilderMixin):
     def form_valid(self, form):
         context = self.get_context_data()
         inlineformset = context['inlineformset']
+
         if inlineformset.is_valid():
             self.object = form.save()
             inlineformset.instance = self.object
             inlineformset.save()
+            children = inlineformset.save(commit=False)
+
+            # execute post signals
+            signal = self.get_actual_signal
+            signal.send(
+                sender=self.model,
+                request=self.request,
+                parent=self.object,
+                children=children)
+
             return HttpResponseRedirect(self.success_url)
         else:
             messages.error(
