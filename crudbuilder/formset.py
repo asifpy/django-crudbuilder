@@ -6,7 +6,6 @@ from crudbuilder.exceptions import NotModelException
 class BaseInlineFormset(object):
     extra = 3
     can_delete = True
-    formset_class = None
     inline_model = None
     parent_model = None
     exclude = []
@@ -14,6 +13,7 @@ class BaseInlineFormset(object):
     formfield_callback = None
     fk_name = None
     formset_class = None
+    child_form = None
 
     def construct_formset(self):
         """
@@ -45,5 +45,8 @@ class BaseInlineFormset(object):
             'fk_name': self.fk_name,
         })
         if self.formset_class:
-            kwargs['formset'] = self.inline_formset_class()
+            kwargs['formset'] = self.formset_class
+
+        if self.child_form:
+            kwargs['form'] = self.child_form
         return kwargs
