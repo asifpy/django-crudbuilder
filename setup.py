@@ -1,11 +1,11 @@
 import os
 from setuptools import setup
-from django.utils import version
+import django
 import crudbuilder
 
 # Allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
-djang_version = version.get_complete_version()[1]
+djang_version = django.VERSION[1]
 
 if djang_version == 7:
     django_tables2 = 'django_tables2>=1.0.4'
