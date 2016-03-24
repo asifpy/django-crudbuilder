@@ -1,9 +1,16 @@
 import os
 from setuptools import setup
+from django.utils import version
 import crudbuilder
 
 # Allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+djang_version = version.get_complete_version()[1]
+
+if djang_version == 7:
+    django_tables2 = 'django_tables2>=1.0.4'
+else:
+    django_tables2 = 'django_tables2'
 
 
 def read(fname):
@@ -21,7 +28,7 @@ setup(
     author_email='saluasif@gmail.com',
     long_description=read('README.rst'),
     install_requires=[
-        'django_tables2>=1.0.4',
+        django_tables2,
         'six>=1.10.0'
     ],
     classifiers=[
