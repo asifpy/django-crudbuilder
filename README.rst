@@ -40,6 +40,7 @@ Features:
 - Add your own custom templates for List/Create/Detail/Update/Delete views
 - Separate CREATE and UPDATE forms
 - Define your own custom queryset for list view
+- Inline Formset support for parent child models
 
 Prerequisites
 -------------
