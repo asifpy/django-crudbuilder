@@ -22,7 +22,6 @@ matrix:
 install:
   - pip install -q Django==$DJANGO
   - python setup.py -q install
-  - if [[ $DJANGO == '1.7.4' ]]; then pip install "django-tables2==1.1.2" else pip install "django-tables2"; fi
   - pip install coveralls
 after_success:
   coveralls
