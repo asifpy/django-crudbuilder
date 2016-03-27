@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 djang_version = django.VERSION[1]
 
 if djang_version == 7:
-    django_tables2 = 'django_tables2>=1.0.4'
+    django_tables2 = 'django_tables2==1.1.2'
 else:
     django_tables2 = 'django_tables2'
 
