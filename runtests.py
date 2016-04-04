@@ -20,6 +20,7 @@ settings.configure(
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.admin',
+        'django.contrib.staticfiles',
         'crudbuilder',
         'django_tables2',
 
@@ -42,6 +43,8 @@ settings.configure(
         'django.template.loaders.app_directories.Loader',
         'django.template.loaders.eggs.Loader'
     ),
+
+    STATIC_URL='/static/',
 
     TEMPLATES=[
         {
