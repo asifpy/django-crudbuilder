@@ -19,11 +19,11 @@ class PersonCrud(BaseCrudBuilder):
     search_feilds = ['name']
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
-    tables2_pagination = 20  # default is 10
+    tables2_pagination = 10  # default is 10
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
-    inlineformset = PersonEmploymentInlineFormset
+    # inlineformset = PersonEmploymentInlineFormset
 
     # custom_templates = {
     #     'list': 'yourtemplates/template.html'

@@ -3,22 +3,25 @@
 
 {% block main_content %}
 
-<b>APP :</b> {{app_label}}<br/>
-<b>MODEL : </b>{{actual_model_name}}<br/>
-<b>PLURIZED MODEL :</b> {{pluralized_model_name}}<br/>
-
-<div id="title">
+<div class='container'>
 	<h3>Create {{actual_model_name|title}}</h3>
+	<hr/>
+	<form action="." method="post" enctype="multipart/form-data" class="form-horizontal">
+		{% csrf_token %}
+		{% for field in form %}
+			<fieldset class="form-group">
+			    {{ field|label_with_class:"col-sm-2 control-label" }}
+			    <div class="col-sm-10">
+			        {{ field }}
+			    </div>
+			</fieldset>
+		{% endfor %}
+		<div class="form-group">
+    		<div  class="col-sm-offset-2 col-sm-10">
+        		<input type="submit" value="Save" class="btn btn-success" />
+    		</div>
+		</div>
+	</form>
 </div>
 
-<form action="." method="post" enctype="multipart/form-data">
-	{% csrf_token %}
-	{% for field in form %}
-		<div class="fieldWrapper">
-        	{{ field.errors }}
-        	{{ field.label_tag }} {{ field }}
-    	</div>
-	{% endfor %}
-	<input type="submit" value="Submit" />
-</form>
 {% endblock %}
