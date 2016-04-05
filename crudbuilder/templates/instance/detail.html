@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load tags %}
+
+{% block main_content %}
+    {% block actions %}
+        <a class="btn btn-primary" href="{% url app_label|add:'-'|add:actual_model_name|add:'-update' object.id %}"><i class="glyphicon glyphicon-pencil"></i> Update</a>
+        <a class="btn btn-primary" href="{% url app_label|add:'-'|add:actual_model_name|add:'-delete' object.id %}"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a>
+    {% endblock %}
+<hr/>
+
+<div class='container'>
+    <h3>{{object}}</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field in object|get_model_fields %}
+        	   <tr>
+        		  <td>{{field.name|undertospaced}}</td>
+        		  <td>{{object|get_value:field.name}}</td>
+        	   </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>s
+{% endblock %}

@@ -79,6 +79,8 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['app_label'] = model._meta.app_label
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
+        context['project_name'] = getattr(
+            settings, 'PROJECT_NAME', 'CRUDBUILDER')
         return context
 
     @property

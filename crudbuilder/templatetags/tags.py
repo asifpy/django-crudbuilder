@@ -46,6 +46,12 @@ def label_with_class(value, arg):
     return value.label_tag(attrs={'class': arg})
 
 
+@register.filter(is_safe=True)
+def input_with_class(value, arg):
+    value.field.widget.attrs['class'] = arg
+    return value
+
+
 @register.inclusion_tag('widgets/tables/pagination.html')
 def bootstrap_pagination(page, **kwargs):
     pagination_kwargs = kwargs.copy()

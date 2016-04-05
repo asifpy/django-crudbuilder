@@ -61,13 +61,13 @@ class ViewBuilder(BaseBuilder):
         - Get custom template from CRUD class, if it is defined in it
         - No custom template in CRUD class, then use the default template
         """
-        if self.inlineformset:
-            tname = 'inline_{}'.format(tname)
 
         if self.custom_templates and self.custom_templates.get(tname, None):
             return self.custom_templates.get(tname)
+        elif self.inlineformset:
+            return 'inline/{}.html'.format(tname)
         else:
-            return 'object_{}.html'.format(tname)
+            return 'instance/{}.html'.format(tname)
 
     def get_createupdate_mixin(self):
         if self.inlineformset:

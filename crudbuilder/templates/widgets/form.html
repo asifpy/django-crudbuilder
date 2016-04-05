@@ -1,0 +1,19 @@
+{% load tags %}
+
+<form action="." method="post" enctype="multipart/form-data" class="form-horizontal">
+	{% csrf_token %}
+	{% for field in form %}
+		<fieldset class={% if field.errors %} "form-group has-error" {% else %} "form-group" {% endif %} >
+			{{ field|label_with_class:"col-sm-2 control-label" }}
+			<div class="col-xs-4">
+				{{ field|input_with_class:"form-control" }}
+			    {{ field.errors }}
+			</div>
+		</fieldset>
+	{% endfor %}
+		<div class="form-group">
+    		<div  class="col-sm-offset-2 col-sm-12">
+        		<input type="submit" value="Save" class="btn btn-success" />
+    		</div>
+		</div>
+</form>

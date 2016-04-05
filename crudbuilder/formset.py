@@ -23,13 +23,10 @@ class BaseInlineFormset(object):
             msg = "Parent and Inline models are required in {}".format(self.__class__.__name__)
             raise NotModelException(msg)
 
-        if self.inline_model:
-            return inlineformset_factory(
-                self.parent_model,
-                self.inline_model,
-                **self.get_factory_kwargs())
-        else:
-            return None
+        return inlineformset_factory(
+            self.parent_model,
+            self.inline_model,
+            **self.get_factory_kwargs())
 
     def get_factory_kwargs(self):
         """

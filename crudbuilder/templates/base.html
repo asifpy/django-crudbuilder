@@ -12,6 +12,7 @@
     {% block title %}{% endblock %}
 
     {% load staticfiles %}
+    <script src="{% static 'crudbuilder/js/jquery-1.11.3.js' %}"></script>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'crudbuilder/css/bootstrap.min.css' %}">
 
@@ -33,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project Name</a>
+          <a class="navbar-brand" href="#">{{project_name}}</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           {% if user.is_authenticated %}
@@ -57,7 +58,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static 'crudbuilder/js/jquery-1.11.3.js' %}"></script>
     {% block js %}{% endblock %}
     <script src="{% static 'crudbuilder/js/bootstrap.min.js' %}"></script>
   </body>
