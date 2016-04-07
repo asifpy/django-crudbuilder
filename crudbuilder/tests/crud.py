@@ -1,6 +1,12 @@
 from crudbuilder.abstract import BaseCrudBuilder
+from crudbuilder.formset import BaseInlineFormset
+from crudbuilder.tests.models import TestModel, TestChildModel
 
-from crudbuilder.tests.models import TestModel
+
+class TestChildInlineFormset(BaseInlineFormset):
+    inline_model = TestChildModel
+    parent_model = TestModel
+    exclude = ['created_by', 'updated_by']
 
 
 class TestModelCrud(BaseCrudBuilder):
