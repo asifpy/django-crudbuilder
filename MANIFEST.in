@@ -1,5 +1,6 @@
 include LICENSE.txt
 include README.md
 recursive-include crudbuilder/templates *
+recursive-include crudbuilder/static *
 recursive-include crudbuilder/templatetags *
 recursive-include docs *

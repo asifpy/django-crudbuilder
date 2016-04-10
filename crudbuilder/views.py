@@ -12,7 +12,8 @@ from crudbuilder.mixins import(
     CrudBuilderMixin,
     BaseListViewMixin,
     CreateUpdateViewMixin,
-    InlineFormsetViewMixin
+    InlineFormsetViewMixin,
+    BaseDetailViewMixin
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
@@ -134,10 +135,11 @@ class ViewBuilder(BaseBuilder):
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
             permissions=self.view_permission('detail'),
+            inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
             )
 
-        detail_class = type(name, (CrudBuilderMixin, DetailView), detail_args)
+        detail_class = type(name, (BaseDetailViewMixin, DetailView), detail_args)
         self.classes[name] = detail_class
         return detail_class
 

@@ -93,6 +93,13 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
             return signals['instance'][view]
 
 
+class BaseDetailViewMixin(CrudBuilderMixin):
+    def get_context_data(self, **kwargs):
+        context = super(BaseDetailViewMixin, self).get_context_data(**kwargs)
+        context['inlineformset'] = self.inlineformset
+        return context
+
+
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
 

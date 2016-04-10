@@ -1,7 +1,7 @@
 Templates
 =========
 
-By default django-crudbuilder uses its own plain html CRUD templates. You can view these templates in `template folder of crudbuilder`_ on Github.
+By default django-crudbuilder uses Bootstrap3 style for its CRUD templates. You can view these templates in `template folder of crudbuilder`_ on Github.
 
 
 Use your own HTML templates for crudbuilder
@@ -10,16 +10,34 @@ Use your own HTML templates for crudbuilder
 You can use your own templates for the crudbuilder in following two ways:
 
 5 common templates for all models CRUD
-########################################
+--------------------------------------
 
-You can create your own 5 common HTML templates for CRUD in templates/crudbuilder, then crudbuilder will use your defined templates.::
-	
-	templates/crudbuilder
-	    object_list.html
-	    object_create.html
-	    object_update.html
-	    object_delete.html
-	    object_detail.html
+You can create your own 5 common HTML templates for CRUD in templates/crudbuilder, then crudbuilder will use your defined templates.
+
+
+Model
+#####
+
+For single object crud.::
+
+	templates/crudbuilder/instance
+		list.html
+		create.html
+		update.html
+		delete.html
+		detail.html
+
+Inline Formset
+##############
+
+For inline formset.::
+
+	templates/crudbuilder/inline
+	    list.html
+	    create.html
+	    update.html
+	    delete.html
+	    detail.html
 
 
 Custom templates for specific model:

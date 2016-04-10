@@ -27,5 +27,34 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <hr/>
+
+    <h3>{{inlineformset.fk.related_query_name|title}}</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                {% for field in inlineformset.form.base_fields.keys %}
+                    {% if inlineformset.fk.name != field %}
+                    <th>{{field}}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object|inline_objects:inlineformset.fk %}
+                <tr>
+                {% for field in inlineformset.form.base_fields.keys %}
+                    {% if inlineformset.fk.name != field %}
+                    <td>{{object|get_value:field}}</td>
+                    {% endif %}
+                {% endfor %}
+                <tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 </div>
 {% endblock %}

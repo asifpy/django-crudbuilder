@@ -52,6 +52,13 @@ def input_with_class(value, arg):
     return value
 
 
+@register.filter(is_safe=True)
+def inline_objects(object, inline_fk):
+    inline_model = inline_fk.model
+    related_filter = inline_fk.get_forward_related_filter(object)
+    return inline_model.objects.filter(**related_filter)
+
+
 @register.inclusion_tag('widgets/tables/pagination.html')
 def bootstrap_pagination(page, **kwargs):
     pagination_kwargs = kwargs.copy()
