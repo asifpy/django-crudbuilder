@@ -2,12 +2,17 @@
 {% load tags %}
 {% load render_table from django_tables2 %}
 
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li class="active">{{pluralized_model_name|title}}</li>
+</ul>
+{% endblock %}
+
 {% block main_content %}
 
 {% block actions %}
-	<a class="btn btn-primary" href="{% url app_label|add:'-'|add:actual_model_name|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:actual_model_name|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
 {% endblock %}
-<hr/>
 
 <div class='container'>
 
