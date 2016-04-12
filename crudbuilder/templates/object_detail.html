@@ -24,7 +24,7 @@
     <tbody>
         {% for field in object|get_model_fields %}
         	<tr>
-        		<td>{{field.name|undertospaced}}</td>
+        		<td>{{object|get_verbose_field_name:field.name}}</td>
         		<td>{{object|get_value:field.name}}</td>
         	</tr>
         {% endfor %}
