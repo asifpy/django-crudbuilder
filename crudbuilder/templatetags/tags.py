@@ -13,6 +13,9 @@ except ImportError:
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
 
+@register.filter
+def get_verbose_field_name(instance, field_name):
+    return instance._meta.get_field(field_name).verbose_name.title()
 
 @register.filter
 @stringfilter
