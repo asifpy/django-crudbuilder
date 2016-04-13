@@ -1,12 +1,14 @@
 import operator
 import six
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.conf import settings
+from django.contrib import messages
 
 from crudbuilder.helpers import plural
-from crudbuilder.signals import post_update_signal, post_create_signal
+from crudbuilder.signals import signals
 
 if six.PY3:
     from functools import reduce
@@ -77,18 +79,29 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['app_label'] = model._meta.app_label
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
+        context['project_name'] = getattr(
+            settings, 'PROJECT_NAME', 'CRUDBUILDER')
+        return context
+
+    @property
+    def get_actual_signal(self):
+        view = 'update' if self.object else 'create'
+
+        if self.inlineformset:
+            return signals['inlineformset'][view]
+        else:
+            return signals['instance'][view]
+
+
+class BaseDetailViewMixin(CrudBuilderMixin):
+    def get_context_data(self, **kwargs):
+        context = super(BaseDetailViewMixin, self).get_context_data(**kwargs)
+        context['inlineformset'] = self.inlineformset
         return context
 
 
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
-
-    @property
-    def get_actual_signal(self):
-        if self.object:
-            return post_update_signal
-        else:
-            return post_create_signal
 
     def form_valid(self, form):
         signal = self.get_actual_signal
@@ -118,3 +131,45 @@ class BaseListViewMixin(CrudBuilderMixin):
                 ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
+
+
+class InlineFormsetViewMixin(CrudBuilderMixin):
+    def get_context_data(self, **kwargs):
+        context = super(
+            InlineFormsetViewMixin, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['inlineformset'] = self.inlineformset(
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context['inlineformset'] = self.inlineformset(
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        inlineformset = context['inlineformset']
+
+        if inlineformset.is_valid():
+            self.object = form.save()
+            inlineformset.instance = self.object
+            inlineformset.save()
+            children = inlineformset.save(commit=False)
+
+            # execute post signals
+            signal = self.get_actual_signal
+            signal.send(
+                sender=self.model,
+                request=self.request,
+                parent=self.object,
+                children=children)
+
+            return HttpResponseRedirect(self.success_url)
+        else:
+            messages.error(
+                self.request, inlineformset.non_form_errors())
+            return self.render_to_response(
+                self.get_context_data(form=form, inlineformset=inlineformset)
+            )

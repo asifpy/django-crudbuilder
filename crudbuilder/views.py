@@ -11,7 +11,9 @@ from django_tables2 import SingleTableView
 from crudbuilder.mixins import(
     CrudBuilderMixin,
     BaseListViewMixin,
-    CreateUpdateViewMixin
+    CreateUpdateViewMixin,
+    InlineFormsetViewMixin,
+    BaseDetailViewMixin
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
@@ -60,10 +62,19 @@ class ViewBuilder(BaseBuilder):
         - Get custom template from CRUD class, if it is defined in it
         - No custom template in CRUD class, then use the default template
         """
+
         if self.custom_templates and self.custom_templates.get(tname, None):
             return self.custom_templates.get(tname)
+        elif self.inlineformset:
+            return 'inline/{}.html'.format(tname)
         else:
-            return 'object_{}.html'.format(tname)
+            return 'instance/{}.html'.format(tname)
+
+    def get_createupdate_mixin(self):
+        if self.inlineformset:
+            return InlineFormsetViewMixin
+        else:
+            return CreateUpdateViewMixin
 
     def generate_list_view(self):
         """Generate class based view for ListView"""
@@ -102,10 +113,16 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('create'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
+            inlineformset=self.inlineformset,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
-        create_class = type(name, (CreateUpdateViewMixin, CreateView), create_args)
+        create_class = type(
+            name,
+            (self.get_createupdate_mixin(), CreateView),
+            create_args
+            )
+
         self.classes[name] = create_class
         return create_class
 
@@ -118,10 +135,11 @@ class ViewBuilder(BaseBuilder):
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
             permissions=self.view_permission('detail'),
+            inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
             )
 
-        detail_class = type(name, (CrudBuilderMixin, DetailView), detail_args)
+        detail_class = type(name, (BaseDetailViewMixin, DetailView), detail_args)
         self.classes[name] = detail_class
         return detail_class
 
@@ -136,14 +154,15 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('update'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
+            inlineformset=self.inlineformset,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
             )
 
         update_class = type(
-            name,
-            (CreateUpdateViewMixin, UpdateView),
-            update_args
-            )
+                name,
+                (self.get_createupdate_mixin(), UpdateView),
+                update_args
+                )
         self.classes[name] = update_class
         return update_class
 

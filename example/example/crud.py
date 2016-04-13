@@ -1,4 +1,6 @@
 from crudbuilder.abstract import BaseCrudBuilder
+from crudbuilder.formset import BaseInlineFormset
+
 from example.models import Person, PersonEmployment
 from example.forms import(
     PersonEmployementCreateForm,
@@ -6,15 +8,22 @@ from example.forms import(
 )
 
 
+class PersonEmploymentInlineFormset(BaseInlineFormset):
+    inline_model = PersonEmployment
+    parent_model = Person
+    exclude = ['created_by', 'updated_by']
+
+
 class PersonCrud(BaseCrudBuilder):
     model = Person
     search_feilds = ['name']
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
-    tables2_pagination = 20  # default is 10
+    tables2_pagination = 10  # default is 10
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
+    inlineformset = PersonEmploymentInlineFormset
 
     # custom_templates = {
     #     'list': 'yourtemplates/template.html'
@@ -25,9 +34,9 @@ class PersonCrud(BaseCrudBuilder):
     #     'create': 'example.person_create'
     # }
 
-    @classmethod
-    def custom_queryset(cls, request, **kwargs):
-        return cls.model.objects.filter(created_by=request.user)
+    # @classmethod
+    # def custom_queryset(cls, request, **kwargs):
+    #     return cls.model.objects.filter(created_by=request.user)
 
 
 class PersonEmploymentCrud(BaseCrudBuilder):

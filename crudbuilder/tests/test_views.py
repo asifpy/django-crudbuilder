@@ -1,10 +1,11 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from django.template import Context, Template, TemplateSyntaxError
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
 from crudbuilder.tests.models import TestModel
-from crudbuilder.tests.crud import TestModelCrud
+from crudbuilder.tests.crud import TestModelCrud, TestChildInlineFormset
 from crudbuilder.tests.forms import TestModelForm
 from crudbuilder.tests.tables import TestModelTable
 
@@ -109,3 +110,36 @@ class ViewTestCase(TestCase):
             return self.model.objects.all()
         setattr(TestModelCrud, 'custom_queryset', classmethod(custom_queryset))
         self.get_list_view()
+
+    def test_iniline_formset(self):
+        TestModelCrud.inlineformset = TestChildInlineFormset
+        self.get_list_view()
+
+    def test_undertospace_filter(self):
+        model = 'test_model'
+        t = Template('{% load tags %}{{model|undertospaced}}')
+        c = Context({"model": model})
+        result = t.render(c)
+        self.assertEqual(result, 'Test Model')
+
+    def test_model_fields_filter(self):
+        obj = TestModel.objects.create(name='object1')
+        t = Template(
+            "{% load tags %}"
+            "{% for field in obj|get_model_fields %}"
+            "{{ field.name}},"
+            "{% endfor %}"
+            )
+        c = Context({"obj": obj})
+        result = t.render(c)
+        self.assertEqual(result, 'id,name,email,created_at,')
+
+    def test_get_value_filter(self):
+        obj = TestModel.objects.create(name='object1')
+        t = Template(
+            "{% load tags %}"
+            "{{obj|get_value:'name'}}"
+            )
+        c = Context({"obj": obj})
+        result = t.render(c)
+        self.assertEqual(result, 'object1')

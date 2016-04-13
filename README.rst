@@ -40,6 +40,8 @@ Features:
 - Add your own custom templates for List/Create/Detail/Update/Delete views
 - Separate CREATE and UPDATE forms
 - Define your own custom queryset for list view
+- Inline Formset support for parent child models
+- Default Bootstrap3 CSS
 
 Prerequisites
 -------------
@@ -69,6 +71,7 @@ Usage
 
 	LOGIN_REQUIRED_FOR_CRUD = True/False
 	PERMISSION_REQUIRED_FOR_CRUD = True/False
+	PROJECT_NAME = 'YOUR PROJECT NAME'
 
 **Create models in yourapp/models.py**
 
@@ -193,41 +196,5 @@ Added mixin which allows access to additional template variables like app lable 
 	PLURIZED MODEL : {{pluralized_model_name}}
 
 
-EXTENDABLE
-----------
-All the generated views/tables/forms/url are extendable.
-
-.. code-block:: python
-	
-	# GENERATE CRUD CLASSES
-	from crudbuilder.views import ViewBuilder
-	builder = ViewBuilder('example', 'person', crudclass)
-	builder.generate_crud()
-	builder.classes
-
-	{'PersonCreateView': <class 'django.views.generic.edit.PersonCreateView'>,
- 	'PersonDeleteView': <class 'crudbuilder.views.PersonDeleteView'>,
- 	'PersonListView': <class 'crudbuilder.views.PersonListView'>, 
- 	'PersonUpdateView': <class 'django.views.generic.edit.PersonUpdateView'>,
- 	'PersonDetailView': <class 'crudbuilder.views.PersonDetailView'>
-	}
-
-	# OVERRIDE AUTO GENERATED VIEWS
-	from crudbuilder.views import ViewBuilder
-	builder = ViewBuilder('example', 'person')
-	builder.generate_crud()
-	PersonListView = builder.classes['PersonListView']
-	class CustomPersonListView(PersonListView):
-    	    def get_context_data(self, **kwargs):
-        	context = super(CustomPersonListView, self).get_context_data(**kwargs)
-        	context['your_template_variable'] = 'Your new template variable'
-        	return context
-
-	# OVERRIDE AUTO GENERATED TABLE (from django_tables2)
-	from crudbuilder.tables import TableBuilder
-	builder = TableBuilder('example', 'person')
-	PersonTable = builder.generate_table()
-	class CustomPersonTable(PersonTable):
-    	    # add your custom implementation here
 
 

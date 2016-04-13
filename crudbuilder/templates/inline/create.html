@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load tags %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="{% url app_label|add:'-'|add:actual_model_name|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
+    <li class="active">Create {{actual_model_name}}</li>
+</ul>
+{% endblock %}
+
+
+{% block js %}
+	<script type="text/javascript" src="{% static 'crudbuilder/js/jquery.formset.js' %}"></script>
+
+	<script type="text/javascript">
+	    $(function() {
+	        $('#formset_table tbody tr').formset({
+	            prefix: '{{inlineformset.prefix}}'
+	        })
+	    })
+</script>
+
+{% endblock %}
+
+
+{% block main_content %}
+<div class='container'>
+	<h3>{{actual_model_name|title}}</h3>
+
+	<form action="." method="post" enctype="multipart/form-data" class="form-horizontal">
+		{% csrf_token %}
+		{% for field in form %}
+			<fieldset class={% if field.errors %} "form-group has-error" {% else %} "form-group" {% endif %} >
+				{{ field|label_with_class:"col-sm-2 control-label" }}
+				<div class="col-xs-4">
+					{{ field|input_with_class:"form-control" }}
+			    	{{ field.errors }}
+				</div>
+			</fieldset>
+		{% endfor %}
+
+		<hr/>
+		<h3>{{inlineformset.prefix|title}}</h3>
+
+		<table id="formset_table" class="table table-bordered">
+			{% for form in inlineformset.forms %}
+				{{ form.id }}
+				{% if forloop.first %}
+					<thead>
+						<tr>
+							{% for field in form.visible_fields %}
+								<th>{{ field.label_tag }}</th>
+							{% endfor %}
+						</tr>
+					</thead>
+				{% endif %}
+				
+				<tr id="{{ form.prefix }}-row">
+				{% for field in form.visible_fields %}
+					<div class="fieldWrapper">
+        				{{ field.errors }}
+        				<td>{{ field }}</td>
+    				</div>
+				{% endfor %}
+				</tr>
+			{% endfor %}
+		</table>
+		{{ inlineformset.management_form }}
+
+	<input type="submit" value="Submit" class='btn btn-success'/>
+</form>
+
+{% endblock %}

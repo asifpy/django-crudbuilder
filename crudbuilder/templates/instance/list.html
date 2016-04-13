@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load tags %}
+{% load render_table from django_tables2 %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li class="active">{{pluralized_model_name|title}}</li>
+</ul>
+{% endblock %}
+
+{% block main_content %}
+
+{% block actions %}
+	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:actual_model_name|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+{% endblock %}
+
+<div class='container'>
+
+	<h3>{{pluralized_model_name|title}}</h3>
+
+	<form class="form-inline pull-right" role="form" action="." method="GET">
+  		<div class="form-group">
+    		<input type="text" class="form-control" name="search" placeholder="Search">
+  			<button type="submit" class="btn btn-primary">Search</button>
+  		</div>
+  	</form>
+	<br/>
+	<br/>
+
+	{% render_table table_objects "widgets/tables/tables.html" %}
+
+</div>
+
+
+{% comment %}
+	<b>APP :</b> {{app_label}}<br/>
+	<b>MODEL : </b>{{actual_model_name}}<br/>
+	<b>PLURIZED MODEL :</b> {{pluralized_model_name}}<br/>
+
+	<h4>Using normal queryset</h4>
+	{{object_list}}
+{% endcomment %}
+
+{% endblock %}

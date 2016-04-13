@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load tags %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="{% url app_label|add:'-'|add:actual_model_name|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
+    <li class="active">Create {{actual_model_name}}</li>
+</ul>
+{% endblock %}
+
+
+{% block main_content %}
+
+<div class='container'>
+	<h3>Create {{actual_model_name|title}}</h3>
+	<hr/>
+	{% include "widgets/form.html" %}
+</div>
+
+{% endblock %}

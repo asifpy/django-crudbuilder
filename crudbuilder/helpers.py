@@ -187,6 +187,3 @@ def auto_discover():
     for app in settings.INSTALLED_APPS:
         import_crud(app)
 
-
-if __name__ == '__main__':
-    print (plural('activity'))

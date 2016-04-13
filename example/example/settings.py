@@ -26,6 +26,7 @@ SECRET_KEY = 'e)uw#bitbtk!bc#f_!s(4)ytu85z)tn91#o9#dukt0waa8vher'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+PROJECT_NAME = 'Example'
 
 # LOGIN_REQUIRED_FOR_CRUD = False
 # PERMISSION_REQUIRED_FOR_CRUD = True
@@ -42,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_tables2',
-    
+
     'example',
 
     'crudbuilder'
@@ -107,6 +108,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 STATIC_URL = '/static/'
 

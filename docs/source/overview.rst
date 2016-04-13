@@ -16,6 +16,8 @@ Features
 - Add your own templates for List/Create/Detail/Update/Delete views
 - Separate CREATE and UPDATE forms
 - Define your own custom queryset for list view
+- Inline Formset support for parent child models
+- Default Bootstrap3 CSS
 
 
 Requirements and Compatibility

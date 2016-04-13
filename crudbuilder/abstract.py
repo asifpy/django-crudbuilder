@@ -1,7 +1,14 @@
+import django
+try:
+    from django.apps import apps
+except ImportError:
+    pass
+
 import crudbuilder
 from six import with_metaclass
-from crudbuilder.exceptions import NotModelException
 from django.contrib.contenttypes.models import ContentType
+
+from crudbuilder.exceptions import NotModelException
 
 
 class BaseBuilder(object):
@@ -32,12 +39,20 @@ class BaseBuilder(object):
 
         self.custom_templates = self._has_crud_attr('custom_templates')
         self.custom_queryset = self._has_crud_attr('custom_queryset')
+        self.inlineformset = self.get_inlineformset
 
     @property
     def get_model_class(self):
         """Returns model class"""
-        c = ContentType.objects.get(app_label=self.app, model=self.model)
-        return c.model_class()
+        try:
+            c = ContentType.objects.get(app_label=self.app, model=self.model)
+        except ContentType.DoesNotExist:
+            # try another kind of resolution
+            # fixes a situation where a proxy model is defined in some external app.
+            if django.VERSION >= (1, 7):
+                return apps.get_model(self.app, self.model)
+        else:
+            return c.model_class()
 
     def _has_crud_attr(self, attr):
         return getattr(self.crud, attr, None)
@@ -55,6 +70,13 @@ class BaseBuilder(object):
     @property
     def check_permission_required(self):
         return True if self.permission_required else False
+
+    @property
+    def get_inlineformset(self):
+        if self.crud.inlineformset:
+            return self.crud.inlineformset().construct_formset()
+        else:
+            return None
 
 
 class MetaCrudRegister(type):
@@ -74,3 +96,4 @@ class MetaCrudRegister(type):
 
 class BaseCrudBuilder(with_metaclass(MetaCrudRegister)):
     model = None
+    inlineformset = None
