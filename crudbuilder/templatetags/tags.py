@@ -22,7 +22,10 @@ def undertospaced(value):
 
 @register.filter
 def get_value(obj, field):
-    return getattr(obj, field)
+    try:
+        return getattr(obj, 'get_%s_display' % field)()
+    except:
+        return getattr(obj, field)
 
 
 @register.filter
@@ -38,6 +41,14 @@ def get_model_fields(obj):
             property_fields.append(Field(name=name, verbose_name=name))
 
     return chain(obj._meta.fields, property_fields)
+
+
+@register.filter
+def get_verbose_field_name(instance, field_name):
+    """
+    Returns verbose_name for a field.
+    """
+    return instance._meta.get_field(field_name).verbose_name.title()
 
 
 @register.filter(is_safe=True)
