@@ -198,3 +198,8 @@ Added mixin which allows access to additional template variables like app lable 
 
 
 
+
+
+.. image:: https://badges.gitter.im/asifpy/django-crudbuilder.svg
+   :alt: Join the chat at https://gitter.im/asifpy/django-crudbuilder
+   :target: https://gitter.im/asifpy/django-crudbuilder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
