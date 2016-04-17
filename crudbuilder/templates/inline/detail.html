@@ -52,7 +52,7 @@
             <tr>
                 {% for field in inlineformset.form.base_fields.keys %}
                     {% if inlineformset.fk.name != field %}
-                    <th>{{field}}</th>
+                    <th>{{field|undertospaced}}</th>
                     {% endif %}
                 {% endfor %}
             </tr>

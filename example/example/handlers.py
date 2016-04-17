@@ -55,4 +55,3 @@ def post_inline_update_handler(sender, **kwargs):
     for child in children:
         child.updated_by = request.user
         child.save()
-

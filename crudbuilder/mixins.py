@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from crudbuilder.helpers import plural
-from crudbuilder.signals import signals
+from crudbuilder.signals import crudbuilder_signals
 
 if six.PY3:
     from functools import reduce
@@ -86,11 +86,10 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
     @property
     def get_actual_signal(self):
         view = 'update' if self.object else 'create'
-
         if self.inlineformset:
-            return signals['inlineformset'][view]
+            return crudbuilder_signals['inlineformset'][view]
         else:
-            return signals['instance'][view]
+            return crudbuilder_signals['instance'][view]
 
 
 class BaseDetailViewMixin(CrudBuilderMixin):
@@ -153,9 +152,8 @@ class InlineFormsetViewMixin(CrudBuilderMixin):
         inlineformset = context['inlineformset']
 
         if inlineformset.is_valid():
-            self.object = form.save()
-            inlineformset.instance = self.object
-            inlineformset.save()
+            parent = form.save(commit=False)
+            inlineformset.instance = parent
             children = inlineformset.save(commit=False)
 
             # execute post signals
@@ -163,8 +161,11 @@ class InlineFormsetViewMixin(CrudBuilderMixin):
             signal.send(
                 sender=self.model,
                 request=self.request,
-                parent=self.object,
+                parent=parent,
                 children=children)
+
+            parent.save()
+            inlineformset.save()
 
             return HttpResponseRedirect(self.success_url)
         else:
