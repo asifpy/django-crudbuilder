@@ -1,4 +1,4 @@
-|Build|_ |CodeHealth|_ |coverage|_ |pypi|_ |CodeQuality|_
+|Build|_ |CodeHealth|_ |coverage|_ |pypi|_ |CodeQuality|_ |gitter|_
 
 .. |Build| image:: https://travis-ci.org/asifpy/django-crudbuilder.svg?branch=master
 .. _Build: https://travis-ci.org/asifpy/django-crudbuilder
@@ -14,6 +14,9 @@
 
 .. |coverage| image:: https://coveralls.io/repos/github/asifpy/django-crudbuilder/badge.svg?branch=master
 .. _coverage: https://coveralls.io/github/asifpy/django-crudbuilder?branch=master 
+
+.. |gitter| image:: https://badges.gitter.im/asifpy/django-crudbuilder.svg
+.. _gitter: https://gitter.im/asifpy/django-crudbuilder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 ==================
 django-crudbuilder
@@ -194,7 +197,3 @@ Added mixin which allows access to additional template variables like app lable 
 	APP : {{app_label}}
 	MODEL : {{actual_model_name}}
 	PLURIZED MODEL : {{pluralized_model_name}}
-
-
-
-
