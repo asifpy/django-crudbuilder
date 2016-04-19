@@ -107,6 +107,7 @@ class CreateUpdateViewMixin(CrudBuilderMixin):
         instance = form.save(commit=False)
         signal.send(sender=self.model, request=self.request, instance=instance)
         instance.save()
+        form.save_m2m()
         return super(CreateUpdateViewMixin, self).form_valid(form)
 
 
@@ -166,6 +167,7 @@ class InlineFormsetViewMixin(CrudBuilderMixin):
 
             parent.save()
             inlineformset.save()
+            inlineformset.save_m2m()
 
             return HttpResponseRedirect(self.success_url)
         else:
