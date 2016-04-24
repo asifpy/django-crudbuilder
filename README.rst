@@ -48,7 +48,7 @@ Features:
 
 Prerequisites
 -------------
-- Django 1.7+
+- Django 1.8+
 - Python 2.7+, 3.2+
 - Django Tables2
 
