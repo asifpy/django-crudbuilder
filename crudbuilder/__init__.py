@@ -1,4 +1,3 @@
-from crudbuilder import signals
 from crudbuilder.registry import (
     register,
     CrudBuilderRegistry,
