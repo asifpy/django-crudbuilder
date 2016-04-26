@@ -2,7 +2,7 @@
 from django.conf.urls import url
 from django.db import connection
 
-import crudbuilder
+from crudbuilder.registry import registry
 from crudbuilder.views import ViewBuilder
 from crudbuilder import helpers
 helpers.auto_discover()
@@ -12,7 +12,7 @@ urlpatterns = []
 tables = connection.introspection.table_names()
 
 if tables:
-    for app_model, base_crud in crudbuilder.registry.items():
+    for app_model, base_crud in registry.items():
         app, model = app_model.split('-')
         viewbuilder = ViewBuilder(app, model, base_crud)
 

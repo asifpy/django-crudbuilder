@@ -4,7 +4,7 @@ try:
 except ImportError:
     pass
 
-import crudbuilder
+from crudbuilder.registry import register
 from six import with_metaclass
 from django.contrib.contenttypes.models import ContentType
 
@@ -87,7 +87,7 @@ class MetaCrudRegister(type):
 
         if bases:
             if newclass.model:
-                crudbuilder.register(newclass.model, newclass)
+                register(newclass.model, newclass)
             else:
                 msg = "No model defined in {} class".format(newclass)
                 raise NotModelException(msg)
