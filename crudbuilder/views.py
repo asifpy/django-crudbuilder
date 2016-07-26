@@ -91,7 +91,8 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             table_pagination={'per_page': self.tables2_pagination or 10},
-            custom_queryset=self.custom_queryset
+            custom_queryset=self.custom_queryset,
+            custom_context=self.custom_context
             )
 
         list_class = type(

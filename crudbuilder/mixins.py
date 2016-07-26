@@ -132,6 +132,12 @@ class BaseListViewMixin(CrudBuilderMixin):
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
 
+    def get_context_data(self, **kwargs):
+        context = super(BaseListViewMixin, self).get_context_data(**kwargs)
+        if self.custom_context:
+            context.update(self.custom_context)
+        return context
+
 
 class InlineFormsetViewMixin(CrudBuilderMixin):
     def get_context_data(self, **kwargs):
