@@ -135,7 +135,7 @@ class BaseListViewMixin(CrudBuilderMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseListViewMixin, self).get_context_data(**kwargs)
         if self.custom_context:
-            custom_context = self.custom_context(self.request, **self.args)
+            custom_context = self.custom_context(self.request, context, **kwargs)
             context.update(custom_context)
         return context
 
