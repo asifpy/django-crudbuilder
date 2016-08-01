@@ -16,7 +16,7 @@ class PersonEmploymentInlineFormset(BaseInlineFormset):
 
 class PersonCrud(BaseCrudBuilder):
     model = Person
-    search_feilds = ['name']
+    search_fields = ['name']
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 10  # default is 10
@@ -41,7 +41,7 @@ class PersonCrud(BaseCrudBuilder):
 
 class PersonEmploymentCrud(BaseCrudBuilder):
     model = PersonEmployment
-    tables2_fields = ('year', 'salary', 'medical_allowance')
+    search_fields = ('year', 'salary', 'medical_allowance')
     search_feilds = ['year', 'person__name']
     tables2_css_class = "table table-bordered table-condensed"
     # custom_modelform = PersonEmploymentForm
