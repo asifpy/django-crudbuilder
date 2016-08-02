@@ -40,5 +40,5 @@ class PersonEmployment(Audit):
         Person,
         blank=True,
         null=True,
-        )
+    )
     medical_allowance = models.BooleanField(default=False)

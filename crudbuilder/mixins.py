@@ -126,9 +126,9 @@ class BaseListViewMixin(CrudBuilderMixin):
         if search:
             q_list = [
                 Q(
-                    ('{}__icontains'.format(field), search)
-                    ) for field in self.crud.search_feilds
-                ]
+                    ('{}__icontains'.format(field), search))
+                for field in self.crud.search_fields
+            ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
 
