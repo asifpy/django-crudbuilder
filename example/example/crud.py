@@ -41,8 +41,8 @@ class PersonCrud(BaseCrudBuilder):
 
 class PersonEmploymentCrud(BaseCrudBuilder):
     model = PersonEmployment
-    search_fields = ('year', 'salary', 'medical_allowance')
-    search_feilds = ['year', 'person__name']
+    tables2_fields = ('year', 'salary', 'medical_allowance')
+    search_fields = ['year', 'person__name']
     tables2_css_class = "table table-bordered table-condensed"
     # custom_modelform = PersonEmploymentForm
     # modelform_excludes = ['person']
