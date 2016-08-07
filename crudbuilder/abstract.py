@@ -39,6 +39,7 @@ class BaseBuilder(object):
 
         self.custom_templates = self._has_crud_attr('custom_templates')
         self.custom_queryset = self._has_crud_attr('custom_queryset')
+        self.custom_context = self._has_crud_attr('custom_context')
         self.inlineformset = self.get_inlineformset
 
     @property
