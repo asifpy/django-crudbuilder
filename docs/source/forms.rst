@@ -67,7 +67,7 @@ The latest version of django-crudbuilder supports inline formset. You can define
 
 	class PersonCrud(BaseCrudBuilder):
 		model = Person
-		search_feilds = ['name']
+		search_fields = ['name']
 		tables2_fields = ('name', 'email')		
 		inlineformset = PersonEmploymentInlineFormset
 
