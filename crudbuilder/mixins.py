@@ -116,7 +116,7 @@ class CreateUpdateViewMixin(CrudBuilderMixin):
 class BaseListViewMixin(CrudBuilderMixin):
     """
     - Search implementation for tables2 in ListView.
-    - search_feilds will be defined in actual model
+    - search_fields will be defined in actual model
     - Override get_queryset method of ListView
     """
     def get_queryset(self):
@@ -133,6 +133,13 @@ class BaseListViewMixin(CrudBuilderMixin):
             ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseListViewMixin, self).get_context_data(**kwargs)
+        if self.custom_context:
+            custom_context = self.custom_context(self.request, context, **kwargs)
+            context.update(custom_context)
+        return context
 
 
 class InlineFormsetViewMixin(CrudBuilderMixin):

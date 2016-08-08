@@ -38,9 +38,9 @@ class ViewBuilderTestCase(TestCase):
         list_view = self.builder.generate_list_view()
         self.assertEqual(list_view.table_pagination, {'per_page': 10})
 
-    def test_tables2_feilds(self):
-        tables2_feilds = self.builder.tables2_fields
-        self.assertEqual(tables2_feilds,  ('name', 'email'))
+    def test_tables2_fields(self):
+        tables2_fields = self.builder.tables2_fields
+        self.assertEqual(tables2_fields,  ('name', 'email'))
 
     def test_custom_list_view_permission(self):
         # test custom permission
