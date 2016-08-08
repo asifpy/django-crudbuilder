@@ -103,6 +103,11 @@ class BaseDetailViewMixin(CrudBuilderMixin):
 
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
+    def get_form_kwargs(self):
+        kwargs = super(CreateUpdateViewMixin, self).get_form_kwargs()
+        if self.custom_form:
+            kwargs.update({'request': self.request})
+        return kwargs
 
     def form_valid(self, form):
         signal = self.get_actual_signal

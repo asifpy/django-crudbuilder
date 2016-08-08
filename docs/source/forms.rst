@@ -15,10 +15,18 @@ You can define your own custom modelform in yourapp/forms.py and the same will b
 			fields = '__all__'
 			# exclude = ('person',)
 
+		def __init__(self, *args, **kwargs):
+			self.request = kwargs.pop('request', None)
+			super(PersonEmploymentForm, self).__init__(*args, **kwargs)
+
 	# yourapp/crud.py
 	class PersonEmploymentCrud(BaseCrudBuilder):
 		model = PersonEmployment
 		custom_modelform = PersonEmploymentForm
+
+.. note::
+	
+	If you want to plug custom modelform, then make sure to override form's ``__init__`` to get `request` param as mentioned above.
 
 
 Separate CREATE and UPDATE forms
@@ -32,10 +40,18 @@ You can also define separate forms for CreateView and UpdateView.::
 			model = PersonEmployment
 			exclude = ('person', 'medical_allowance')
 
+		def __init__(self, *args, **kwargs):
+			self.request = kwargs.pop('request', None)
+			super(PersonEmployementCreateForm, self).__init__(*args, **kwargs)
+
 	class PersonEmployementUpdateForm(forms.ModelForm):
 		class Meta:
 			model = PersonEmployment
 			exclude = ('salary', 'year')
+
+		def __init__(self, *args, **kwargs):
+			self.request = kwargs.pop('request', None)
+			super(PersonEmployementUpdateForm, self).__init__(*args, **kwargs)
 
 	# yourapp/crud.py
 	class PersonEmploymentCrud(BaseCrudBuilder):
@@ -48,6 +64,10 @@ You can also define separate forms for CreateView and UpdateView.::
 You can check `forms`_.py of example project on Github.
 
 .. _forms: https://github.com/asifpy/django-crudbuilder/blob/master/example/example/forms.py
+
+.. note::
+	
+	If you want to plug custom modelform, then make sure to override form's ``__init__`` to get `request` param as mentioned above.
 
 
 Inline Formset (Parent child relation)
