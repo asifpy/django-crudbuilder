@@ -13,7 +13,8 @@ tables = connection.introspection.table_names()
 
 if tables:
     for app_model, base_crud in registry.items():
-        app, model = app_model.split('-')
+        app, _ = app_model.split('-')
+        model = base_crud.model.__name__.lower()
         viewbuilder = ViewBuilder(app, model, base_crud)
 
         urls = []
@@ -25,23 +26,28 @@ if tables:
         create_view = viewbuilder.generate_create_view()
         delete_view = viewbuilder.generate_delete_view()
 
-        entries = [
-            (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
-            (r'^{}/{}/(?P<pk>\d+)/$', detail_view.as_view(), '{}-{}-detail'),
-            (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<pk>\d+)/update/$',
+        url_pattern = '{}/{}'.format(app, pluralized)
+        if viewbuilder.custom_url_name:
+            url_pattern = viewbuilder.custom_url_name
+
+        url_name = '{}-{}'.format(app, model)
+        if viewbuilder.custom_url_name:
+            url_name = viewbuilder.custom_url_name
+
+        urlpatterns += [
+            url(r'^{}/$'.format(url_pattern),
+                list_view.as_view(),
+                name='{}-list'.format(url_name)),
+            url(r'^{}/(?P<pk>\d+)/$'.format(url_pattern),
+                detail_view.as_view(),
+                name='{}-detail'.format(url_name)),
+            url(r'^{}/create/$'.format(url_pattern),
+                create_view.as_view(),
+                name='{}-create'.format(url_name)),
+            url(r'^{}/(?P<pk>\d+)/update/$'.format(url_pattern),
                 update_view.as_view(),
-                '{}-{}-update'),
-            (r'^{}/{}/(?P<pk>\d+)/delete/$',
+                name='{}-update'.format(url_name)),
+            url(r'^{}/(?P<pk>\d+)/delete/$'.format(url_pattern),
                 delete_view.as_view(),
-                '{}-{}-delete'),
-            ]
-
-        for entry in entries:
-            address = entry[0].format(app, pluralized)
-            url_name = entry[2].format(app, model)
-
-            urls.append(
-                url(address, entry[1], name=url_name),
-            )
-        urlpatterns += urls
+                name='{}-delete'.format(url_name))
+        ]

@@ -16,3 +16,8 @@ class TestModelCrud(BaseCrudBuilder):
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 20  # default is 10
     modelform_excludes = ['created_by']
+
+
+class TestSameModelCrud(BaseCrudBuilder):
+    model = TestModel
+    custom_url_name = 'testfoo'

@@ -41,6 +41,7 @@ class BaseBuilder(object):
         self.custom_queryset = self._has_crud_attr('custom_queryset')
         self.custom_context = self._has_crud_attr('custom_context')
         self.inlineformset = self.get_inlineformset
+        self.custom_url_name = self._has_crud_attr('custom_url_name')
 
     @property
     def get_model_class(self):
@@ -84,7 +85,7 @@ class MetaCrudRegister(type):
     def __new__(cls, clsname, bases, attrs):
         newclass = super(
             MetaCrudRegister, cls
-            ).__new__(cls, clsname, bases, attrs)
+        ).__new__(cls, clsname, bases, attrs)
 
         if bases:
             if newclass.model:
@@ -98,3 +99,7 @@ class MetaCrudRegister(type):
 class BaseCrudBuilder(with_metaclass(MetaCrudRegister)):
     model = None
     inlineformset = None
+
+    @classmethod
+    def get_class_name(cls):
+        return cls.__name__.lower()

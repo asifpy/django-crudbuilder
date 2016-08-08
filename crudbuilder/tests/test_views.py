@@ -32,6 +32,11 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('tests-testmodel-list'))
         self.assertEqual(200, response.status_code)
 
+    def test_custom_url_name(self):
+        self.client_login()
+        response = self.client.get(reverse('testfoo-list'))
+        self.assertEqual(200, response.status_code)
+
     def test_user_not_logged_in(self):
         response = self.client.get(reverse('tests-testmodel-list'))
         self.assertEqual(302, response.status_code)
