@@ -18,6 +18,6 @@ class TestModelCrud(BaseCrudBuilder):
     modelform_excludes = ['created_by']
 
 
-class TestSameModelCrud(BaseCrudBuilder):
+class TestCustomURLModelCrud(BaseCrudBuilder):
     model = TestModel
-    custom_url_name = 'testfoo'
+    custom_url_name = 'foo'
