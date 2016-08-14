@@ -32,6 +32,10 @@ class Person(Audit):
     def __unicode__(self):
         return self.name
 
+    @property
+    def foo(self):
+        return self.name
+
 
 class PersonEmployment(Audit):
     year = models.IntegerField()
