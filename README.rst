@@ -45,6 +45,7 @@ Features:
 - Define your own custom queryset for list view
 - Inline Formset support for parent child models
 - Default Bootstrap3 CSS
+- All the generated views are extendable.
 
 Prerequisites
 -------------
