@@ -1,4 +1,4 @@
-|Build|_ |CodeHealth|_ |coverage|_ |pypi|_ |CodeQuality|_ |gitter|_
+|Build|_ |CodeHealth|_ |coverage|_ |pypi|_ |CodeQuality|_
 
 .. |Build| image:: https://travis-ci.org/asifpy/django-crudbuilder.svg?branch=master
 .. _Build: https://travis-ci.org/asifpy/django-crudbuilder
@@ -9,14 +9,12 @@
 .. |pypi| image:: https://img.shields.io/pypi/v/django-crudbuilder.svg
 .. _pypi: https://pypi.python.org/pypi/django-crudbuilder
 
-.. |CodeQuality| image:: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/badges/quality-score.png?b=master
+.. |CodeQuality| image:: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/badges/build.png?b=master
 .. _CodeQuality: https://scrutinizer-ci.com/g/asifpy/django-crudbuilder/?branch=master
 
 .. |coverage| image:: https://coveralls.io/repos/github/asifpy/django-crudbuilder/badge.svg?branch=master
 .. _coverage: https://coveralls.io/github/asifpy/django-crudbuilder?branch=master 
 
-.. |gitter| image:: https://badges.gitter.im/asifpy/django-crudbuilder.svg
-.. _gitter: https://gitter.im/asifpy/django-crudbuilder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 ==================
 django-crudbuilder
