@@ -40,7 +40,9 @@ def get_model_fields(obj):
         ):
             property_fields.append(Field(name=name, verbose_name=name))
     ret = chain(obj._meta.fields, property_fields)
-    return chain(i for i in ret if not i.name in exclude)
+    if exclude:
+        return chain(i for i in ret if not i.name in exclude)
+    return ret
 
 @register.filter
 def get_verbose_field_name(instance, field_name):
