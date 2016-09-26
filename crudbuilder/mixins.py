@@ -77,6 +77,10 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context = super(CrudBuilderMixin, self).get_context_data(**kwargs)
         model = context['view'].model
         context['app_label'] = model._meta.app_label
+        try:
+            context['exclude'] = self.detailview_excludes
+        except:
+            context['exclude'] =None
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
         context['verbose_model_name'] = model._meta.verbose_name
