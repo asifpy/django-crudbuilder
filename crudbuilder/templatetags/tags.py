@@ -39,9 +39,8 @@ def get_model_fields(obj):
             getattr(model, name, None), property
         ):
             property_fields.append(Field(name=name, verbose_name=name))
-
-    return chain(obj._meta.fields, property_fields)
-
+    ret = chain(obj._meta.fields, property_fields)
+    return chain(i for i in ret if not i.name in exclude)
 
 @register.filter
 def get_verbose_field_name(instance, field_name):
