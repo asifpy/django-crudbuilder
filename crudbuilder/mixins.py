@@ -79,6 +79,8 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['app_label'] = model._meta.app_label
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
+        context['verbose_model_name'] = model._meta.verbose_name
+        context['verbose_model_name_plural'] = model._meta.verbose_name_plural
         context['project_name'] = getattr(
             settings, 'PROJECT_NAME', 'CRUDBUILDER')
         return context
@@ -101,19 +103,25 @@ class BaseDetailViewMixin(CrudBuilderMixin):
 
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
+    def get_form_kwargs(self):
+        kwargs = super(CreateUpdateViewMixin, self).get_form_kwargs()
+        if self.custom_form:
+            kwargs.update({'request': self.request})
+        return kwargs
 
     def form_valid(self, form):
         signal = self.get_actual_signal
         instance = form.save(commit=False)
         signal.send(sender=self.model, request=self.request, instance=instance)
         instance.save()
+        form.save_m2m()
         return super(CreateUpdateViewMixin, self).form_valid(form)
 
 
 class BaseListViewMixin(CrudBuilderMixin):
     """
     - Search implementation for tables2 in ListView.
-    - search_feilds will be defined in actual model
+    - search_fields will be defined in actual model
     - Override get_queryset method of ListView
     """
     def get_queryset(self):
@@ -125,11 +133,18 @@ class BaseListViewMixin(CrudBuilderMixin):
         if search:
             q_list = [
                 Q(
-                    ('{}__icontains'.format(field), search)
-                    ) for field in self.crud.search_feilds
-                ]
+                    ('{}__icontains'.format(field), search))
+                for field in self.crud.search_fields
+            ]
             objects = objects.filter(reduce(operator.or_, q_list))
         return objects.order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseListViewMixin, self).get_context_data(**kwargs)
+        if self.custom_context:
+            custom_context = self.custom_context(self.request, context, **kwargs)
+            context.update(custom_context)
+        return context
 
 
 class InlineFormsetViewMixin(CrudBuilderMixin):
@@ -166,6 +181,7 @@ class InlineFormsetViewMixin(CrudBuilderMixin):
 
             parent.save()
             inlineformset.save()
+            inlineformset.save_m2m()
 
             return HttpResponseRedirect(self.success_url)
         else:

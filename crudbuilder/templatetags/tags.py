@@ -48,7 +48,11 @@ def get_verbose_field_name(instance, field_name):
     """
     Returns verbose_name for a field.
     """
-    return instance._meta.get_field(field_name).verbose_name.title()
+    fields = [field.name for field in instance._meta.fields]
+    if field_name in fields:
+        return instance._meta.get_field(field_name).verbose_name.title()
+    else:
+        return field_name.title()
 
 
 @register.filter(is_safe=True)
@@ -66,7 +70,7 @@ def input_with_class(value, arg):
 @register.filter(is_safe=True)
 def inline_objects(object, inline_fk):
     inline_model = inline_fk.model
-    related_filter = inline_fk.get_forward_related_filter(object)
+    related_filter = {inline_fk.name: object}
     return inline_model.objects.filter(**related_filter)
 
 

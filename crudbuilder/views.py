@@ -91,14 +91,15 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             table_pagination={'per_page': self.tables2_pagination or 10},
-            custom_queryset=self.custom_queryset
-            )
+            custom_queryset=self.custom_queryset,
+            custom_context=self.custom_context
+        )
 
         list_class = type(
             name,
             (BaseListViewMixin, SingleTableView),
             list_args
-            )
+        )
         self.classes[name] = list_class
         return list_class
 
@@ -114,14 +115,15 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
-            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
-            )
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model)),
+            custom_form=self.createupdate_forms or self.custom_modelform
+        )
 
         create_class = type(
             name,
             (self.get_createupdate_mixin(), CreateView),
             create_args
-            )
+        )
 
         self.classes[name] = create_class
         return create_class
@@ -137,7 +139,7 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('detail'),
             inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
-            )
+        )
 
         detail_class = type(name, (BaseDetailViewMixin, DetailView), detail_args)
         self.classes[name] = detail_class
@@ -155,14 +157,15 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
+            custom_form=self.createupdate_forms or self.custom_modelform,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
-            )
+        )
 
         update_class = type(
-                name,
-                (self.get_createupdate_mixin(), UpdateView),
-                update_args
-                )
+            name,
+            (self.get_createupdate_mixin(), UpdateView),
+            update_args
+        )
         self.classes[name] = update_class
         return update_class
 
@@ -177,7 +180,7 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
-            )
+        )
 
         delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
         self.classes[name] = delete_class

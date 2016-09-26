@@ -16,14 +16,14 @@ class PersonEmploymentInlineFormset(BaseInlineFormset):
 
 class PersonCrud(BaseCrudBuilder):
     model = Person
-    search_feilds = ['name']
+    search_fields = ['name']
     tables2_fields = ('name', 'email')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 10  # default is 10
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
-    inlineformset = PersonEmploymentInlineFormset
+    # inlineformset = PersonEmploymentInlineFormset
 
     # custom_templates = {
     #     'list': 'yourtemplates/template.html'
@@ -42,7 +42,7 @@ class PersonCrud(BaseCrudBuilder):
 class PersonEmploymentCrud(BaseCrudBuilder):
     model = PersonEmployment
     tables2_fields = ('year', 'salary', 'medical_allowance')
-    search_feilds = ['year', 'person__name']
+    search_fields = ['year', 'person__name']
     tables2_css_class = "table table-bordered table-condensed"
     # custom_modelform = PersonEmploymentForm
     # modelform_excludes = ['person']

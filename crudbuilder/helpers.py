@@ -165,7 +165,7 @@ def import_crud(app):
 
     try:
         app_path = import_module(app).__path__
-    except AttributeError:
+    except (AttributeError, ImportError):
         return None
 
     try:

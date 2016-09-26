@@ -4,7 +4,7 @@ try:
 except ImportError:
     pass
 
-import crudbuilder
+from crudbuilder.registry import register
 from six import with_metaclass
 from django.contrib.contenttypes.models import ContentType
 
@@ -39,6 +39,7 @@ class BaseBuilder(object):
 
         self.custom_templates = self._has_crud_attr('custom_templates')
         self.custom_queryset = self._has_crud_attr('custom_queryset')
+        self.custom_context = self._has_crud_attr('custom_context')
         self.inlineformset = self.get_inlineformset
 
     @property
@@ -87,7 +88,7 @@ class MetaCrudRegister(type):
 
         if bases:
             if newclass.model:
-                crudbuilder.register(newclass.model, newclass)
+                register(newclass.model, newclass)
             else:
                 msg = "No model defined in {} class".format(newclass)
                 raise NotModelException(msg)

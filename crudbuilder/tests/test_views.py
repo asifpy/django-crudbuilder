@@ -111,6 +111,13 @@ class ViewTestCase(TestCase):
         setattr(TestModelCrud, 'custom_queryset', classmethod(custom_queryset))
         self.get_list_view()
 
+    def test_custom_context(self):
+        def custom_context(self, request, context, **kwargs):
+            context['testcontext'] = 'foo'
+            return context
+        setattr(TestModelCrud, 'custom_context', classmethod(custom_context))
+        self.get_list_view()
+
     def test_iniline_formset(self):
         TestModelCrud.inlineformset = TestChildInlineFormset
         self.get_list_view()
