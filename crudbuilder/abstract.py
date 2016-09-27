@@ -25,6 +25,7 @@ class BaseBuilder(object):
 
         self.custom_modelform = self._has_crud_attr('custom_modelform')
         self.modelform_excludes = self._has_crud_attr('modelform_excludes')
+        self.detailview_excludes = self._has_crud_attr('detailview_excludes')
         self.createupdate_forms = self._has_crud_attr('createupdate_forms')
 
         # django tables2

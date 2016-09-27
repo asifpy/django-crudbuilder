@@ -133,6 +133,7 @@ class ViewBuilder(BaseBuilder):
 
         name = model_class_form(self.model + 'DetailView')
         detail_args = dict(
+            detailview_excludes = self.detailview_excludes,
             model=self.get_model_class,
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
