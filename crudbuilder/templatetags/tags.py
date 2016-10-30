@@ -29,7 +29,7 @@ def get_value(obj, field):
 
 
 @register.filter
-def get_model_fields(obj, exclude=[]):
+def get_model_fields(obj, detail_exclude=None):
     model = obj.__class__
     excludes = ['pk']
 
@@ -39,8 +39,11 @@ def get_model_fields(obj, exclude=[]):
             getattr(model, name, None), property
         ):
             property_fields.append(Field(name=name, verbose_name=name))
-    ret = chain(obj._meta.fields, property_fields)
-    return [i for i in ret if i.name not in exclude]
+    fields = chain(obj._meta.fields, property_fields)
+
+    if detail_exclude:
+        fields = [field for field in fields if field.name not in detail_exclude]
+    return fields
 
 
 @register.filter

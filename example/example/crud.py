@@ -23,6 +23,7 @@ class PersonCrud(BaseCrudBuilder):
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
+    # detailview_excludes = ['img']
     # inlineformset = PersonEmploymentInlineFormset
 
     # custom_templates = {

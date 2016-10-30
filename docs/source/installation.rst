@@ -97,6 +97,7 @@ CRUD class Attributes
 - **tables2_css_class** -- CSS class for list view table (for django-tables2)
 - **tables2_pagination** -- By default crudbuilder will set pagination to 10, you can oveeride this value by setting this attribute
 - **modelform_excludes** -- Exclude fields for model form
+- **detailview_excludes** -- Exclude fields in Deatail view
 - **custom_modelform** -- Your custom model form
 - **custom_table2** -- Your custom Tables2 class
 - **custom_templates** -- Your own custom templates. For more details on custom templates, you can check check :doc:`custom templates </templates>`
