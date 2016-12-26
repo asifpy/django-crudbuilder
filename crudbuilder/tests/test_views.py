@@ -124,7 +124,7 @@ class ViewTestCase(TestCase):
 
     def test_undertospace_filter(self):
         model = 'test_model'
-        t = Template('{% load tags %}{{model|undertospaced}}')
+        t = Template('{% load crudbuilder %}{{model|undertospaced}}')
         c = Context({"model": model})
         result = t.render(c)
         self.assertEqual(result, 'Test Model')
@@ -132,7 +132,7 @@ class ViewTestCase(TestCase):
     def test_model_fields_filter(self):
         obj = TestModel.objects.create(name='object1')
         t = Template(
-            "{% load tags %}"
+            "{% load crudbuilder %}"
             "{% for field in obj|get_model_fields %}"
             "{{ field.name}},"
             "{% endfor %}"
@@ -144,7 +144,7 @@ class ViewTestCase(TestCase):
     def test_get_value_filter(self):
         obj = TestModel.objects.create(name='object1')
         t = Template(
-            "{% load tags %}"
+            "{% load crudbuilder %}"
             "{{obj|get_value:'name'}}"
             )
         c = Context({"obj": obj})
