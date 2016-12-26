@@ -66,9 +66,9 @@ class ViewBuilder(BaseBuilder):
         if self.custom_templates and self.custom_templates.get(tname, None):
             return self.custom_templates.get(tname)
         elif self.inlineformset:
-            return 'inline/{}.html'.format(tname)
+            return 'crudbuilder/inline/{}.html'.format(tname)
         else:
-            return 'instance/{}.html'.format(tname)
+            return 'crudbuilder/instance/{}.html'.format(tname)
 
     def get_createupdate_mixin(self):
         if self.inlineformset:

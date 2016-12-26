@@ -77,7 +77,7 @@ def inline_objects(object, inline_fk):
     return inline_model.objects.filter(**related_filter)
 
 
-@register.inclusion_tag('widgets/tables/pagination.html')
+@register.inclusion_tag('crudbuilder/widgets/tables/pagination.html')
 def bootstrap_pagination(page, **kwargs):
     pagination_kwargs = kwargs.copy()
     pagination_kwargs['page'] = page
