@@ -29,11 +29,11 @@ class ViewTestCase(TestCase):
 
     def get_list_view(self):
         self.client_login()
-        response = self.client.get(reverse('tests-testmodel-list'))
+        response = self.client.get(reverse('tests-testmodels-list'))
         self.assertEqual(200, response.status_code)
 
     def test_user_not_logged_in(self):
-        response = self.client.get(reverse('tests-testmodel-list'))
+        response = self.client.get(reverse('tests-testmodels-list'))
         self.assertEqual(302, response.status_code)
 
     def tearDown(self):
@@ -85,7 +85,7 @@ class ViewTestCase(TestCase):
 
     @override_settings(LOGIN_REQUIRED_FOR_CRUD=False)
     def test_no_login(self):
-        response = self.client.get(reverse('tests-testmodel-list'))
+        response = self.client.get(reverse('tests-testmodels-list'))
         self.assertEqual(200, response.status_code)
 
     def test_separate_createupdateform(self):
