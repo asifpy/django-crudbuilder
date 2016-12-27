@@ -32,6 +32,7 @@ Features:
 
 - Generates class based views for CRUD
 - Uses django-tables2 to display objects in ListView
+- Define multiple crud builders for same model with separate URL
 - Allows custom forms/tables as additional arguments
 - Context provides additional template variables APP_LABEL and MODEL for all CRUD templates
 - Enable/disable login required option for CRUD views
