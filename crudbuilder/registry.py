@@ -1,10 +1,12 @@
 from django.db import models
 
-from crudbuilder.exceptions import(
+from crudbuilder.exceptions import (
     NotModelException,
     AlreadyRegistered,
     NotRegistered
 )
+
+from crudbuilder import helpers
 
 __all__ = ('CrudBuilderRegistry', 'register', 'registry')
 
@@ -47,21 +49,23 @@ class CrudBuilderRegistry(dict):
             msg = "First argument should be Django Model"
             raise NotModelException(msg)
 
-        key = self._model_key(model)
+        key = self._model_key(model, crudbuilder)
 
         if key in self:
             msg = "Key '{key}' has already been registered.".format(
                 key=key
-                )
+            )
             raise AlreadyRegistered(msg)
 
         self.__setitem__(key, crudbuilder)
         return crudbuilder
 
-    def _model_key(self, model):
+    def _model_key(self, model, crudbuilder):
         app_label = model._meta.app_label
         model_name = model.__name__.lower()
-        return '{}-{}'.format(app_label, model_name)
+        print(model)
+        postfix_url = helpers.custom_postfix_url(crudbuilder(), model_name)
+        return '{}-{}-{}'.format(app_label, model_name, postfix_url)
 
     def unregister(self, model):
         key = self._model_key(model)

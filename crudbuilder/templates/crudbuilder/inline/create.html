@@ -3,7 +3,7 @@
 
 {% block breadcrumb %}
 <ul class="breadcrumb">
-    <li><a href="{% url app_label|add:'-'|add:actual_model_name|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
+    <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
     <li class="active">Create {{actual_model_name}}</li>
 </ul>
 {% endblock %}

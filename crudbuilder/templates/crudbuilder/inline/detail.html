@@ -1,6 +1,6 @@
 {% extends "crudbuilder/base.html" %}
 
-{% load crudbuilder.py %}
+{% load crudbuilder %}
 
 {% block css %}
 <style>
@@ -13,15 +13,15 @@
 
 {% block breadcrumb %}
 <ul class="breadcrumb">
-    <li><a href="{% url app_label|add:'-'|add:actual_model_name|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
+    <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
     <li class="active">{{object}}</li>
 </ul>
 {% endblock %}
 
 {% block main_content %}
     {% block actions %}
-        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:actual_model_name|add:'-update' object.id %}"><i class="glyphicon glyphicon-pencil"></i> Update</a>
-        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:actual_model_name|add:'-delete' object.id %}"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a>
+        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-update' object.id %}"><i class="glyphicon glyphicon-pencil"></i> Update</a>
+        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-delete' object.id %}"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a>
     {% endblock %}
 
 <div class='container'>

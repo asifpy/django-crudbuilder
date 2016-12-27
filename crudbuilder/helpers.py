@@ -1,3 +1,4 @@
+
 import re
 import string
 import imp
@@ -187,3 +188,10 @@ def auto_discover():
     for app in settings.INSTALLED_APPS:
         import_crud(app)
 
+
+def custom_postfix_url(crud, model):
+    postfix = getattr(crud, 'custom_postfix_url', None)
+
+    if not postfix:
+        postfix = plural(model)
+    return postfix

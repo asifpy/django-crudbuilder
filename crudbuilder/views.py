@@ -92,7 +92,8 @@ class ViewBuilder(BaseBuilder):
             login_required=self.check_login_required,
             table_pagination={'per_page': self.tables2_pagination or 10},
             custom_queryset=self.custom_queryset,
-            custom_context=self.custom_context
+            custom_context=self.custom_context,
+            custom_postfix_url=self.custom_postfix_url
         )
 
         list_class = type(
@@ -115,8 +116,9 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
-            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model)),
-            custom_form=self.createupdate_forms or self.custom_modelform
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
+            custom_form=self.createupdate_forms or self.custom_modelform,
+            custom_postfix_url=self.custom_postfix_url
         )
 
         create_class = type(
@@ -133,13 +135,14 @@ class ViewBuilder(BaseBuilder):
 
         name = model_class_form(self.model + 'DetailView')
         detail_args = dict(
-            detailview_excludes = self.detailview_excludes,
+            detailview_excludes=self.detailview_excludes,
             model=self.get_model_class,
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
             permissions=self.view_permission('detail'),
             inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
+            custom_postfix_url=self.custom_postfix_url
         )
 
         detail_class = type(name, (BaseDetailViewMixin, DetailView), detail_args)
@@ -159,7 +162,8 @@ class ViewBuilder(BaseBuilder):
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
             custom_form=self.createupdate_forms or self.custom_modelform,
-            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
+            custom_postfix_url=self.custom_postfix_url
         )
 
         update_class = type(
@@ -180,7 +184,8 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('delete'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
-            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.model))
+            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
+            custom_postfix_url=self.custom_postfix_url
         )
 
         delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)

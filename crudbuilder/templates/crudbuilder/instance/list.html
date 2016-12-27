@@ -11,7 +11,7 @@
 {% block main_content %}
 
 {% block actions %}
-	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:actual_model_name|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
 {% endblock %}
 
 <div class='container'>

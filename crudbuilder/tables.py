@@ -2,7 +2,11 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 from crudbuilder.abstract import BaseBuilder
-from crudbuilder.helpers import model_class_form, plural
+from crudbuilder.helpers import (
+    model_class_form,
+    plural,
+    custom_postfix_url
+)
 
 
 class TableBuilder(BaseBuilder):
@@ -15,11 +19,14 @@ class TableBuilder(BaseBuilder):
     """
     def generate_table(self):
         model_class = self.get_model_class()
-        detail_url_name = '{}-{}-detail'.format(self.app, self.model)
+
+        detail_url_name = '{}-{}-detail'.format(
+            self.app, custom_postfix_url(self.crud(), self.model)
+        )
 
         main_attrs = dict(
             id=tables.LinkColumn(detail_url_name, args=[A('pk')])
-            )
+        )
 
         meta_attrs = dict(
             model=model_class,
@@ -34,5 +41,5 @@ class TableBuilder(BaseBuilder):
             model_class_form(self.model + 'Table'),
             (tables.Table,),
             main_attrs
-            )
+        )
         return klass

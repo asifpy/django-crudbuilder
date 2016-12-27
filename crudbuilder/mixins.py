@@ -84,6 +84,7 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
         context['verbose_model_name'] = model._meta.verbose_name
+        context['custom_postfix_url'] = self.custom_postfix_url
         context['verbose_model_name_plural'] = model._meta.verbose_name_plural
         context['project_name'] = getattr(
             settings, 'PROJECT_NAME', 'CRUDBUILDER')

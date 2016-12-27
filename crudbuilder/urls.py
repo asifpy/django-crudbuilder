@@ -13,11 +13,11 @@ tables = connection.introspection.table_names()
 
 if tables:
     for app_model, base_crud in registry.items():
-        app, model = app_model.split('-')
+
+        app, model, postfix_url = app_model.split('-', 2)
         viewbuilder = ViewBuilder(app, model, base_crud)
 
         urls = []
-        pluralized = helpers.plural(model)
 
         list_view = viewbuilder.generate_list_view()
         update_view = viewbuilder.generate_update_view()
@@ -35,11 +35,11 @@ if tables:
             (r'^{}/{}/(?P<pk>\d+)/delete/$',
                 delete_view.as_view(),
                 '{}-{}-delete'),
-            ]
+        ]
 
         for entry in entries:
-            address = entry[0].format(app, pluralized)
-            url_name = entry[2].format(app, model)
+            address = entry[0].format(app, postfix_url)
+            url_name = entry[2].format(app, postfix_url)
 
             urls.append(
                 url(address, entry[1], name=url_name),

@@ -9,6 +9,7 @@ from six import with_metaclass
 from django.contrib.contenttypes.models import ContentType
 
 from crudbuilder.exceptions import NotModelException
+from crudbuilder import helpers
 
 
 class BaseBuilder(object):
@@ -42,6 +43,7 @@ class BaseBuilder(object):
         self.custom_queryset = self._has_crud_attr('custom_queryset')
         self.custom_context = self._has_crud_attr('custom_context')
         self.inlineformset = self.get_inlineformset
+        self.custom_postfix_url = self.postfix_url
 
     @property
     def get_model_class(self):
@@ -80,12 +82,16 @@ class BaseBuilder(object):
         else:
             return None
 
+    @property
+    def postfix_url(self):
+        return helpers.custom_postfix_url(self.crud(), self.model)
+
 
 class MetaCrudRegister(type):
     def __new__(cls, clsname, bases, attrs):
         newclass = super(
             MetaCrudRegister, cls
-            ).__new__(cls, clsname, bases, attrs)
+        ).__new__(cls, clsname, bases, attrs)
 
         if bases:
             if newclass.model:

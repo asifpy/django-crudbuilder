@@ -2,7 +2,7 @@ from crudbuilder.abstract import BaseCrudBuilder
 from crudbuilder.formset import BaseInlineFormset
 
 from example.models import Person, PersonEmployment
-from example.forms import(
+from example.forms import (
     PersonEmployementCreateForm,
     PersonEmployementUpdateForm
 )
@@ -23,6 +23,7 @@ class PersonCrud(BaseCrudBuilder):
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
+
     # detailview_excludes = ['img']
     # inlineformset = PersonEmploymentInlineFormset
 
@@ -38,6 +39,12 @@ class PersonCrud(BaseCrudBuilder):
     # @classmethod
     # def custom_queryset(cls, request, **kwargs):
     #     return cls.model.objects.filter(created_by=request.user)
+
+
+class AnotherPersonCrud(BaseCrudBuilder):
+    model = Person
+    tables2_css_class = "table table-bordered table-condensed"
+    custom_postfix_url = 'another-person-crud'  # /appname/<custom_postfix_url>
 
 
 class PersonEmploymentCrud(BaseCrudBuilder):
