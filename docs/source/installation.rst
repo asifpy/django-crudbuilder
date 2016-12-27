@@ -91,8 +91,11 @@ The above will generate following URL's::
 CRUD class Attributes
 ---------------------
 
+Usage of all below attributes you can view in `CRUD class of example project`_ on Github.
+
 - **model** -- Actual model name
 - **search_fields** -- Search fields for list view
+- **custom_postfix_url** -- Your own custom url postfix, if this value set then the resulted URL will become `/crud/appname/<custom_postfix_url>`.
 - **tables2_fields** -- Fields which will be used in django-tables2 fields attribute (in list view)
 - **tables2_css_class** -- CSS class for list view table (for django-tables2)
 - **tables2_pagination** -- By default crudbuilder will set pagination to 10, you can oveeride this value by setting this attribute
@@ -100,7 +103,7 @@ CRUD class Attributes
 - **detailview_excludes** -- Exclude fields in Deatail view
 - **custom_modelform** -- Your custom model form
 - **custom_table2** -- Your custom Tables2 class
-- **custom_templates** -- Your own custom templates. For more details on custom templates, you can check check :doc:`custom templates </templates>`
+- **custom_templates** -- Your own custom templates. For more details on custom templates, you can check :doc:`custom templates </templates>`
 - **login_required** -- Enable login required for specific model CRUD (by default False)
 - **permission_required** -- Enable permission required for specific model CRUD (by default False)
 - **permissions** -- By default crudbuilder will generate crud permissions, if you want to define your own permissions then add permissions dictionary on the CRUD class. For more details on permission, you can check :doc:`custom permission </settings>`
@@ -109,7 +112,6 @@ CRUD class Attributes
 - **custom_context** -- Define your own custom context for list view
 - **inlineformset** -- Define your Inline Formset for parent child relation, you can check :doc:`inline-formset-parent-child-relation </forms>` for more detail.
 
-Usage of all these attributes you can view in `CRUD class of example project`_ on Github.
 
 .. _example project: https://github.com/asifpy/django-crudbuilder/tree/master/example
 .. _CRUD class of example project: https://github.com/asifpy/django-crudbuilder/blob/master/example/example/crud.py

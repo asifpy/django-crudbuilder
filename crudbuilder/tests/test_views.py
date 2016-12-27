@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from django.template import Context, Template, TemplateSyntaxError
+from django.template import Context, Template
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
@@ -136,7 +136,7 @@ class ViewTestCase(TestCase):
             "{% for field in obj|get_model_fields %}"
             "{{ field.name}},"
             "{% endfor %}"
-            )
+        )
         c = Context({"obj": obj})
         result = t.render(c)
         self.assertEqual(result, 'id,name,email,created_at,')
@@ -146,7 +146,7 @@ class ViewTestCase(TestCase):
         t = Template(
             "{% load crudbuilder %}"
             "{{obj|get_value:'name'}}"
-            )
+        )
         c = Context({"obj": obj})
         result = t.render(c)
         self.assertEqual(result, 'object1')
