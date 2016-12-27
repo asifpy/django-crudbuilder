@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% load tags %}
+{% extends "crudbuilder/base.html" %}
+{% load crudbuilder %}
 {% load render_table from django_tables2 %}
 
 {% block breadcrumb %}
@@ -27,7 +27,7 @@
 	<br/>
 	<br/>
 
-	{% render_table table_objects "widgets/tables/tables.html" %}
+	{% render_table table_objects "crudbuilder/widgets/tables/tables.html" %}
 
 </div>
 
