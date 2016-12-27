@@ -150,3 +150,18 @@ class ViewTestCase(TestCase):
         c = Context({"obj": obj})
         result = t.render(c)
         self.assertEqual(result, 'object1')
+
+    def test_custom_url_name_list(self):
+        self.client_login()
+        response = self.client.get(reverse('foo-list'))
+        self.assertEqual(200, response.status_code)
+
+    def test_custom_url_name_create_url(self):
+        self.assertEqual('/crud/foo/create/', reverse('foo-create'))
+
+    def test_custom_url_name_update_url(self):
+        self.assertEqual('/crud/foo/1/update/', reverse('foo-update', args=[1]))
+
+    def test_custom_url_name_delete_url(self):
+        self.assertEqual('/crud/foo/1/delete/', reverse('foo-delete', args=[1]))
+

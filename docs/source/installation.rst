@@ -108,6 +108,7 @@ CRUD class Attributes
 - **custom_queryset** -- Define your own custom queryset for list view
 - **custom_context** -- Define your own custom context for list view
 - **inlineformset** -- Define your Inline Formset for parent child relation, you can check :doc:`inline-formset-parent-child-relation </forms>` for more detail.
+- **custom_url_name** -- Define your own custom model URL. For example instead of `/crud/<appname>/<modelname>/` it could be `/crud/foo/`
 
 Usage of all these attributes you can view in `CRUD class of example project`_ on Github.
 
