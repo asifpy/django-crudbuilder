@@ -63,7 +63,6 @@ class CrudBuilderRegistry(dict):
     def _model_key(self, model, crudbuilder):
         app_label = model._meta.app_label
         model_name = model.__name__.lower()
-        print(model)
         postfix_url = helpers.custom_postfix_url(crudbuilder(), model_name)
         return '{}-{}-{}'.format(app_label, model_name, postfix_url)
 

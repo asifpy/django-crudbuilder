@@ -2,6 +2,7 @@ from crudbuilder.abstract import BaseCrudBuilder
 from crudbuilder.formset import BaseInlineFormset
 
 from example.models import Person, PersonEmployment
+from example.tables import CustomPersonTable
 from example.forms import (
     PersonEmployementCreateForm,
     PersonEmployementUpdateForm
@@ -23,6 +24,7 @@ class PersonCrud(BaseCrudBuilder):
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
+    # custom_table2 = CustomPersonTable
 
     # detailview_excludes = ['img']
     # inlineformset = PersonEmploymentInlineFormset

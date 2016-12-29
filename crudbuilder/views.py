@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.forms.models import modelform_factory
-from django.views.generic import(
+from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
@@ -8,7 +8,7 @@ from django.views.generic import(
 )
 from django_tables2 import SingleTableView
 
-from crudbuilder.mixins import(
+from crudbuilder.mixins import (
     CrudBuilderMixin,
     BaseListViewMixin,
     CreateUpdateViewMixin,
