@@ -4,10 +4,12 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    TemplateView
 )
 from django_tables2 import SingleTableView
 
+from crudbuilder.registry import registry
 from crudbuilder.mixins import (
     CrudBuilderMixin,
     BaseListViewMixin,
@@ -191,3 +193,14 @@ class ViewBuilder(BaseBuilder):
         delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
         self.classes[name] = delete_class
         return delete_class
+
+
+class CrudListView(TemplateView):
+    template_name = "crudbuilder/cruds.html"
+    title = "Registered Cruds"
+
+    def cruds(self):
+        return registry.items()
+
+
+crudlist_view = CrudListView.as_view()

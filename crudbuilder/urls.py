@@ -3,11 +3,13 @@ from django.conf.urls import url
 from django.db import connection
 
 from crudbuilder.registry import registry
-from crudbuilder.views import ViewBuilder
+from crudbuilder.views import ViewBuilder, crudlist_view
 from crudbuilder import helpers
 helpers.auto_discover()
 
-urlpatterns = []
+urlpatterns = [
+    url(r'^$', crudlist_view, name='crud-index'),
+]
 
 tables = connection.introspection.table_names()
 

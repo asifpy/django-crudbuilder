@@ -29,6 +29,18 @@ def get_value(obj, field):
 
 
 @register.filter
+def class_name(obj):
+    return obj.__class__.__name__
+
+
+@register.filter
+def crud_detail(crud_key):
+    app, model, postfix_url = crud_key.split('-', 2)
+    list_url = '{}-{}-list'.format(app, postfix_url)
+    return (app, model, list_url)
+
+
+@register.filter
 def get_model_fields(obj, detail_exclude=None):
     model = obj.__class__
     excludes = ['pk']
