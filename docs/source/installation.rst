@@ -56,11 +56,11 @@ Then create the CRUD class for ``Person`` model::
             return qset
 
         @classmethod
-        def custom_context(cls, request, context **kwargs):
+        def custom_context(cls, request, context, **kwargs):
             """Define your own custom context for list view"""
             context['custom_data'] = "Some custom data"
             return context
-        
+
         # permissions = {
         #     'list': 'example.person_list',
         #     'create': 'example.person_create'
@@ -69,7 +69,6 @@ Then create the CRUD class for ``Person`` model::
         #     'create': PersonCreateForm,
         #     'update': PersonUpdateForm
         # }
-
 
 Finally implement the urls for the CRUD::
     
@@ -86,6 +85,10 @@ The above will generate following URL's::
     http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/detail/
     http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/update/
     http://127.0.0.1:8000/crud/yourappname/yourmodelname/<pk>/delete/
+
+View all your registered CRUDS::
+    
+    http://127.0.0.1:8000/crud/
 
 
 CRUD class Attributes
