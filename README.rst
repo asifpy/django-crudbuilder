@@ -121,6 +121,13 @@ Usage
 		url(r'^crud/',  include('crudbuilder.urls')),
 	]
 
+**View All your registered CRUDS**
+
+.. code-block:: python
+
+	http://127.0.0.1:8000/crud/
+
+
 **Now you can access the below CRUD URLS**
 
 .. code-block:: python
