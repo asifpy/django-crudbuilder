@@ -13,7 +13,7 @@ urlpatterns = [
 
 tables = connection.introspection.table_names()
 
-if tables:
+if 'django_content_type' in tables:
     for app_model, base_crud in registry.items():
 
         app, model, postfix_url = app_model.split('-', 2)
