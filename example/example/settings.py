@@ -25,7 +25,7 @@ SECRET_KEY = 'e)uw#bitbtk!bc#f_!s(4)ytu85z)tn91#o9#dukt0waa8vher'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 PROJECT_NAME = 'Example'
 
 # LOGIN_REQUIRED_FOR_CRUD = False
