@@ -65,9 +65,9 @@ def get_verbose_field_name(instance, field_name):
     """
     fields = [field.name for field in instance._meta.fields]
     if field_name in fields:
-        return instance._meta.get_field(field_name).verbose_name.title()
+        return instance._meta.get_field(field_name).verbose_name
     else:
-        return field_name.title()
+        return field_name
 
 
 @register.filter(is_safe=True)

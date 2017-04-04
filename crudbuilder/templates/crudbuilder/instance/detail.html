@@ -37,10 +37,10 @@
         </thead>
         <tbody>
             {% for field in object|get_model_fields:exclude %}
-        	   <tr>
-        		  <td>{{object|get_verbose_field_name:field.name}}</td>
-        		  <td>{{object|get_value:field.name}}</td>
-        	   </tr>
+                <tr>
+                    <td>{{object|get_verbose_field_name:field.name|title}}</td>
+                    <td>{{object|get_value:field.name}}</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
