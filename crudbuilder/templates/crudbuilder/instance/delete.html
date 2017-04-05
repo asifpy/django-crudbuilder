@@ -1,24 +1,24 @@
 {% extends "crudbuilder/base.html" %}
-{% load crudbuilder %}
+{% load crudbuilder i18n %}
 
 {% block breadcrumb %}
 <ul class="breadcrumb">
     <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
     <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-detail' object.id %}">{{object}}</a></li>
-    <li class="active">Delete {{object}}</li>
+    <li class="active">{% trans 'Delete' %} {{object}}</li>
 </ul>
 {% endblock %}
 
 
 {% block main_content %}
-<h3>Delete {{actual_model_name}}</h3>
+<h3>{% trans 'Delete' %} {{actual_model_name}}</h3>
 
-<h4>Are you sure?</h4>
-Are you sure you want to delete the selected {{actual_model_name}}?
+<h4>{% trans 'Are you sure?' %}</h4>
+{% blocktrans %}Are you sure you want to delete the selected {{actual_model_name}}?{% endblocktrans %}
 {{ object}}
 
 <form action="." method="post">{% csrf_token %}
-    <input type="submit" value="Delete" class="btn btn-primary" />
+    <input type="submit" value="{% trans 'Delete' %}" class="btn btn-primary" />
 </form>
 
 {% endblock %}

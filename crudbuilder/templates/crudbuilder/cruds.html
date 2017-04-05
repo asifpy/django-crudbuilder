@@ -1,5 +1,5 @@
 {% extends "crudbuilder/base.html" %}
-{% load crudbuilder %}
+{% load crudbuilder i18n %}
 
 {% block main_content %}
 <div class="container">
@@ -8,9 +8,9 @@
 	<table class="table table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>Crud</th>
-				<th>Model</th>
-				<th>App</th>
+				<th>{% trans 'Crud' %}</th>
+				<th>{% trans 'Model' %}</th>
+				<th>{% trans 'App' %}</th>
 			</tr>
 		</thead>
 		<tbody>
