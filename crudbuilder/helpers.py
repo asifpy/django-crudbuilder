@@ -189,9 +189,13 @@ def auto_discover():
         import_crud(app)
 
 
+# noinspection PyProtectedMember
 def custom_postfix_url(crud, model):
     postfix = getattr(crud, 'custom_postfix_url', None)
 
     if not postfix:
-        postfix = plural(model)
+        if crud.model._meta.verbose_name_plural:
+            postfix = crud.model._meta.verbose_name_plural.lower()
+        else:
+            postfix = plural(model)
     return postfix

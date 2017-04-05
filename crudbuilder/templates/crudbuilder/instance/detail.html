@@ -1,6 +1,6 @@
 {% extends "crudbuilder/base.html" %}
 
-{% load crudbuilder %}
+{% load crudbuilder i18n %}
 
 {% block css %}
 <style>
@@ -21,8 +21,8 @@
 
 {% block main_content %}
     {% block actions %}
-        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-update' object.id %}"><i class="glyphicon glyphicon-pencil"></i> Update</a>
-        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-delete' object.id %}"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a>
+        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-update' object.id %}"><i class="glyphicon glyphicon-pencil"></i> {% trans 'Update' %}</a>
+        <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-delete' object.id %}"><i class="glyphicon glyphicon-remove-sign"></i> {% trans 'Delete' %}</a>
     {% endblock %}
 <hr/>
 
@@ -31,8 +31,8 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Field</th>
-                <th>Value</th>
+                <th>{% trans 'Field' %}</th>
+                <th>{% trans 'Value' %}</th>
             </tr>
         </thead>
         <tbody>

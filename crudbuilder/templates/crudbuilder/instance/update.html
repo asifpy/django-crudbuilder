@@ -1,11 +1,11 @@
 {% extends "crudbuilder/base.html" %}
-{% load crudbuilder %}
+{% load crudbuilder i18n %}
 
 {% block breadcrumb %}
 <ul class="breadcrumb">
     <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
     <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-detail' object.id %}">{{object}}</a></li>
-    <li class="active">Update {{object}}</li>
+    <li class="active">{% trans 'Update' %} {{object}}</li>
 </ul>
 {% endblock %}
 
@@ -13,7 +13,7 @@
 {% block main_content %}
 
 <div class='container'>
-	<h3>Update {{actual_model_name|title}}</h3>
+	<h3>{% trans 'Update' %} {{actual_model_name|title}}</h3>
 	<hr/>
 	{% include "crudbuilder/widgets/form.html" %}
 </div>

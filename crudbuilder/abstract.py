@@ -1,4 +1,5 @@
 import django
+
 try:
     from django.apps import apps
 except ImportError:
@@ -14,10 +15,10 @@ from crudbuilder import helpers
 
 class BaseBuilder(object):
     def __init__(
-        self,
-        app,
-        model,
-        crud
+            self,
+            app,
+            model,
+            crud
     ):
 
         self.model = model
@@ -78,7 +79,10 @@ class BaseBuilder(object):
     @property
     def get_inlineformset(self):
         if self.crud.inlineformset:
-            return self.crud.inlineformset().construct_formset()
+            if isinstance(self.crud.inlineformset, list):
+                return [x().construct_formset() for x in self.crud.inlineformset]
+            else:
+                return [self.crud.inlineformset().construct_formset()]
         else:
             return None
 

@@ -1,5 +1,5 @@
 {% extends "crudbuilder/base.html" %}
-{% load crudbuilder %}
+{% load crudbuilder i18n %}
 {% load render_table from django_tables2 %}
 
 {% block breadcrumb %}
@@ -11,7 +11,7 @@
 {% block main_content %}
 
 {% block actions %}
-	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> {% trans 'Add' %} {{actual_model_name|title}}</a>
 {% endblock %}
 
 <div class='container'>
@@ -20,8 +20,8 @@
 
 	<form class="form-inline pull-right" role="form" action="." method="GET">
   		<div class="form-group">
-    		<input type="text" class="form-control" name="search" placeholder="Search">
-  			<button type="submit" class="btn btn-primary">Search</button>
+    		<input type="text" class="form-control" name="search" placeholder="{% trans 'Search' %}">
+  			<button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
   		</div>
   	</form>
 	<br/>

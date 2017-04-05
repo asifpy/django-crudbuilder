@@ -44,6 +44,7 @@ class PermissionRequiredMixin(object):
     View mixin which verifies that the logged in user has the specified
     permission.
     """
+
     def check_permissions(self, request):
         perms = self.permissions
         result = request.user.has_perm(perms) if perms else True
@@ -73,6 +74,7 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
     - pluralized_model_name : return the pluralized_model_name
     (person -> people)
     """
+
     def get_context_data(self, **kwargs):
         context = super(CrudBuilderMixin, self).get_context_data(**kwargs)
         model = context['view'].model
@@ -80,9 +82,9 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         try:
             context['exclude'] = self.detailview_excludes
         except:
-            context['exclude'] =None
+            context['exclude'] = None
         context['actual_model_name'] = model.__name__.lower()
-        context['pluralized_model_name'] = plural(model.__name__.lower())
+        context['pluralized_model_name'] = model._meta.verbose_name_plural or plural(model.__name__.lower())
         context['verbose_model_name'] = model._meta.verbose_name
         context['custom_postfix_url'] = self.custom_postfix_url
         context['verbose_model_name_plural'] = model._meta.verbose_name_plural
@@ -102,12 +104,13 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
 class BaseDetailViewMixin(CrudBuilderMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseDetailViewMixin, self).get_context_data(**kwargs)
-        context['inlineformset'] = self.inlineformset
+        context['inlineformsets'] = self.inlineformset
         return context
 
 
 class CreateUpdateViewMixin(CrudBuilderMixin):
     """Common form_valid() method for both Create and Update views"""
+
     def get_form_kwargs(self):
         kwargs = super(CreateUpdateViewMixin, self).get_form_kwargs()
         if self.custom_form:
@@ -129,6 +132,7 @@ class BaseListViewMixin(CrudBuilderMixin):
     - search_fields will be defined in actual model
     - Override get_queryset method of ListView
     """
+
     def get_queryset(self):
         if self.custom_queryset:
             objects = self.custom_queryset(self.request, **self.kwargs)
@@ -157,41 +161,39 @@ class InlineFormsetViewMixin(CrudBuilderMixin):
         context = super(
             InlineFormsetViewMixin, self).get_context_data(**kwargs)
         if self.request.POST:
-            context['inlineformset'] = self.inlineformset(
-                self.request.POST,
-                instance=self.object
-            )
+            context['inlineformsets'] = [x(self.request.POST, instance=self.object) for x in self.inlineformset]
         else:
-            context['inlineformset'] = self.inlineformset(
-                instance=self.object
-            )
+            context['inlineformsets'] = [x(instance=self.object) for x in self.inlineformset]
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
-        inlineformset = context['inlineformset']
+        inlineformsets = context['inlineformsets']
+        valid = True
+        for inlineformset in inlineformsets:
+            if inlineformset.is_valid():
+                parent = form.save(commit=False)
+                inlineformset.instance = parent
+                children = inlineformset.save(commit=False)
 
-        if inlineformset.is_valid():
-            parent = form.save(commit=False)
-            inlineformset.instance = parent
-            children = inlineformset.save(commit=False)
+                # execute post signals
+                signal = self.get_actual_signal
+                signal.send(
+                    sender=self.model,
+                    request=self.request,
+                    parent=parent,
+                    children=children)
 
-            # execute post signals
-            signal = self.get_actual_signal
-            signal.send(
-                sender=self.model,
-                request=self.request,
-                parent=parent,
-                children=children)
+                parent.save()
+                inlineformset.save()
+                inlineformset.save_m2m()
+            else:
+                messages.error(self.request, inlineformset.non_form_errors())
+                valid = False
 
-            parent.save()
-            inlineformset.save()
-            inlineformset.save_m2m()
-
+        if valid:
             return HttpResponseRedirect(self.success_url)
         else:
-            messages.error(
-                self.request, inlineformset.non_form_errors())
             return self.render_to_response(
-                self.get_context_data(form=form, inlineformset=inlineformset)
+                self.get_context_data(form=form, inlineformsets=inlineformsets)
             )

@@ -84,7 +84,7 @@ class ViewBuilder(BaseBuilder):
         name = model_class_form(self.model + 'ListView')
         list_args = dict(
             model=self.get_model_class,
-            context_object_name=plural(self.model),
+            context_object_name=self.get_model_class._meta.verbose_name_plural or plural(self.model),
             template_name=self.get_template('list'),
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
