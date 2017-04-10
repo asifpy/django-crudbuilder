@@ -40,9 +40,8 @@ def get_model_fields(obj, exclude=[]):
         ):
             property_fields.append(Field(name=name, verbose_name=name))
     ret = chain(obj._meta.fields, property_fields)
-    if exclude:
-        return [i for i in ret if i.name not in exclude]
-    return ret
+    return [i for i in ret if i.name not in exclude]
+
 
 
 @register.filter
