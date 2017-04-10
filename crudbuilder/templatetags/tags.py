@@ -43,7 +43,6 @@ def get_model_fields(obj, exclude=[]):
     return [i for i in ret if i.name not in exclude]
 
 
-
 @register.filter
 def get_verbose_field_name(instance, field_name):
     """
