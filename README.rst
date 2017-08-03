@@ -115,10 +115,12 @@ Usage
 **Open yourapp/urls.py and add the following**
 
 .. code-block:: python
+	
+	from crudbuilder import urls
 
 	urlpatterns = [
 		url(r'^admin/', include(admin.site.urls)),
-		url(r'^crud/',  include('crudbuilder.urls')),
+		url(r'^crud/',  include(urls)),
 	]
 
 **View All your registered CRUDS**
