@@ -44,7 +44,7 @@
 
 		<table id="formset_table" class="table table-bordered">
 			{% for form in inlineformset.forms %}
-				{{ form.id }}
+				{{ form.pk }}
 				{% if forloop.first %}
 					<thead>
 						<tr>

@@ -25,7 +25,7 @@ settings.configure(
         'django_tables2',
 
         'crudbuilder.tests',
-        ),
+    ),
     ROOT_URLCONF='crudbuilder.tests.urls',
     LOGIN_REQUIRED_FOR_CRUD=True,
 
@@ -38,12 +38,6 @@ settings.configure(
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware'),
 
-    TEMPLATE_LOADERS=(
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-        'django.template.loaders.eggs.Loader'
-    ),
-
     STATIC_URL='/static/',
 
     TEMPLATES=[
@@ -51,7 +45,7 @@ settings.configure(
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
             'DIRS': [
                 localpath('templates'),
-                ],
+            ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -67,20 +61,6 @@ settings.configure(
 )
 
 django.setup()
-
-if DJANGO_VERSION == 1.7:
-    settings.TEMPLATE_CONTEXT_PROCESSORS = (
-        "django.contrib.auth.context_processors.auth",
-        "django.core.context_processors.debug",
-        "django.core.context_processors.i18n",
-        "django.core.context_processors.media",
-        "django.core.context_processors.static",
-        "django.core.context_processors.request",
-        "django.contrib.messages.context_processors.messages")
-
-    settings.TEMPLATE_DIRS = (
-        localpath('templates')
-    )
 
 TestRunner = get_runner(settings)
 test_runner = TestRunner()

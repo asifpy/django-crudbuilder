@@ -29,7 +29,7 @@ class Person(Audit):
         upload_to='uploads',
         blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @property
@@ -38,6 +38,8 @@ class Person(Audit):
 
 
 class PersonEmployment(Audit):
+
+    mypk = models.AutoField(primary_key=True)
     year = models.IntegerField()
     salary = models.FloatField()
     person = models.ForeignKey(

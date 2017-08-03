@@ -4,7 +4,7 @@
 {% block breadcrumb %}
 <ul class="breadcrumb">
     <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-list' %}">{{pluralized_model_name|title}}</a></li>
-    <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-detail' object.id %}">{{object}}</a></li>
+    <li><a href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-detail' object.pk %}">{{object}}</a></li>
     <li class="active">Update {{object}}</li>
 </ul>
 {% endblock %}

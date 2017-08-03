@@ -39,7 +39,7 @@ class MyCustomPersonDetailView(PersonDetailView):
         return HttpResponseRedirect(
             reverse(
                 'person-detail',
-                args=[self.object.id]
+                args=[self.object.pk]
             )
         )
 

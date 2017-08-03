@@ -142,7 +142,7 @@ class BaseListViewMixin(CrudBuilderMixin):
                 for field in self.crud.search_fields
             ]
             objects = objects.filter(reduce(operator.or_, q_list))
-        return objects.order_by('-id')
+        return objects.order_by('-pk')
 
     def get_context_data(self, **kwargs):
         context = super(BaseListViewMixin, self).get_context_data(**kwargs)
