@@ -7,6 +7,9 @@
 			{{ field|label_with_class:"col-sm-2 control-label" }}
 			<div class="col-xs-4">
 				{{ field|input_with_class:"form-control" }}
+                {% if field.help_text %}
+                    <p class="help-block">{{ field.help_text|safe }}</p>
+                {% endif %}
 			    {{ field.errors }}
 			</div>
 		</fieldset>
