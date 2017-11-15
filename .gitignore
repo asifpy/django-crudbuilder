@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
+Pipfile
+Pipfile.lock
 build
 dist
 *.egg-info

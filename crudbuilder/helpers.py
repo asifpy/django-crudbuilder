@@ -161,7 +161,7 @@ def underToAllCaps(value):  # pragma: no cover
 
 def import_crud(app):
     '''
-    Import moderator module and register all models it contains with moderation
+    Import crud module and register all model cruds which it contains
     '''
 
     try:
@@ -181,7 +181,7 @@ def import_crud(app):
 
 def auto_discover():
     '''
-    Auto register all apps that have module moderator with moderation
+    Auto register all apps that have module crud
     '''
     from django.conf import settings
 
