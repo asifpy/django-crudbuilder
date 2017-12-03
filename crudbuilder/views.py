@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse_lazy
 from django.forms.models import modelform_factory
 from django.views.generic import (
     DetailView,
@@ -19,7 +18,11 @@ from crudbuilder.mixins import (
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
-from crudbuilder.helpers import model_class_form, plural
+from crudbuilder.helpers import (
+    model_class_form,
+    plural,
+    reverse_lazy
+)
 
 
 class ViewBuilder(BaseBuilder):

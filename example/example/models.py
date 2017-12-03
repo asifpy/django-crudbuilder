@@ -8,12 +8,14 @@ class Audit(models.Model):
         User,
         blank=True,
         null=True,
-        related_name='%(class)ss_creators')
+        related_name='%(class)ss_creators',
+        on_delete=models.CASCADE)
     updated_by = models.ForeignKey(
         User,
         blank=True,
         null=True,
-        related_name='%(class)ss_updators')
+        related_name='%(class)ss_updators',
+        on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
@@ -46,5 +48,6 @@ class PersonEmployment(Audit):
         Person,
         blank=True,
         null=True,
+        on_delete=models.CASCADE
     )
     medical_allowance = models.BooleanField(default=False)

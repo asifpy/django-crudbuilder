@@ -1,6 +1,8 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+from django.contrib import admin, auth
 from django.db import connection
+
+from crudbuilder import urls
 
 tables = connection.introspection.table_names()
 
@@ -9,9 +11,9 @@ urlpatterns = [
     # url(r'^$', 'example.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('django.contrib.auth.urls')),
-    url(r'^crud/', include('crudbuilder.urls'))
+    url(r'^crud/', include(urls))
 ]
 
 if 'django_content_type' in tables:

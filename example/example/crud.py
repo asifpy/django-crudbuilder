@@ -27,7 +27,7 @@ class PersonCrud(BaseCrudBuilder):
     # custom_table2 = CustomPersonTable
 
     # detailview_excludes = ['img']
-    inlineformset = PersonEmploymentInlineFormset
+    # inlineformset = PersonEmploymentInlineFormset
 
     # custom_templates = {
     #     'list': 'yourtemplates/template.html'

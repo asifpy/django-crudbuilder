@@ -1,9 +1,9 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.template import Context, Template
-from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
+from crudbuilder.helpers import reverse
 from crudbuilder.tests.models import TestModel
 from crudbuilder.tests.crud import TestModelCrud, TestChildInlineFormset
 from crudbuilder.tests.forms import TestModelForm

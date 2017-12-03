@@ -195,3 +195,18 @@ def custom_postfix_url(crud, model):
     if not postfix:
         postfix = plural(model)
     return postfix
+
+
+def get_urlresolver():
+    """Returns apporpriate urlresolver based on django version"""
+
+    try:
+        from django.core import urlresolvers
+        return urlresolvers
+    except ImportError:
+        from django import urls
+        return urls
+
+
+reverse_lazy = get_urlresolver().reverse_lazy
+reverse = get_urlresolver().reverse
