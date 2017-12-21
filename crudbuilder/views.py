@@ -14,7 +14,8 @@ from crudbuilder.mixins import (
     BaseListViewMixin,
     CreateUpdateViewMixin,
     InlineFormsetViewMixin,
-    BaseDetailViewMixin
+    BaseDetailViewMixin,
+    LoginRequiredMixin
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
@@ -198,9 +199,10 @@ class ViewBuilder(BaseBuilder):
         return delete_class
 
 
-class CrudListView(TemplateView):
+class CrudListView(LoginRequiredMixin, TemplateView):
     template_name = "crudbuilder/cruds.html"
     title = "Registered Cruds"
+    login_required = False
 
     def cruds(self):
         return registry.items()
