@@ -8,7 +8,7 @@ script:
   - coverage run --source=crudbuilder runtests.py
 env:
   matrix:
-   - DJANGO="1.10"
+   - DJANGO="1.10.8"
    - DJANGO="1.11.8"
    - DJANGO="2.0"
 
