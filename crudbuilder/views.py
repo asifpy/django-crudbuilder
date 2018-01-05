@@ -127,9 +127,13 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
+        parent_classes = [self.get_createupdate_mixin(), CreateView]
+        if self.custom_create_view_mixin:
+            parent_classes.insert(0, self.custom_create_view_mixin)
+
         create_class = type(
             name,
-            (self.get_createupdate_mixin(), CreateView),
+            tuple(parent_classes),
             create_args
         )
 
@@ -172,9 +176,13 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
+        parent_classes = [self.get_createupdate_mixin(), UpdateView]
+        if self.custom_update_view_mixin:
+            parent_classes.insert(0, self.custom_update_view_mixin)
+
         update_class = type(
             name,
-            (self.get_createupdate_mixin(), UpdateView),
+            tuple(parent_classes),
             update_args
         )
         self.classes[name] = update_class
