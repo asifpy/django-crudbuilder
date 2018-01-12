@@ -67,7 +67,7 @@ Enable search in ListView template
 
 If you are writing your own custom templates, then please add the following to your list view template to enable the search.::
 
-	<form saction="." method="GET">
+	<form action="." method="GET">
 	    <input type="text" name='search'>
 	    <button type="submit" >Search</button>
 	</form>
