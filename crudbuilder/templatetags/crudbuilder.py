@@ -12,7 +12,7 @@ except ImportError:
 
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
-CrudDetail = namedtuple('CrudListing', ['app', 'model', 'list_url'])
+CrudDetail = namedtuple('CrudDetail', ['app', 'model', 'list_url'])
 
 
 @register.filter
