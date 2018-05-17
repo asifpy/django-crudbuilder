@@ -202,7 +202,15 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
-        delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
+        parent_classes = [CrudBuilderMixin, DeleteView]
+        if self.custom_delete_view_mixin:
+            parent_classes.insert(0, self.custom_delete_view_mixin)
+
+        delete_class = type(
+            name,
+            tuple(parent_classes),
+            delete_args
+        )
         self.classes[name] = delete_class
         return delete_class
 

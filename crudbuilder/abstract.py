@@ -32,6 +32,7 @@ class BaseBuilder(object):
 
         self.custom_update_view_mixin = self._has_crud_attr('custom_update_view_mixin')
         self.custom_create_view_mixin = self._has_crud_attr('custom_create_view_mixin')
+        self.custom_delete_view_mixin = self._has_crud_attr('custom_delete_view_mixin')
 
         # django tables2
         self.custom_table2 = self._has_crud_attr('custom_table2')
