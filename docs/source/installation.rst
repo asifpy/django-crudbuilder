@@ -61,6 +61,12 @@ Then create the CRUD class for ``Person`` model::
             context['custom_data'] = "Some custom data"
             return context
 
+        @classmethod
+        def custom_detail_context(cls, request, context, **kwargs):
+            """Define your own custom context for detail view"""
+            context['custom_data'] = "Some custom data"
+            return context
+
         # permissions = {
         #     'list': 'example.person_list',
         #     'create': 'example.person_create'
