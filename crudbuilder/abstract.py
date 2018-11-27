@@ -30,6 +30,7 @@ class BaseBuilder(object):
         self.detailview_excludes = self._has_crud_attr('detailview_excludes')
         self.createupdate_forms = self._has_crud_attr('createupdate_forms')
 
+        self.custom_list_view_mixin = self._has_crud_attr('custom_list_view_mixin')
         self.custom_update_view_mixin = self._has_crud_attr('custom_update_view_mixin')
         self.custom_create_view_mixin = self._has_crud_attr('custom_create_view_mixin')
         self.custom_delete_view_mixin = self._has_crud_attr('custom_delete_view_mixin')
