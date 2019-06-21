@@ -1,7 +1,7 @@
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from crudbuilder.views import ViewBuilder
+from crudbuilder.helpers import reverse
 from example.crud import PersonCrud
 
 builder = ViewBuilder('example', 'person', PersonCrud)

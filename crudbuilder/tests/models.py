@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import CASCADE
 from django.contrib.auth.models import User
 
 # User = get_user_model()
@@ -16,4 +17,6 @@ class TestChildModel(models.Model):
         TestModel,
         blank=True,
         null=True,
-        related_name='children')
+        related_name='children',
+        on_delete=CASCADE
+    )

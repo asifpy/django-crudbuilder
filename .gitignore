@@ -1,10 +1,12 @@
 __pycache__/
 *.pyc
+Pipfile
+Pipfile.lock
 build
 dist
 *.egg-info
 example/db.sqlite3
-#example/example/migrations*
+example/example/migrations*
 .DS_Store
 .idea
 .venv

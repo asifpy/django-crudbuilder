@@ -30,11 +30,11 @@ if 'django_content_type' in tables:
         entries = [
             (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
             (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<pk>\w+)/$', detail_view.as_view(), '{}-{}-detail'),
-            (r'^{}/{}/(?P<pk>\w+)/update/$',
+            (r'^{}/{}/(?P<pk>[\w-]+)/$', detail_view.as_view(), '{}-{}-detail'),
+            (r'^{}/{}/(?P<pk>[\w-]+)/update/$',
                 update_view.as_view(),
                 '{}-{}-update'),
-            (r'^{}/{}/(?P<pk>\w+)/delete/$',
+            (r'^{}/{}/(?P<pk>[\w-]+)/delete/$',
                 delete_view.as_view(),
                 '{}-{}-delete'),
         ]

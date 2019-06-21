@@ -32,7 +32,7 @@ class LoginRequiredMixin(object):
             settings, 'LOGIN_REQUIRED_FOR_CRUD', False)
 
         if global_login_required or self.login_required:
-            if not request.user.is_authenticated():
+            if not request.user.is_authenticated:
                 return self.handle_login_required(request)
 
         return super(LoginRequiredMixin, self).dispatch(
@@ -80,7 +80,7 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
         try:
             context['exclude'] = self.detailview_excludes
         except:
-            context['exclude'] =None
+            context['exclude'] = None
         context['actual_model_name'] = model.__name__.lower()
         context['pluralized_model_name'] = plural(model.__name__.lower())
         context['verbose_model_name'] = model._meta.verbose_name

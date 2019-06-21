@@ -161,7 +161,7 @@ def underToAllCaps(value):  # pragma: no cover
 
 def import_crud(app):
     '''
-    Import moderator module and register all models it contains with moderation
+    Import crud module and register all model cruds which it contains
     '''
 
     try:
@@ -181,7 +181,7 @@ def import_crud(app):
 
 def auto_discover():
     '''
-    Auto register all apps that have module moderator with moderation
+    Auto register all apps that have module crud
     '''
     from django.conf import settings
 
@@ -195,3 +195,18 @@ def custom_postfix_url(crud, model):
     if not postfix:
         postfix = plural(model)
     return postfix
+
+
+def get_urlresolver():
+    """Returns apporpriate urlresolver based on django version"""
+
+    try:
+        from django.core import urlresolvers
+        return urlresolvers
+    except ImportError:
+        from django import urls
+        return urls
+
+
+reverse_lazy = get_urlresolver().reverse_lazy
+reverse = get_urlresolver().reverse

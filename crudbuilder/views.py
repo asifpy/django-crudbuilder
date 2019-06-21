@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse_lazy
 from django.forms.models import modelform_factory
 from django.views.generic import (
     DetailView,
@@ -15,11 +14,16 @@ from crudbuilder.mixins import (
     BaseListViewMixin,
     CreateUpdateViewMixin,
     InlineFormsetViewMixin,
-    BaseDetailViewMixin
+    BaseDetailViewMixin,
+    LoginRequiredMixin
 )
 from crudbuilder.abstract import BaseBuilder
 from crudbuilder.tables import TableBuilder
-from crudbuilder.helpers import model_class_form, plural
+from crudbuilder.helpers import (
+    model_class_form,
+    plural,
+    reverse_lazy
+)
 
 
 class ViewBuilder(BaseBuilder):
@@ -123,9 +127,13 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
+        parent_classes = [self.get_createupdate_mixin(), CreateView]
+        if self.custom_create_view_mixin:
+            parent_classes.insert(0, self.custom_create_view_mixin)
+
         create_class = type(
             name,
-            (self.get_createupdate_mixin(), CreateView),
+            tuple(parent_classes),
             create_args
         )
 
@@ -169,9 +177,13 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
+        parent_classes = [self.get_createupdate_mixin(), UpdateView]
+        if self.custom_update_view_mixin:
+            parent_classes.insert(0, self.custom_update_view_mixin)
+
         update_class = type(
             name,
-            (self.get_createupdate_mixin(), UpdateView),
+            tuple(parent_classes),
             update_args
         )
         self.classes[name] = update_class
@@ -196,9 +208,10 @@ class ViewBuilder(BaseBuilder):
         return delete_class
 
 
-class CrudListView(TemplateView):
+class CrudListView(LoginRequiredMixin, TemplateView):
     template_name = "crudbuilder/cruds.html"
     title = "Registered Cruds"
+    login_required = False
 
     def cruds(self):
         return registry.items()
