@@ -32,6 +32,11 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('tests-testmodels-list'))
         self.assertEqual(200, response.status_code)
 
+    def get_detail_view(self, obj):
+        self.client_login()
+        response = self.client.get(reverse('tests-testmodels-detail', args=(obj.pk, )))
+        self.assertEqual(200, response.status_code)
+
     def test_user_not_logged_in(self):
         response = self.client.get(reverse('tests-testmodels-list'))
         self.assertEqual(302, response.status_code)
@@ -123,7 +128,8 @@ class ViewTestCase(TestCase):
             context['testcontext'] = 'foo'
             return context
         setattr(TestModelCrud, 'custom_detail_context', classmethod(custom_detail_context))
-        self.get_detail_view()
+        obj = TestModel.objects.create(name='object1')
+        self.get_detail_view(obj)
 
     def test_iniline_formset(self):
         TestModelCrud.inlineformset = TestChildInlineFormset
