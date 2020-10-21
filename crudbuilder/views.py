@@ -152,6 +152,7 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('detail'),
             inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
+            custom_detail_context=self.custom_detail_context,
             custom_postfix_url=self.custom_postfix_url
         )
 
