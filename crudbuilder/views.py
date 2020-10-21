@@ -102,11 +102,16 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
+        parent_classes = [BaseListViewMixin, SingleTableView]
+        if self.custom_list_view_mixin:
+            parent_classes.insert(0, self.custom_list_view_mixin)
+
         list_class = type(
             name,
-            (BaseListViewMixin, SingleTableView),
+            tuple(parent_classes),
             list_args
         )
+
         self.classes[name] = list_class
         return list_class
 
@@ -203,7 +208,15 @@ class ViewBuilder(BaseBuilder):
             custom_postfix_url=self.custom_postfix_url
         )
 
-        delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)
+        parent_classes = [CrudBuilderMixin, DeleteView]
+        if self.custom_delete_view_mixin:
+            parent_classes.insert(0, self.custom_delete_view_mixin)
+
+        delete_class = type(
+            name,
+            tuple(parent_classes),
+            delete_args
+        )
         self.classes[name] = delete_class
         return delete_class
 
