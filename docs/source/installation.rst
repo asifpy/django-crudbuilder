@@ -34,6 +34,8 @@ We're going to run through creating a tutorial app. Let's start with a simple mo
         created_at = models.DateTimeField(auto_now=True)
         created_by = models.ForeignKey(User, blank=True, null=True)
 
+You can optionally set verbose_name and verbose_name_plural in model's Meta class to have custom name in CRUD interface.
+
 Then create the CRUD class for ``Person`` model::
 
     # tutorial/crud.py
