@@ -7,7 +7,6 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.conf import settings
 from django.contrib import messages
 
-from crudbuilder.helpers import plural
 from crudbuilder.signals import crudbuilder_signals
 
 if six.PY3:
@@ -81,11 +80,13 @@ class CrudBuilderMixin(LoginRequiredMixin, PermissionRequiredMixin):
             context['exclude'] = self.detailview_excludes
         except:
             context['exclude'] = None
-        context['actual_model_name'] = model.__name__.lower()
-        context['pluralized_model_name'] = plural(model.__name__.lower())
-        context['verbose_model_name'] = model._meta.verbose_name
+        name = model._meta.verbose_name
+        context['actual_model_name'] = name
+        context['verbose_model_name'] = name
+        name_plural = model._meta.verbose_name_plural
+        context['pluralized_model_name'] = name_plural
+        context['verbose_model_name_plural'] = name_plural
         context['custom_postfix_url'] = self.custom_postfix_url
-        context['verbose_model_name_plural'] = model._meta.verbose_name_plural
         context['project_name'] = getattr(
             settings, 'PROJECT_NAME', 'CRUDBUILDER')
         return context
