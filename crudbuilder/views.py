@@ -101,6 +101,8 @@ class ViewBuilder(BaseBuilder):
             custom_context=self.custom_context,
             custom_postfix_url=self.custom_postfix_url
         )
+        if self.custom_listview_obj:
+            list_args.update(**self.custom_listview_obj)
 
         parent_classes = [BaseListViewMixin, SingleTableView]
         if self.custom_list_view_mixin:
