@@ -17,7 +17,7 @@
 			{% for key, crud in view.cruds %}
 				<tr>
 					{% with detail=key|crud_detail %}
-						<td><a href="{% url detail.postfix_url %}">{{crud|class_name}}</a></td>
+						<td><a href="{% url detail.list_url %}">{{crud|class_name}}</a></td>
 						<td>{{detail.model|title}}</td>
 						<td>{{detail.app|title}}</td>
 					{% endwith %}

@@ -18,7 +18,7 @@ class TableBuilder(BaseBuilder):
     css_table : css class for generated tables2 class
     """
     def generate_table(self):
-        model_class = self.get_model_class()
+        model_class = self.get_model_class().__class__
 
         detail_url_name = '{}-{}-detail'.format(
             self.app, custom_postfix_url(self.crud(), self.model)

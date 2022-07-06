@@ -1,12 +1,13 @@
 from crudbuilder.abstract import BaseCrudBuilder
 from crudbuilder.formset import BaseInlineFormset
-
+from django_filters.views import FilterView
 from example.models import Person, PersonEmployment
 from example.tables import CustomPersonTable
 from example.forms import (
     PersonEmployementCreateForm,
     PersonEmployementUpdateForm
 )
+from example.filters import PersonFilter
 
 
 class PersonEmploymentInlineFormset(BaseInlineFormset):
@@ -24,6 +25,10 @@ class PersonCrud(BaseCrudBuilder):
     modelform_excludes = ['created_by', 'updated_by']
     login_required = True
     permission_required = True
+    custom_listview_obj = {
+        'filterset_class': PersonFilter
+    }
+    custom_list_view_mixin = FilterView
     # custom_table2 = CustomPersonTable
 
     # detailview_excludes = ['img']
