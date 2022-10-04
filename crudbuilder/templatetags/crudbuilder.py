@@ -5,10 +5,11 @@ from itertools import chain
 from django.template.defaultfilters import stringfilter
 from collections import namedtuple
 
-try:
-    from django.utils.encoding import force_text
-except ImportError:
-    from django.utils.encoding import force_unicode as force_text
+# try:
+#     from django.utils.encoding import force_str
+# except ImportError:
+# from django.utils.encoding import force_unicode as force_str
+from django.utils.encoding import force_str
 
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
@@ -147,7 +148,7 @@ def get_pagination_context(page, pages_to_show=11,
         # Append proper character to url
     if url:
         # Remove existing page GET parameters
-        url = force_text(url)
+        url = force_str(url)
         url = re.sub(r'\?{0}\=[^\&]+'.format(parameter_name), '?', url)
         url = re.sub(r'\&{0}\=[^\&]+'.format(parameter_name), '', url)
         # Append proper separator
@@ -159,7 +160,7 @@ def get_pagination_context(page, pages_to_show=11,
     if extra:
         if not url:
             url = '?'
-        url += force_text(extra) + '&'
+        url += force_str(extra) + '&'
     if url:
         url = url.replace('?&', '?')
     # Set CSS classes, see http://getbootstrap.com/components/#pagination
