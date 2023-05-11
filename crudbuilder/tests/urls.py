@@ -1,6 +1,6 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 urlpatterns = [
-    url(r'^auth/',  include('django.contrib.auth.urls')),
-    url(r'^crud/',  include('crudbuilder.urls'))
-    ]
+    re_path(r'^auth/',  include('django.contrib.auth.urls')),
+    re_path(r'^crud/',  include('crudbuilder.urls'))
+]
