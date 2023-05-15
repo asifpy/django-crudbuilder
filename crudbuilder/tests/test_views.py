@@ -123,6 +123,25 @@ class ViewTestCase(TestCase):
         setattr(TestModelCrud, 'custom_context', classmethod(custom_context))
         self.get_list_view()
 
+    def test_custom_get_success_url(self):
+
+        TestModelCrud.createupdate_forms = dict(
+            create=TestModelForm,
+            update=TestModelForm)
+
+        self.client_login()
+        self.assertEqual(TestModel.objects.count(), 0)
+
+        response = self.client.post("/crud/tests/testmodels/create/", {"name": "Test text", "email": "sa@me.org"})
+        test_models = list(TestModel.objects.all())
+        self.assertEqual(len(test_models), 1)
+        self.assertEqual(response.url, "/crud/tests/testmodels/%s/" % test_models[0].pk)
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post("/crud/tests/testmodels/1/update/", data={"name": "new_name"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/crud/tests/testmodels/%s/" % test_models[0].pk)
+
     def test_custom_detail_context(self):
         def custom_detail_context(self, request, context, **kwargs):
             context['testcontext'] = 'foo'
