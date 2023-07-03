@@ -68,6 +68,10 @@ Then create the CRUD class for ``Person`` model::
             """Define your own custom context for detail view"""
             context['custom_data'] = "Some custom data"
             return context
+            
+        def custom_get_success_url(self, request):
+            """Define URL redirect after object is successfully created/updated"""
+            return reverse("tutorial-persons-detail", args=(self.object.pk, ))
 
         # permissions = {
         #     'list': 'example.person_list',

@@ -52,6 +52,7 @@ class BaseBuilder(object):
         self.inlineformset = self.get_inlineformset
         self.custom_postfix_url = self.postfix_url
         self.custom_listview_obj = self._has_crud_attr('custom_listview_obj')
+        self.custom_get_success_url = self._has_crud_attr('get_success_url')
 
     @property
     def get_model_class(self):
