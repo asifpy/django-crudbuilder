@@ -50,7 +50,7 @@ Prerequisites
 -------------
 - Django 1.10+
 - Python 2.7+, 3.3+
-- Django Tables2 < 2.0
+- [Django Tables2](https://django-tables2.readthedocs.io/)
 
 Installation
 ------------
